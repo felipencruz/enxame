@@ -1,0 +1,351 @@
+{
+  "_leia_me": {
+    "como_usar": "Copia de seguranca e apendice da monografia. NAO editar para reimportar: o n8n segue sendo a fonte da verdade (decisao de 17/07).",
+    "escopo": "Apenas os workflows do TCC: pasta 'qIpDRrBIJKv95lnd' e isArchived = 0. A instancia tem outros, de outros projetos, que nao entram neste repositorio. O projectId NAO discrimina (os 90 estao no mesmo projeto) e o nome tambem nao (o 'Backup diario da camada bronze' e do TCC e nao tem o prefixo). Medido em 04/08/2026.",
+    "limpeza_para_publicacao": "Em 11/11/2026, depois do fim da coleta, os arquivos foram limpos para publicacao, sem mudar a logica de nenhum no: (1) tres valores trocados por marcadores: o telefone do alerta de WhatsApp (<TELEFONE_DO_ALERTA>), o appId da conta de afiliado da Shopee (<APP_ID_DA_AFILIADA>) e o id da pasta de backup no Google Drive (<ID_DA_PASTA_NO_DRIVE>); (2) comentarios e notas reescritos para tirar referencias a documentos internos de acompanhamento do projeto e emojis. Nos workflows alterados, 'sha256' e 'sha256_definicao' sao do arquivo limpo, e 'sha256_export' e 'sha256_definicao_export' guardam os hashes do export original de 02/11/2026.",
+    "o_que_e": "Backup dos workflows do n8n do TCC Enxame, lido do SQLite do VPS.",
+    "o_que_nao_esta_aqui": "(1) Segredos: a tabela credentials_entity nao e lida; o campo 'credentials' dos nos guarda apenas {id, name}, que e ponteiro. Duas varreduras abortam o export -- uma por NOME de chave e outra pelo VALOR dos .env do servidor. (2) Workflows ARQUIVADOS do TCC: estao listados em 'arquivados_fora_do_backup', com id e nome, para que arquivar nao seja o mesmo que perder em silencio.",
+    "por_que": "A decisao de 17/07/2026 dispensava backup JSON local, mas nunca avaliou PERDA TOTAL: workflows, credenciais, historico e o Bronze vivem no mesmo database.sqlite, sem copia. O que existe em um lugar so nao esta guardado.",
+    "qual_hash_comparar": "Para saber se alguem MEXEU no workflow, compare 'sha256_definicao'. O 'sha256' inclui o campo staticData, que o proprio n8n reescreve (recurrenceRules do Schedule Trigger) sem edicao humana e sem mover o updatedAt -- comparar por ele acusa divergencia onde nao houve mudanca. Medido em 04/08/2026.",
+    "reproduzir": "01_Coleta_n8n/exportar_workflows.py, rodado no VPS com python3."
+  },
+  "arquivados_fora_do_backup": [
+    {
+      "atualizado_em": "2026-09-25 00:24:21",
+      "id": "YOR1G6r8hbi8LaJN",
+      "nome": "TCC - [teste] Achatar ML com rank (temporario, SEM gravacao)"
+    },
+    {
+      "atualizado_em": "2026-09-25 15:53:33",
+      "id": "r5tp7U1vlcEMQ4Bj",
+      "nome": "TCC - [teste] Achatar ML v4 (temporario, SEM gravacao)"
+    },
+    {
+      "atualizado_em": "2026-09-25 21:02:38",
+      "id": "OmPbufpBjoosyXng",
+      "nome": "TCC - [teste] Cadeia ML v4 ao vivo (temporario, SEM gravacao)"
+    },
+    {
+      "atualizado_em": "2026-09-29 22:33:05",
+      "id": "EuHJKxnge2mtcmQq",
+      "nome": "TCC - [teste] Formato do erro do enxame-api (temporario, SEM gravacao)"
+    },
+    {
+      "atualizado_em": "2026-09-29 22:33:06",
+      "id": "Ys7jelR7EFOQF0M4",
+      "nome": "TCC - [teste] Nova tentativa do ML (temporario, SEM gravacao)"
+    },
+    {
+      "atualizado_em": "2026-09-09 03:05:09",
+      "id": "SHg2EZx3JON475BT",
+      "nome": "TCC \u2014 TESTE TEMPORARIO retry Amazon"
+    },
+    {
+      "atualizado_em": "2026-07-10 20:43:01",
+      "id": "9Zttr00cllR9mvHo",
+      "nome": "TCC \u2014 [sonda] Conferir Seeds"
+    },
+    {
+      "atualizado_em": "2026-08-11 20:46:48",
+      "id": "rXnJOfPJD3PzHyG8",
+      "nome": "TCC \u2014 [sonda] Operador de coluna vazia (descartavel)"
+    },
+    {
+      "atualizado_em": "2026-07-15 04:19:42",
+      "id": "KCxWAtTIzjBxpSkn",
+      "nome": "TCC \u2014 [sonda] Testar API Mercado Livre"
+    },
+    {
+      "atualizado_em": "2026-07-15 03:58:58",
+      "id": "VuHyU1vXXoFtOMfY",
+      "nome": "TCC \u2014 [util] Limpar Bronze"
+    },
+    {
+      "atualizado_em": "2026-07-13 15:51:18",
+      "id": "v0ECNWRMp9vInDi7",
+      "nome": "TCC \u2014 [util] Termo Mudo Suggest (temp)"
+    }
+  ],
+  "avisos_da_varredura_por_valor": [
+    "DOMAIN_NAME (valor de configuracao) aparece em 'TCC \u2014 Coletor Google Suggest (Bronze)'",
+    "GENERIC_TIMEZONE (valor de configuracao) aparece em 'TCC \u2014 Coletor YouTube (Bronze)'",
+    "DOMAIN_NAME (valor de configuracao) aparece em 'TCC \u2014 Sonda de Reabertura do Mercado Livre (util)'",
+    "GENERIC_TIMEZONE (valor de configuracao) aparece em 'TCC \u2014 [util] Preencher youtube_slot'"
+  ],
+  "banco": "/var/lib/docker/volumes/n8n_data/_data/database.sqlite",
+  "data_tables_no_momento_do_backup": [
+    {
+      "linhas": 1100,
+      "tabela": "data_table_user_2Qmnq0yOXArJ4b7C"
+    },
+    {
+      "linhas": 2235,
+      "tabela": "data_table_user_HTp0xMFBFsY4OZzx"
+    },
+    {
+      "linhas": 195,
+      "tabela": "data_table_user_WL8TW6jSHW56O2lB"
+    },
+    {
+      "linhas": 249,
+      "tabela": "data_table_user_jOjDYzscIjgIye3r"
+    },
+    {
+      "linhas": 250,
+      "tabela": "data_table_user_oodaLwjRQOZdMcO7"
+    },
+    {
+      "linhas": 236,
+      "tabela": "data_table_user_qVSDXBqUnbstr9wk"
+    },
+    {
+      "linhas": 474,
+      "tabela": "data_table_user_txAtoMRsWO351Pm2"
+    },
+    {
+      "linhas": 28,
+      "tabela": "data_table_user_vche5aYj6BUs9yL9"
+    }
+  ],
+  "gerado_em": "2026-11-02T06:12:26.594158+00:00",
+  "origem": "/var/lib/docker/volumes/n8n_data/_data/database.sqlite",
+  "pasta_do_tcc": "qIpDRrBIJKv95lnd",
+  "total_do_tcc": 18,
+  "total_no_vps": 59,
+  "workflows": [
+    {
+      "arquivo": "Pla4o3Wvk10O76QP__TCC_Alerta_de_Coletor_Parado_util.json",
+      "ativo": false,
+      "atualizado_em": "2026-11-02 05:13:35.457",
+      "bate_com_vps": true,
+      "id": "Pla4o3Wvk10O76QP",
+      "nome": "TCC \u2014 Alerta de Coletor Parado (util)",
+      "nos": 9,
+      "sha256": "a95bddd49c99df0937d923035692e8da67643ecf4d2758d58d41db0121e4d70c",
+      "sha256_definicao": "56db2116154b0595142d97b7ed163d7fdac4326e1f64b421cb11402560b4b7df",
+      "sha256_definicao_export": "72b1505b85cbc1c72b582ef0508b3d9f31c845100ee563b5fbf95a376f86500e",
+      "sha256_export": "879644c230de3404a2c645d1d1b82103dbfabdeef583d9add92e35464031937e",
+      "versionId": "a03da9d9-dfeb-4cd4-9227-ea649632717c"
+    },
+    {
+      "arquivo": "srxlA0ItOoj0BCGX__TCC_Alerta_de_Perda_Silenciosa_na_Amazon_util.json",
+      "ativo": false,
+      "atualizado_em": "2026-08-28 05:35:08.501",
+      "bate_com_vps": true,
+      "id": "srxlA0ItOoj0BCGX",
+      "nome": "TCC \u2014 Alerta de Perda Silenciosa na Amazon (util)",
+      "nos": 5,
+      "sha256": "d80dbd411870ae45350dd3aaebd4f9e514bd3a1ac85a76e635a0099176d109f0",
+      "sha256_definicao": "5f647452e313a266d0260a2f3279361c7593a7c7272a72c8516b3df5f2a740af",
+      "sha256_definicao_export": "a41b4375ec34a57a352be27c118144ac2a54ae28ab59a42165e82425674c1a0d",
+      "sha256_export": "c86b730b30d54a3dcefa08aa0b1a469cc48187f29febd7388150cebcbc6322c4",
+      "versionId": "c9cc2254-deb8-459a-a21f-d1b11f58d08a"
+    },
+    {
+      "arquivo": "pliN9f1zwIhClN2M__TCC_Backup_di_rio_da_camada_bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-08-12 10:57:48.700",
+      "bate_com_vps": true,
+      "id": "pliN9f1zwIhClN2M",
+      "nome": "TCC \u2014 Backup di\u00e1rio da camada bronze",
+      "nos": 34,
+      "sha256": "0e93894d2de8c846e794e4fb01b69a1170a8cc24dd93e16fdff1a4263970be34",
+      "sha256_definicao": "0bb7595a363a5be0864ec3c26c3730714ce29df978b7b543fc00f56b89947eeb",
+      "sha256_definicao_export": "84df2f3ea7530e516c62c611c36c2da0e5b6cadccec9ec1650196dc510c9fef0",
+      "sha256_export": "7f799bcad5f992411a2308b692fbc5e019eaaf1dfd1aa7cfb6457f43f2ab0ad5",
+      "versionId": "373b43c6-558b-4781-a2e1-14ee292232fc"
+    },
+    {
+      "arquivo": "UN8KNwlEsoLKm1kw__TCC_Coletor_Amazon_agentes_de_IA_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-09-09 01:51:47.587",
+      "bate_com_vps": true,
+      "id": "UN8KNwlEsoLKm1kw",
+      "nome": "TCC \u2014 Coletor Amazon (agentes de IA, Bronze)",
+      "nos": 4,
+      "sha256": "5c02c6459ac137b4aa47033c3e332cf97098d61fe81c07e1c248913de708e436",
+      "sha256_definicao": "0ab321ba349a3febb40d72aa7415467d2255aa8cbd6f959c1f6580eadaa46861",
+      "sha256_definicao_export": "960d3ccaef34dda086b6a1a820324b962ca90863d8655ef7022c3c314cd4f060",
+      "sha256_export": "71c7ccb38ee6e03a966c9bc8feeec60b00219984ee674412880e742093b3fd89",
+      "versionId": "4753ff52-a75d-4973-8c1f-2859fa3fa043"
+    },
+    {
+      "arquivo": "PV5UweukBccsizsm__TCC_Coletor_Google_Suggest_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-15 05:00:18.971",
+      "bate_com_vps": true,
+      "id": "PV5UweukBccsizsm",
+      "nome": "TCC \u2014 Coletor Google Suggest (Bronze)",
+      "nos": 5,
+      "sha256": "68c220f9bafd6394ed29d0225a0c990e1950c0bb4ef72bed010a9881f7afa3cd",
+      "sha256_definicao": "a3489ebb212870e37e1f5241323ded863aca94c60802997c7b044792245f2031",
+      "versionId": "ddf17e46-696b-46ff-baf8-8445b2d2db19"
+    },
+    {
+      "arquivo": "5vSP1WtLKpTTVBn6__TCC_Coletor_Mercado_Livre_agentes_de_IA_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-09-29 23:19:00.339",
+      "bate_com_vps": true,
+      "id": "5vSP1WtLKpTTVBn6",
+      "nome": "TCC \u2014 Coletor Mercado Livre (agentes de IA, Bronze)",
+      "nos": 11,
+      "sha256": "f8657badc4388513c5dba1439c71bb03fcad78c23fd939a5f140f15312ccdd00",
+      "sha256_definicao": "5ae8b323244244ca4784e78905dc76309b3444d2ee3848c2d9e387bf2dd7d0ab",
+      "sha256_definicao_export": "9c363150c4c6510980f87ee3ace45c332c0b006526e7e2305cb10ea43d798959",
+      "sha256_export": "35ff0a2b5321a99eacbcafeb1e7e9b4204c958daee44e17437aee53aae190a05",
+      "versionId": "bb5f117a-0af0-4fa0-bc4f-91e8202704ee"
+    },
+    {
+      "arquivo": "qxMqqUOVFCCWvQ1i__TCC_Coletor_Shopee_Afiliados_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-13 20:27:12.606",
+      "bate_com_vps": true,
+      "id": "qxMqqUOVFCCWvQ1i",
+      "nome": "TCC \u2014 Coletor Shopee Afiliados (Bronze)",
+      "nos": 5,
+      "sha256": "feb4acc240f2cb475f51beec6feabdc0719a9fde84b377d9303bd9c442764d7b",
+      "sha256_definicao": "a9cebab5d49c7a12b848264b67991939160bdd8d768f44f946672b8954fc345a",
+      "sha256_definicao_export": "e7654e9b37de55f33722b454c2176377d92a7043e8424751a16df089bb418d3d",
+      "sha256_export": "4ba98d420ed8b30d75f4a67b59e1740b7da94ec088fbaf3891733fbd8589c0be",
+      "versionId": "00bf57fd-7f9e-4f4f-acfb-362ba8fddf9b"
+    },
+    {
+      "arquivo": "WBFUddBm00zBSqIT__TCC_Coletor_YouTube_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-09-11 04:03:20.905",
+      "bate_com_vps": true,
+      "id": "WBFUddBm00zBSqIT",
+      "nome": "TCC \u2014 Coletor YouTube (Bronze)",
+      "nos": 4,
+      "sha256": "3b48034bd4814b9f05027680a48a1f15f8a1e84b7472ef069f4098835f89c795",
+      "sha256_definicao": "0907fb2d938aa4793208553f72b70b46ffb6b7bd196c52018e0b8bb436fb2215",
+      "versionId": "69f36828-009b-4df5-a2c0-11896da02e59"
+    },
+    {
+      "arquivo": "8tJHu2GraKa3pnTU__TCC_Sonda_de_Reabertura_do_Mercado_Livre_util.json",
+      "ativo": false,
+      "atualizado_em": "2026-10-07 00:56:28.108",
+      "bate_com_vps": true,
+      "id": "8tJHu2GraKa3pnTU",
+      "nome": "TCC \u2014 Sonda de Reabertura do Mercado Livre (util)",
+      "nos": 7,
+      "sha256": "577710e2ea0e38c44b59f02878fd2ddc7c4cf85c7c7c700be9df5433a601394d",
+      "sha256_definicao": "fb864e058abcbea9d089c883d865cab0240ec1d939fb29d38bf3cbd11b5342e3",
+      "sha256_definicao_export": "2af33a0e8fa579e416980d653bc0531b68cec14992439949b236846b0d6f3336",
+      "sha256_export": "237aa55f800996b1f38433bcec4dccfb8716fa5189f07829a276f4533ea42615",
+      "versionId": "f4756947-317c-45b7-8987-6d789d03e073"
+    },
+    {
+      "arquivo": "jWlx7EmKfJKW0Ou1__TCC_Status_das_Coletas_util.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-15 03:57:46.768",
+      "bate_com_vps": true,
+      "id": "jWlx7EmKfJKW0Ou1",
+      "nome": "TCC \u2014 Status das Coletas (util)",
+      "nos": 8,
+      "sha256": "d648869bf9f64c43b102cbc035132233b7e323f44ae22e317ffcefd96dc658a2",
+      "sha256_definicao": "b3101eda4e9df6c1b0519d34c63696160c5f4ac476418d07a101f1788fbf2c19",
+      "versionId": "0ae82afc-495d-4dc1-a387-cc476439dfe8"
+    },
+    {
+      "arquivo": "XSdNQEaPSPw6qRQq__TCC_sonda_Shopee_paginacao_calibracao_do_sales.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-16 16:09:05.415",
+      "bate_com_vps": true,
+      "id": "XSdNQEaPSPw6qRQq",
+      "nome": "TCC \u2014 [sonda] Shopee: paginacao + calibracao do sales",
+      "nos": 5,
+      "sha256": "a75ac1e4db7527ec93418b8ed7caa2e1a263a4380303c808197df6b7e20ff27b",
+      "sha256_definicao": "9297d3499315247c4178ac5d67d3dc083a786db133292183260b746e6e1ca924",
+      "sha256_definicao_export": "78dc6495760ef5461ff09c29dccde223a4b54d25e0615f082356224578a35d15",
+      "sha256_export": "e4c45cf2ac2c635a772189805999d4ceca4c5eeae9a5dfbe6cfcbbe8599ebe96",
+      "versionId": "ff749d15-21de-4276-b71a-54ef4c030cfd"
+    },
+    {
+      "arquivo": "NH2PY5s42gnwh0sg__TCC_util_Aplicar_Selecao_de_Buzz_B4.json",
+      "ativo": false,
+      "atualizado_em": "2026-08-12 10:56:21.178",
+      "bate_com_vps": true,
+      "id": "NH2PY5s42gnwh0sg",
+      "nome": "TCC \u2014 [util] Aplicar Selecao de Buzz (B4)",
+      "nos": 4,
+      "sha256": "945466240c2f34407a5b5f36b3880fb7ed243df92af08b4d3e5f84e9072925ca",
+      "sha256_definicao": "3872af5572df91d2b17eb81e535e3de172ad27131ea0fd8abb755c64852b3efd",
+      "versionId": "2d37bf2e-f55e-4a51-865c-70b88cac9225"
+    },
+    {
+      "arquivo": "UUntUm2ErEuLKZVn__TCC_util_Auditar_Delta_Shopee.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-16 15:22:21.984",
+      "bate_com_vps": true,
+      "id": "UUntUm2ErEuLKZVn",
+      "nome": "TCC \u2014 [util] Auditar Delta Shopee",
+      "nos": 4,
+      "sha256": "85425f918c4071efd3c1432c357c70eeffb21e0aafd2e4a80d69ef479f320f29",
+      "sha256_definicao": "55b3d5cc2a9c261a22f4c0e9d2b43013d51d0c014662d197d5a32e02d90577dd",
+      "versionId": "4d0c6899-e57a-422c-929a-c407e113eaf2"
+    },
+    {
+      "arquivo": "svkhNMVBampGIxLK__TCC_util_Auditar_Sobreposicao_Amazon.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-16 02:36:02.763",
+      "bate_com_vps": true,
+      "id": "svkhNMVBampGIxLK",
+      "nome": "TCC \u2014 [util] Auditar Sobreposicao Amazon",
+      "nos": 4,
+      "sha256": "8137948d91d8070cf2f008c6d29877e712994b073ae17e725316a089e3684794",
+      "sha256_definicao": "1fcae37c54e97a0727640e3be80d1ee95f9e7ec7bb3782fa46a44ee89e6d1e57",
+      "versionId": "be1afcf5-638d-4d7f-9782-9bc6f08a12c5"
+    },
+    {
+      "arquivo": "6dAtB1xEFBjL0wRp__TCC_util_Exportar_Bronze.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-17 02:59:35.334",
+      "bate_com_vps": true,
+      "id": "6dAtB1xEFBjL0wRp",
+      "nome": "TCC \u2014 [util] Exportar Bronze",
+      "nos": 11,
+      "sha256": "37270eb9d2bc0e902912ed446982d3ae24f736cf881a9fb02a7f0a6b04ed927f",
+      "sha256_definicao": "7e88efa94842016a1706cbb8c76c4804b76521e6132f15c4f4ab16aa53d68b2f",
+      "versionId": "42702566-fb18-406c-9bbc-582e40eacced"
+    },
+    {
+      "arquivo": "fenQvqnDa1eU82YM__TCC_util_Inspecionar_Seeds.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-15 21:28:56",
+      "bate_com_vps": true,
+      "id": "fenQvqnDa1eU82YM",
+      "nome": "TCC \u2014 [util] Inspecionar Seeds",
+      "nos": 5,
+      "sha256": "53f9971aed7b2d0519313a1efee2ff4f02cc45cc78c0e0883386245fdab25834",
+      "sha256_definicao": "cc7690ea107da7e5cae78831bdd1a855fbbc8a31ddfedec8a35caca9c43198d0",
+      "versionId": "7856827e-b62a-462c-b957-8e38cca2b5fe"
+    },
+    {
+      "arquivo": "4LtPjoPSA55CF8Es__TCC_util_Preencher_youtube_slot.json",
+      "ativo": false,
+      "atualizado_em": "2026-08-12 11:16:21.563",
+      "bate_com_vps": true,
+      "id": "4LtPjoPSA55CF8Es",
+      "nome": "TCC \u2014 [util] Preencher youtube_slot",
+      "nos": 4,
+      "sha256": "7d6c7e6cd44de6279b8afbac109ff90f5490926154578b4de922ccbeb6312142",
+      "sha256_definicao": "8d0f06bf395fcdbec61295511ef0442ad811ebc9fe15be7bb13b928a8b9cdc03",
+      "sha256_definicao_export": "2ce6ffcb06a1a2fda5fdfc4290b625516999a4cf194285a2bb7aad1ddbf52b32",
+      "sha256_export": "132a05d8421b0bc9b245dfb9aa6eada854175d2c087f52a5cde9a874846ca515",
+      "versionId": "26b4025f-aab7-4e72-b7f1-6487f60b8f21"
+    },
+    {
+      "arquivo": "jmH0IyQcgRN2z9in__TCC_util_Vitrines_da_Amazon.json",
+      "ativo": false,
+      "atualizado_em": "2026-07-16 02:15:15.440",
+      "bate_com_vps": true,
+      "id": "jmH0IyQcgRN2z9in",
+      "nome": "TCC \u2014 [util] Vitrines da Amazon",
+      "nos": 3,
+      "sha256": "fe53b75ce5f544c27ec8f56c9f38f6a38e9ec2ab6b3942fb6c2748e24c7ae9d2",
+      "sha256_definicao": "295066a1ef8685216f13bcfe42bc95559bb6fff5c88dc4981bc9c87d5a34dd0d",
+      "versionId": "34ece307-df92-4eb5-9ae2-b00db670217d"
+    }
+  ]
+}

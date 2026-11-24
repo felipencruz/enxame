@@ -1,0 +1,259 @@
+{
+  "active": 0,
+  "connections": {
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Suggest",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze ML": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Shopee": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze ML",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Suggest": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze YouTube": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Shopee",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Calcular Status",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-13 15:12:51.190",
+  "description": "Utilitario de monitoramento do TCC: le as 5 Data Tables Bronze (Suggest, YouTube, Shopee, ML, Amazon) + tcc_seeds e resume linhas, snapshots, linhas por dia e erros. Disparo manual, so leitura.",
+  "id": "jWlx7EmKfJKW0Ou1",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Status das Coletas (util)",
+  "nodes": [
+    {
+      "id": "d02aed8b-3462-47b8-9756-3aed7cc70a81",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "executeOnce": true,
+      "id": "19ce87a8-6cb3-4854-8387-8b08b5fe86a3",
+      "name": "Ler Bronze Suggest",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_google_suggest",
+          "mode": "id",
+          "value": "HTp0xMFBFsY4OZzx"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "ad094285-d38d-4d2d-87af-88939cd9cad5",
+      "name": "Ler Bronze YouTube",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_youtube",
+          "mode": "id",
+          "value": "txAtoMRsWO351Pm2"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "23b65415-e17b-46be-be77-d196d65d97e0",
+      "name": "Ler Bronze Shopee",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_shopee",
+          "mode": "id",
+          "value": "oodaLwjRQOZdMcO7"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        960,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "96cad611-e20a-4ba5-9936-1bff3baebea3",
+      "name": "Ler Bronze ML",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_ml",
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        1200,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "4ee41368-da27-418f-b0d0-ca744f604dc5",
+      "name": "Ler Bronze Amazon",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_amazon",
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        1440,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "37da0bcc-553d-4c17-8b4c-b3c4f59757f4",
+      "name": "Ler Seeds",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        1680,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "96b7fbb9-c97d-4e23-aacd-a8d3fde1ed01",
+      "name": "Calcular Status",
+      "parameters": {
+        "jsCode": "// Painel de saude do Bronze: le as 5 tabelas de coleta + tcc_seeds e resume.\n// So leitura, nao grava nada. Atualizado em 15/07/2026 para cobrir ML e Amazon\n// (antes lia so 3 tabelas e dava \"tudo saudavel\" ignorando 40% das fontes).\nfunction agg(rows, dateField) {\n  const total = rows.length;\n  const stamps = rows.map(r => r[dateField]).filter(Boolean).sort();\n  const dias = {};\n  const snapshots = new Set();\n  for (const s of stamps) {\n    const d = String(s).slice(0, 10);\n    dias[d] = (dias[d] || 0) + 1;\n    snapshots.add(String(s));\n  }\n  return {\n    total_linhas: total,\n    snapshots_distintos: snapshots.size,\n    primeira_coleta: stamps[0] || null,\n    ultima_coleta: stamps[stamps.length - 1] || null,\n    linhas_por_dia: dias\n  };\n}\nconst sug = $('Ler Bronze Suggest').all().map(i => i.json);\nconst yt = $('Ler Bronze YouTube').all().map(i => i.json);\nconst shp = $('Ler Bronze Shopee').all().map(i => i.json);\nconst ml = $('Ler Bronze ML').all().map(i => i.json);\nconst amz = $('Ler Bronze Amazon').all().map(i => i.json);\nconst seeds = $('Ler Seeds').all().map(i => i.json);\n\nconst suggest = agg(sug, 'coletado_em');\nsuggest.linhas_erro = sug.filter(r => r.fonte === 'google_suggest_erro').length;\nsuggest.termos_distintos = new Set(sug.map(r => r.termo_semente)).size;\nsuggest.sugestoes_distintas = new Set(sug.map(r => r.sugestao)).size;\n\nconst youtube = agg(yt, 'coletado_em');\nyoutube.termos_distintos = new Set(yt.map(r => r.termo_semente)).size;\nyoutube.videos_distintos = new Set(yt.map(r => r.video_id)).size;\n\nconst shopee = agg(shp, 'coletado_em');\nshopee.itens_distintos = new Set(shp.map(r => r.item_id)).size;\n\nconst mercadolivre = agg(ml, 'coletado_em');\nmercadolivre.itens_distintos = new Set(ml.map(r => r.item_id)).size;\nmercadolivre.sem_titulo = ml.filter(r => !r.titulo).length;\nmercadolivre.sem_preco = ml.filter(r => !r.preco).length;\n\nconst amazon = agg(amz, 'coletado_em');\namazon.itens_distintos = new Set(amz.map(r => r.item_id)).size;\namazon.categorias_distintas = new Set(amz.map(r => r.categoria_pagina).filter(Boolean)).size;\namazon.sem_titulo = amz.filter(r => !r.titulo).length;\namazon.sem_avaliacao = amz.filter(r => !r.avaliacao).length;\n// A Amazon nao tem coluna de preco de proposito: a fonte sonega preco a quem se\n// identifica como robo, e o projeto optou por manter a identidade EnxameBot.\n\nconst seedsInfo = {\n  total: seeds.length,\n  ativos: seeds.filter(r => r.ativo === true).length,\n  com_youtube: seeds.filter(r => r.coletar_youtube === true).length\n};\n\nreturn [{ json: { gerado_em: new Date().toISOString(), suggest, youtube, shopee, mercadolivre, amazon, seeds: seedsInfo } }];",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        1920,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-15 03:57:46.768",
+  "versionId": "0ae82afc-495d-4dc1-a387-cc476439dfe8"
+}

@@ -1,0 +1,12 @@
+# Dependências de PRODUÇÃO — só o que a imagem do enxame-api precisa para rodar.
+# O que NÃO está aqui, e por quê (medido em 15/07/2026):
+#   - pytest      → não é importado por nada em app/; é ferramenta de teste (3,4 MB)
+#   - playwright  → 136 MB, 66% do site-packages, para um motor que esta imagem NÃO
+#                   consegue usar (o Chromium não está nela). O import virou tardio
+#                   em app/coleta_navegador.py, então produção não precisa dele.
+# Para desenvolver e rodar os testes: requirements-dev.txt
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+httpx==0.28.1
+beautifulsoup4==4.13.4
+python-dotenv==1.1.1

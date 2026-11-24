@@ -1,0 +1,317 @@
+{
+ "_leia_me": {
+  "o_que_e": "VERSAO PUBLICADA em 06/10/2026 ~21:40 BRT do Alerta de Coletor Parado, com o Mercado Livre fora da conta enquanto o coletor estiver despublicado (CAPTCHA).",
+  "mudancas": "Mercado Livre com monitorar:false e motivo; a ultima linha da mensagem passou a dizer quem esta fora da conta (antes afirmava fixo que as 5 estavam). Nenhuma outra mudanca. Voltar o flag a true no mesmo movimento em que o coletor for republicado (licao de 28/07).",
+  "teste": "Execucao 4865 (manual, versao nova): 4 fontes monitoradas, ML 'fora da conta', nada a enviar.",
+  "base": "versao anterior 73cfee68-9890-4fd1-bc2e-6db8bfd60ca5 (activeVersionId 73cfee68-9890-4fd1-bc2e-6db8bfd60ca5), copiada do SQLite em modo ro antes da edicao.",
+  "credencial": "o no 'Avisar no WhatsApp' guarda so {id, name} da credencial Evolution API - Enxame; nenhum segredo neste arquivo."
+ },
+ "workflow_id": "Pla4o3Wvk10O76QP",
+ "active_version": "dd7459b6-1b25-4683-8eb0-21d413d63256",
+ "sha16_nodes": "4b8c6d694563badd",
+ "nodes": [
+  {
+   "id": "907c9818-9295-4bcf-ae41-234b19402119",
+   "name": "A cada 3h",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.3,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "rule": {
+     "interval": [
+      {
+       "field": "hours",
+       "hoursInterval": 3
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "9ee27adf-5eb8-4195-a615-07c92bec60bf",
+   "name": "Ler Suggest",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    224,
+    0
+   ],
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "HTp0xMFBFsY4OZzx",
+     "cachedResultName": "tcc_bronze_google_suggest"
+    },
+    "limit": 1,
+    "orderBy": true,
+    "orderByColumn": "coletado_em"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "1764ad07-dd90-465a-9a1a-c2f84b915f0f",
+   "name": "Ler YouTube",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    448,
+    0
+   ],
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "txAtoMRsWO351Pm2",
+     "cachedResultName": "tcc_bronze_youtube"
+    },
+    "limit": 1,
+    "orderBy": true,
+    "orderByColumn": "coletado_em"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "a067d79b-d7b5-4be4-9b90-e99b591bb03e",
+   "name": "Ler Shopee",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    672,
+    0
+   ],
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "oodaLwjRQOZdMcO7",
+     "cachedResultName": "tcc_bronze_shopee"
+    },
+    "limit": 1,
+    "orderBy": true,
+    "orderByColumn": "coletado_em"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "98e5db45-f42c-4966-8d0e-61c340799c31",
+   "name": "Ler Amazon",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    896,
+    0
+   ],
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "2Qmnq0yOXArJ4b7C",
+     "cachedResultName": "tcc_bronze_amazon"
+    },
+    "limit": 1,
+    "orderBy": true,
+    "orderByColumn": "coletado_em"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "1565184a-f00d-4048-a82e-fccaacc705dd",
+   "name": "Ler ML",
+   "type": "n8n-nodes-base.dataTable",
+   "typeVersion": 1.1,
+   "position": [
+    1120,
+    0
+   ],
+   "parameters": {
+    "operation": "get",
+    "dataTableId": {
+     "__rl": true,
+     "mode": "id",
+     "value": "WL8TW6jSHW56O2lB",
+     "cachedResultName": "tcc_bronze_ml"
+    },
+    "limit": 1,
+    "orderBy": true,
+    "orderByColumn": "coletado_em"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "e1e9e5b1-d905-4cbd-8dd0-482648644191",
+   "name": "Avaliar Frescor",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    1344,
+    0
+   ],
+   "parameters": {
+    "mode": "runOnceForAllItems",
+    "language": "javaScript",
+    "jsCode": "// Alerta de coletor parado. Nasceu em 25/07/2026, depois de o coletor do\n// Mercado Livre ficar 37 HORAS morto sem ninguem notar.\n//\n// LIMIAR = 18h, e o numero tem motivo. Amazon e YouTube coletam a 12/12h,\n// entao a idade da ultima coleta deles oscila naturalmente ate 12h. Um limiar\n// de 12h dispararia em TODO ciclo normal, e alerta que grita todo dia vira\n// ruido que se aprende a ignorar -- mesmo efeito de nao ter alerta nenhum.\n// 18h da 6h de folga e teria pego o ML no mesmo dia.\n//\n// ESTE NO SEMPRE DEVOLVE UM ITEM, mesmo com tudo saudavel -- e isso e desenho,\n// nao sobra. A primeira versao devolvia [] quando estava tudo bem, e a execucao\n// aberta mostrava \"0 itens\", o que parecia defeito. E parecia com razao:\n// um monitor que nao mostra nada quando esta bem e\n// indistinguivel de um monitor morto -- que e EXATAMENTE a falha silenciosa\n// que este alerta existe para evitar. Agora toda execucao mostra o que leu,\n// fonte por fonte, com idade em horas; quem decide enviar e o Filtro seguinte.\n//\n// *** 28/07/2026 -- O MERCADO LIVRE VOLTOU PARA A CONTA (5 de 5 monitoradas).\n// Ele estava com monitorar:false desde 25/07 porque a fonte tinha fechado as\n// rotas ao cracha honesto e o coletor fora despublicado; monitorar uma parada\n// conhecida faria o alerta gritar todo dia. Em 28/07 a fonte REABRIU -- medido\n// do mesmo servidor, mesma URL e mesmo metodo de 25/07: 517.012 bytes, 162 IDs\n// MLB e 301 precos ao EnxameBot, contra 133.957 bytes e ZERO produtos cinco\n// dias antes. O coletor foi republicado e voltou a rodar 6/6h.\n// SE ESTE FLAG TIVESSE FICADO EM FALSE, o ML estaria no ar E FORA DA VIGILANCIA\n// -- a mesma falha silenciosa de 37 horas que este workflow existe para impedir,\n// so que desta vez por descuido nosso, e nao por falta de ferramenta.\n//\n// *** 06/10/2026 -- O MERCADO LIVRE SAIU DA CONTA DE NOVO (4 de 5 monitoradas).\n// A fonte passou a pedir verificacao de conta (CAPTCHA) ao cracha honesto; o enxame-api\n// devolve 451 e o coletor foi despublicado. Quem vigia a volta e a Sonda de Reabertura\n// (8tJHu2GraKa3pnTU), a cada 3h, e a mensagem dela manda voltar este flag para true.\n// A LICAO DE 28/07 VALE INTEIRA: coletor republicado com o flag em false fica no ar\n// E FORA DA VIGILANCIA.\nconst NL = String.fromCharCode(10);\nconst LIMITE_H = 18;\nconst FONTES = [\n  { nome: 'Google Suggest', no: 'Ler Suggest', agenda: '6/6h', monitorar: true },\n  { nome: 'YouTube', no: 'Ler YouTube', agenda: '12/12h', monitorar: true },\n  { nome: 'Shopee', no: 'Ler Shopee', agenda: '6/6h', monitorar: true },\n  { nome: 'Amazon', no: 'Ler Amazon', agenda: '12/12h', monitorar: true },\n  { nome: 'Mercado Livre', no: 'Ler ML', agenda: '6/6h', monitorar: false,\n    motivo: 'coletor despublicado em 06/10/2026: a fonte pede verificacao de conta (CAPTCHA, HTTP 451); a Sonda de Reabertura vigia a volta a cada 3h' }\n];\nconst agora = Date.now();\nconst paradas = [];\nconst situacao = [];\nfor (const f of FONTES) {\n  let ts = null;\n  try { ts = ($(f.no).first() || {}).json.coletado_em || null; } catch (e) { ts = null; }\n  const idadeH = ts ? (agora - new Date(ts).getTime()) / 3600000 : null;\n  const reg = {\n    fonte: f.nome, agenda: f.agenda, ultima_coleta: ts,\n    idade_horas: idadeH === null ? null : Math.round(idadeH * 10) / 10,\n    monitorada: f.monitorar\n  };\n  if (!f.monitorar) { reg.estado = 'fora da conta'; reg.motivo = f.motivo; situacao.push(reg); continue; }\n  reg.parada = idadeH === null || idadeH > LIMITE_H;\n  reg.estado = reg.parada ? 'PARADA' : 'ok';\n  if (reg.parada) paradas.push(reg);\n  situacao.push(reg);\n}\nlet txt = '';\nif (paradas.length > 0) {\n  txt = '*ENXAME - coletor parado*' + NL + NL;\n  for (const p of paradas) {\n    const quando = p.ultima_coleta ? p.ultima_coleta.slice(0, 16).replace('T', ' ') + ' UTC' : 'nunca';\n    const quanto = p.idade_horas === null ? 'sem nenhuma coleta' : p.idade_horas + 'h atras';\n    txt += '- ' + p.fonte + ' (' + p.agenda + '): ultima em ' + quando + ', ' + quanto + NL;\n  }\n  txt += NL + 'Limiar: ' + LIMITE_H + 'h. Verificado em ' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ' UTC.' + NL;\n  const fora = FONTES.filter(function (f) { return !f.monitorar; });\n  if (fora.length === 0) { txt += 'As ' + FONTES.length + ' fontes estao na conta.'; }\n  else { txt += 'Fora da conta: ' + fora.map(function (f) { return f.nome; }) + ' (ver o motivo na execucao).'; }\n}\nreturn [{ json: {\n  alertar: paradas.length > 0,\n  resumo: paradas.length === 0 ? 'tudo ok, nada a enviar' : paradas.length + ' fonte(s) parada(s)',\n  limite_horas: LIMITE_H,\n  fontes_monitoradas: FONTES.filter(function (f) { return f.monitorar; }).length,\n  verificado_em: new Date().toISOString(),\n  situacao: situacao,\n  mensagem: txt\n} }];"
+   },
+   "executeOnce": true
+  },
+  {
+   "id": "c0feca6f-e42e-430e-93f0-1a4f3728cf1b",
+   "name": "So se houver parada",
+   "type": "n8n-nodes-base.filter",
+   "typeVersion": 2.3,
+   "position": [
+    1568,
+    0
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": true,
+      "leftValue": "",
+      "typeValidation": "strict",
+      "version": 3
+     },
+     "conditions": [
+      {
+       "id": "tem-parada",
+       "leftValue": "={{ $json.alertar }}",
+       "operator": {
+        "type": "boolean",
+        "operation": "true",
+        "singleValue": true
+       },
+       "rightValue": ""
+      }
+     ],
+     "combinator": "and"
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "d050e967-9cbe-40da-abc9-31b4df589e57",
+   "name": "Avisar no WhatsApp",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.4,
+   "position": [
+    1792,
+    0
+   ],
+   "parameters": {
+    "method": "POST",
+    "url": "http://evolution-api:8080/message/sendText/enxame-alertas",
+    "authentication": "genericCredentialType",
+    "genericAuthType": "httpHeaderAuth",
+    "sendBody": true,
+    "specifyBody": "json",
+    "jsonBody": "={{ JSON.stringify({ number: \"<TELEFONE_DO_ALERTA>\", options: { delay: 800, presence: \"composing\" }, textMessage: { text: $json.mensagem } }) }}",
+    "options": {
+     "timeout": 20000
+    }
+   },
+   "credentials": {
+    "httpHeaderAuth": {
+     "id": "A0xdPHclav6xIw6j",
+     "name": "Evolution API - Enxame"
+    }
+   }
+  }
+ ],
+ "connections": {
+  "A cada 3h": {
+   "main": [
+    [
+     {
+      "node": "Ler Suggest",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ler Suggest": {
+   "main": [
+    [
+     {
+      "node": "Ler YouTube",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ler YouTube": {
+   "main": [
+    [
+     {
+      "node": "Ler Shopee",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ler Shopee": {
+   "main": [
+    [
+     {
+      "node": "Ler Amazon",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ler Amazon": {
+   "main": [
+    [
+     {
+      "node": "Ler ML",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Ler ML": {
+   "main": [
+    [
+     {
+      "node": "Avaliar Frescor",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Avaliar Frescor": {
+   "main": [
+    [
+     {
+      "node": "So se houver parada",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "So se houver parada": {
+   "main": [
+    [
+     {
+      "node": "Avisar no WhatsApp",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

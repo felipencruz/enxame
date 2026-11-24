@@ -1,0 +1,179 @@
+{
+  "active": 0,
+  "connections": {
+    "Agendado 6h": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds Ativos",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Coletar Google Suggest": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar Bronze Suggest",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds Ativos",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds Ativos": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Coletar Google Suggest",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-09 23:05:20.547",
+  "description": "Coletor Bronze de Demanda (Google Suggest). Le termos-semente ATIVOS de tcc_seeds, busca sugestoes (UTF-8) identificando-se como EnxameBot, e grava em tcc_bronze_google_suggest. Agendado 6/6h.",
+  "id": "PV5UweukBccsizsm",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Coletor Google Suggest (Bronze)",
+  "nodes": [
+    {
+      "id": "e1c2babc-7751-412a-81a8-eee150bdcac0",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        240
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "71649e94-4ee2-4b18-8bd3-9632f3ee9851",
+      "name": "Ler Seeds Ativos",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isTrue",
+              "keyName": "ativo"
+            }
+          ]
+        },
+        "matchType": "anyCondition",
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        320
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "e962782b-e5cd-4e58-bb4a-09efefcd63a0",
+      "name": "Coletar Google Suggest",
+      "parameters": {
+        "jsCode": "// Identidade honesta: o mesmo cracha do enxame-api (nome, versao e contato).\n// Ate 15/07 este coletor era o unico anonimo dos cinco \u2014 incoerente com o capitulo\n// de etica, que promete auto-identificacao. Testado antes de mudar: o Google devolve\n// sugestoes IDENTICAS com e sem o UA (diferente da Amazon, que sonega dado a robo).\nconst UA = 'EnxameBot/0.1 (+https://automatize-ai.tech)';\nconst seeds = $input.all().map(i => i.json.termo).filter(Boolean);\nconst rows = [];\nconst agora = new Date().toISOString();\nfor (const termo of seeds) {\n  try {\n    const url = 'https://suggestqueries.google.com/complete/search?client=firefox&hl=pt-BR&oe=utf-8&ie=utf-8&q=' + encodeURIComponent(termo);\n    const raw = await this.helpers.httpRequest({ method: 'GET', url, headers: { 'User-Agent': UA } });\n    const arr = typeof raw === 'string' ? JSON.parse(raw) : raw;\n    const sugestoes = Array.isArray(arr) && Array.isArray(arr[1]) ? arr[1] : [];\n    sugestoes.forEach((s, i) => {\n      rows.push({ json: { termo_semente: termo, sugestao: s, posicao: i + 1, fonte: 'google_suggest', idioma: 'pt-BR', coletado_em: agora } });\n    });\n  } catch (e) {\n    rows.push({ json: { termo_semente: termo, sugestao: '[ERRO] ' + e.message, posicao: 0, fonte: 'google_suggest_erro', idioma: 'pt-BR', coletado_em: agora } });\n  }\n  await new Promise(r => setTimeout(r, 150));  // politeness: nao martelar a fonte\n}\nreturn rows;",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        720,
+        320
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "cd818224-843a-4097-adea-0f3b7a885f51",
+      "name": "Gravar Bronze Suggest",
+      "parameters": {
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {}
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_google_suggest",
+          "mode": "id",
+          "value": "HTp0xMFBFsY4OZzx"
+        },
+        "operation": "insert",
+        "resource": "row"
+      },
+      "position": [
+        960,
+        320
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "6ae95570-6911-4724-b629-39544a2b1b20",
+      "name": "Agendado 6h",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "position": [
+        240,
+        400
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Agendado 6h": {
+      "recurrenceRules": [
+        0
+      ]
+    },
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-07-15 05:00:18.971",
+  "versionId": "ddf17e46-696b-46ff-baf8-8445b2d2db19"
+}

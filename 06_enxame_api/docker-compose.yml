@@ -1,0 +1,23 @@
+# Deploy do enxame-api no VPS: container isolado, plugado na rede do n8n.
+# Acesso SÓ interno (sem `ports:`) — o n8n chama http://enxame-api:8000.
+# Não expõe nada na internet, não toca traefik nem os outros containers.
+services:
+  enxame-api:
+    build: .
+    container_name: enxame-api
+    restart: unless-stopped
+    env_file: .env            # OPENAI_API_KEY (copiada do .env do n8n)
+    environment:
+      - OPENAI_MODEL=gpt-4o-mini
+    volumes:
+      - ./receitas:/srv/enxame-api/receitas   # receitas versionadas persistem
+      # O log de custo do LLM precisa de volume (29/07/2026). Sem isto ele mora
+      # dentro do container e **evapora no próximo `--build`** — o registro de gasto
+      # some justamente quando se mexe no código, que é quando mais se olha para ele.
+      - ./logs:/srv/enxame-api/logs
+    networks:
+      - n8n_default
+
+networks:
+  n8n_default:
+    external: true

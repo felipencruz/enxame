@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+
+# Saídas da análise
+02_Dados/processado/
+
+# Dado coletado: não é publicado
+02_Dados/raw/
+02_Dados/trends/
+
+~$*

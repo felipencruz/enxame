@@ -1,0 +1,52 @@
+{
+  "seletor_item": "article.product_pod",
+  "campos": {
+    "titulo": {
+      "seletor": "h3 a",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".price_color",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": "h3 a",
+      "origem": "atributo",
+      "atributo": "href"
+    },
+    "avaliacao": {
+      "seletor": "p.star-rating",
+      "origem": "texto"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://books.toscrape.com/",
+    "dominio": "books.toscrape.com",
+    "modelo": "gpt-4o-mini",
+    "criado_em": "2026-07-13T20:50:06.015605+00:00",
+    "agente": "analista_estrutura",
+    "versao_formato": 1,
+    "validacao": {
+      "itens_encontrados": 20,
+      "campos": {
+        "titulo": {
+          "preenchidos": 20,
+          "taxa": 1.0
+        },
+        "preco": {
+          "preenchidos": 20,
+          "taxa": 1.0
+        },
+        "link": {
+          "preenchidos": 20,
+          "taxa": 1.0
+        },
+        "avaliacao": {
+          "preenchidos": 0,
+          "taxa": 0.0
+        }
+      }
+    },
+    "aprovada": true
+  }
+}

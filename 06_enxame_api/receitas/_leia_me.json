@@ -1,0 +1,57 @@
+{
+  "o_que_e": "As 14 receitas de extracao versionadas do TCC Enxame -- o artefato que sustenta a afirmacao 'o sistema se repara sozinho'. Uma receita e o mapa de seletores CSS de um dominio, proposta pelo LLM (Agente 2) e aprovada ou recusada pela regua deterministica (codigo, nunca o LLM).",
+  "por_que_este_arquivo_existe": "Declarar o que estas receitas NAO carregam. A nota de metodo vem em JSON, junto das receitas. Sem isto, quem auditar a pasta encontra ausencias e contradicoes sem saber se sao defeito ou historia.",
+  "medido_em": "2026-08-04",
+
+  "inventario": {
+    "total": 14,
+    "por_dominio": {
+      "www.amazon.com.br": 10,
+      "www.mercadolivre.com.br": 2,
+      "lista.mercadolivre.com.br": 1,
+      "books.toscrape.com": 1
+    },
+    "como_o_coletor_escolhe": "carregar_receita_mais_recente() ordena por NOME (reverse) dentro da pasta do dominio e devolve a primeira cuja _meta.aprovada nao seja false. Receita reprovada fica em disco de proposito, como registro auditavel do que o LLM propos."
+  },
+
+  "o_que_estas_14_NAO_carregam": {
+    "salvo_em": "null nas 14. O campo nasceu em 25/07/2026 e todas sao anteriores. CONSEQUENCIA A DECLARAR: a correcao do criado_em herdado nao tem artefato que a demonstre -- ela e grau B (codigo + teste), nao grau A. So o proximo reparo salvo produz a prova.",
+    "reparo_historico": "ausente nas 14, pelo mesmo motivo (campo de 25/07). O bloco que guarda pontuacao antes/depois, tentativas e as regressoes que barraram uma candidata nao existe nelas.",
+    "atencao_o_reparo_de_23_07_NAO_esta_perdido": "A ausencia do bloco NAO significa que o reparo de 23/07 seja apenas narrativa. A sequencia inteira esta gravada nos proprios seletores das receitas versionadas, e o veredito do guarda anti-sobreajuste se REPRODUZ aplicando-as ao HTML versionado em 02_Dados/raw/experimento_cracha/. Ver tests/test_receita_amazon_rota_atual.py -- ele mede: pai de 16/07 (clamp-3) da titulo 0,92 em toys e 0,86 em sports; a candidata de 23/07 que fixa clamp-1 derruba para 0,06 e 0,00; a agnostica que entrou em producao leva as duas a 1,00. Grau C vira grau B."
+  },
+
+  "contradicao_conhecida_e_deliberadamente_NAO_corrigida": {
+    "o_que": "Tres receitas tem _meta.criado_em anterior a data do proprio nome de arquivo.",
+    "quais": [
+      "www.amazon.com.br/receita_20260723_030834.json",
+      "www.amazon.com.br/receita_20260723_031014.json",
+      "www.amazon.com.br/receita_20260723_032219.json"
+    ],
+    "valor_herdado": "2026-07-16T01:36:18.212823+00:00",
+    "de_onde_vem": "supervisor._pedir_reparo copia o _meta do pai ao montar a candidata, e o pai das tres e receita_20260716_013618.json. O criado_em e do Analista (quando a receita foi PROPOSTA); o nome do arquivo e do momento da GRAVACAO. Nas receitas de primeira proposta os dois coincidem; nas reparadas, nao.",
+    "sao_TRES_e_nao_quatro": "Uma anotacao antiga do projeto dizia 'as 4 receitas de 23/07'. Sao QUATRO as receitas com _meta.reparo true (as tres acima mais www.amazon.com.br/receita_20260715_031818.json), mas so TRES tem a data herdada: a de 15/07 traz criado_em 03:14:05 com nome 031818, ou seja, mesma data e 3 minutos de diferenca -- que e o comportamento CORRETO, nao o defeito. Conferido nos 14 arquivos em 04/08/2026.",
+    "por_que_nao_foi_corrigido": "Reescrever _meta em artefato versionado seria editar a trilha de auditoria que este trabalho usa como prova. A correcao vale daqui para frente (o campo salvo_em, de 25/07, separa proposta de gravacao); o passado se DECLARA, nao se reescreve."
+  },
+
+  "ponteiro_que_nao_resolve_mais_e_foi_investigado": {
+    "arquivo": "www.amazon.com.br/receita_20260715_031818.json",
+    "campo": "_meta.origem_html",
+    "o_que_ele_diz": "execucao n8n 2408 (wf pliN9f1zwIhClN2M), HTML servido ao VPS em 2026-07-13",
+    "os_dois_problemas": "(1) a execucao 2408 NAO EXISTE MAIS -- execucao do n8n expira em 14 dias, e a faixa viva em 04/08/2026 e 2568..2944. (2) o ID pliN9f1zwIhClN2M e HOJE o workflow 'Backup diario da camada bronze', o que faz o ponteiro parecer errado.",
+    "conferido_no_objeto_vivo_em_04_08_2026": "O ID NAO esta errado -- o workflow foi REAPROVEITADO. Evidencia medida no SQLite do VPS: pliN9f1zwIhClN2M tem createdAt 2026-07-13 18:14:09, ou seja, existia na data citada; e o 'TCC - Coletor Amazon' so foi criado em 2026-07-15 03:42:04, DEPOIS desta receita (nome 031818, criado_em 03:14:05) -- em 13/07 nao havia coletor da Amazon nenhum, entao o HTML nao poderia ter vindo dele.",
+    "o_que_continua_sem_prova": "COMO o workflow se chamava em 13/07. O workflow_history do n8n so guarda uma versao dele, de 29/07 -- os nomes anteriores nao sao recuperaveis. Fica declarado em vez de suposto.",
+    "por_que_o_campo_nao_foi_reescrito": "Mesmo motivo do criado_em herdado: e a trilha de auditoria. O ponteiro registra o que se sabia quando a receita foi salva; o que envelheceu foi o mundo, nao o registro. A licao virou regra de trabalho: HTML ou payload que importa se copia para 02_Dados/raw/ no mesmo dia, porque execucao do n8n e log, nao artefato."
+  },
+
+  "a_receita_alucinada_que_fica_de_proposito": {
+    "arquivo": "lista.mercadolivre.com.br/receita_20260713_204621.json",
+    "o_que_e": "seletor_item '.item-class' -- o LLM inventou um seletor generico ao receber a pagina anti-bot do Mercado Livre em 13/07, deu 0 itens, e foi versionado como se prestasse.",
+    "por_que_continua_aqui": "E o caso que originou a regua de aceite: material de apendice, nao lixo. Esta marcada _meta.aprovada false e o carregador se recusa a devolve-la -- ha teste travando isso (tests/test_aprovacao_receita.py)."
+  },
+
+  "onde_esta_o_resto": {
+    "prova_do_auto_reparo": "02_Dados/raw/prova_auto_reparo_20260729/ -- 3 rodadas carimbadas, llm_uso.jsonl e LEIA-ME. Script: 06_enxame_api/prova_auto_reparo.py (--seco mede sem gastar LLM).",
+    "numeros_citaveis": "Os numeros derivados citados no trabalho estao na monografia (capitulo 4). Nao copiar valor para ca."
+  },
+  "limpeza_para_publicacao": "Em 11/11/2026, depois do fim da coleta, o texto livre do _meta de duas receitas (www.mercadolivre.com.br/receita_20260925_000039.json e receita_20260925_154603.json: campos agente, historia e campos_essenciais_por_que) e destas notas foi reescrito para tirar referencias a documentos internos de acompanhamento do projeto. Nenhum seletor, campo pedido, campo essencial, data ou carimbo de aprovacao mudou; a versao anterior esta no historico do repositorio privado do autor."
+}

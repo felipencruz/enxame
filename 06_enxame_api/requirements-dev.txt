@@ -1,0 +1,15 @@
+# Desenvolvimento e testes = produção + as ferramentas que não vão para a imagem.
+-r requirements.txt
+
+pytest==8.4.1
+
+# O motor 'navegador' (Playwright) só existe em desenvolvimento. Em produção o
+# enxame-api roda só o motor 'http'. Depois de instalar: playwright install chromium
+playwright==1.61.0
+
+# Só para os testes de 03_Analise/ (o loader do Bronze usa pandas). Não é dependência
+# do enxame-api em si — vive aqui para manter um único venv de testes do projeto.
+pandas==2.3.3
+
+# Só para os gráficos da EDA (03_Analise/eda_descritiva.py). Mesmo motivo do pandas acima.
+matplotlib==3.10.0

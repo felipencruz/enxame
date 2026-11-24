@@ -1,0 +1,382 @@
+{
+  "_leia_me": {
+    "o_que_e": "RASCUNHO (nao publicado) de nova tentativa no coletor do Mercado Livre (5vSP1WtLKpTTVBn6), preparada em 29/09/2026, depois de 5 rodadas perdidas por HTTP 500 da fonte (02_Dados/raw/ml_http500_20260929/).",
+    "base": "versao ativa 4678894b-a68a-4861-9802-20c61f6d8f4a, lida do SQLite do n8n em modo ro. Os 4 nos antigos estao copiados byte a byte; a unica mudanca neles e onError=continueErrorOutput no HTTP da 1a tentativa.",
+    "desenho": "So a falha 'a fonte nao entregou a pagina (HTTP 5xx)' ganha nova tentativa: espera 10 min, tenta; espera 20 min, tenta pela ultima vez (3 pedidos em ~30 min). Qualquer outro erro (403 robots, 451 anti-bot, volume abaixo do piso, casca, 422/502 do reparo por LLM) vai direto para 'Parar com o erro original' e a execucao termina em ERRO, como hoje. A 3a tentativa nao tem saida de erro: se falhar, a execucao termina em erro, como hoje.",
+    "por_que_nao_o_retry_nativo": "retryOnFail do no HTTP repete QUALQUER erro, inclusive 451 (CAPTCHA, parada etica) e o reparo por LLM (custo, pendulo), e espera no maximo 5 s; as 5 rodadas de 28-29/09 falharam por horas, e 5 s nao salvaria nenhuma.",
+    "por_que_wait_e_nao_code": "um Code node esperando 30 min bate no N8N_RUNNERS_TASK_TIMEOUT=1800 e perde a rodada inteira; o Wait acima de 65 s e persistido pelo n8n.",
+    "rastro": "coletado_em sai do Achatar Produtos (new Date()), entao rodada recuperada grava ~HH:10 ou ~HH:30 UTC em vez de ~HH:00:53: o proprio Bronze guarda que a nova tentativa disparou. Nenhum consumidor em 03_Analise supoe horario fixo (rodada = valor exato de coletado_em; dia = data UTC, que 30 min nao muda).",
+    "a_validar_antes_de_publicar": null,
+    "estado": "29/09/2026 22:33 UTC: rascunho a011f74b-774e-4657-8c0a-30a593517634 criado no n8n por update_workflow; a versao ativa segue 4678894b. Os 'nodes' e 'connections' abaixo sao os do rascunho, lidos do SQLite em modo ro. Nao foi publicado.",
+    "testes_feitos": {
+      "execucao_4626": "workflow temporario EuHJKxnge2mtcmQq (arquivado): chamada REAL ao enxame-api com pagina inexistente do books.toscrape.com. O item da saida de erro traz o corpo inteiro ('...nao entregou a pagina (HTTP 404)...'); a regra 'HTTP 5' deu FALSO para o 404; o ramo falso terminou a execucao em ERRO com a mensagem original.",
+      "execucao_4627": "workflow temporario Ys7jelR7EFOQF0M4 (arquivado), SEM no de gravacao: duas falhas HTTP 500 simuladas no formato medido na 4626, esperas de 1 min (60 s cada, retomadas pelo n8n), 3a tentativa REAL ao ML e o Achatar de producao (sha256 do jsCode igual): 197 itens, rank e categoria_id em 197, 10 categorias, um carimbo, 156 precos com centavos. Bronze intocado (conferido).",
+      "mudanca_depois_do_teste": "a mensagem do 'Parar com o erro original' passou de JSON.stringify($json) para $json.error.message (o item inteiro traz o stack trace)."
+    }
+  },
+  "workflow_id": "5vSP1WtLKpTTVBn6",
+  "base_active_version": "4678894b-a68a-4861-9802-20c61f6d8f4a",
+  "sha16_nodes_base": "ca57fe9cb4d3cd53",
+  "sha16_connections_base": "c76b337ed9d8a8a6",
+  "nodes": [
+    {
+      "id": "c67b94e7-65bb-49a2-bcbe-51b6c100e3a4",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fa8450c9-1ba2-4413-af38-80c9018ff6c2",
+      "name": "enxame-api: coletar ML",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://enxame-api:8000/agentes/coletar",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "be496b1c-0def-4b01-83ff-c6beccee4f55",
+      "name": "Achatar Produtos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// Bronze = dado cru: precos entram como texto (\"R$ 400\"); a Silver parseia.\n// Normalizacao minima: extrair o codigo MLB do link (o id do item).\n//\n// categoria (25/09/2026): o ML trocou o layout e o titulo do carrossel\n// passou a vir em espanhol e DESALINHADO do conteudo. Desde a receita v4 a categoria vem do\n// link \"Ver mais\" de cada carrossel (href com o codigo MLB da categoria), nos dois layouts.\n// O nome sai do MAPA abaixo, conferido nos HTML de 29/07 e 24/09 (mesmo id, mesmo nome, mesma\n// ordem): categoria_pagina continua com os mesmos 10 nomes da serie, e o id cru vai para\n// categoria_id. Id fora do mapa grava o proprio id como nome (a Silver avisa carrossel\n// desconhecido). Valor que nao e link (receita v3, layout antigo) passa como veio.\n//\n// rank (24/09/2026): a POSICAO no carrossel, no formato \"k de M\" que a\n// fonte declara no aria-label de cada slide. A receita nao alcanca esse atributo (ele mora\n// no proprio slide), entao a posicao e NUMERADA AQUI, na ordem em que o enxame-api devolve as\n// linhas - a ordem do DOM, igual ao aria-label nos 3 HTML versionados (537 de 537 slides).\n// Decisao: numerar no n8n, sem recriar o container. k conta dentro do carrossel;\n// M e o total do carrossel na resposta. Linha sem categoria, ou de carrossel partido em mais\n// de um bloco, fica SEM rank.\n//\n// selo_mais_vendido: ate 25/09 o texto \"N MAIS VENDIDO\" (rank declarado, com buracos); no\n// layout novo o rotulo do slide SEM numero (\"MAIS VENDIDO\", \"OFERTA IMPERDIVEL\"...).\n// Guardado cru; nao alimenta o percentil.\nconst MAPA = {\n  MLB1144: 'Games',\n  MLB5726: 'Eletrodomésticos',\n  MLB263532: 'Ferramentas',\n  MLB1246: 'Beleza e Cuidado Pessoal',\n  MLB1051: 'Celulares e Telefones',\n  MLB1648: 'Informática',\n  MLB1000: 'Eletrônicos, Áudio e Vídeo',\n  MLB1276: 'Esportes e Fitness',\n  MLB1430: 'Calçados, Roupas e Bolsas',\n  MLB5672: 'Acessórios para Veículos'\n};\nconst LINK_CATEGORIA = new RegExp('/mais-vendidos/(MLB[0-9]+)');\nconst resp = $input.first().json;\nconst linhas = resp.linhas || [];\nconst agora = new Date().toISOString();\nconst cats = linhas.map(n => {\n  const bruto = n.categoria || null;\n  if (!bruto) return { nome: null, id: null };\n  const m = String(bruto).match(LINK_CATEGORIA);\n  if (!m) return { nome: bruto, id: null };\n  return { nome: MAPA[m[1]] || m[1], id: m[1] };\n});\nconst total = {};\nconst blocos = {};\nlet anterior = null;\ncats.forEach(k => {\n  const c = k.nome;\n  if (c) {\n    total[c] = (total[c] || 0) + 1;\n    if (c !== anterior) { blocos[c] = (blocos[c] || 0) + 1; }\n  }\n  anterior = c;\n});\nconst visto = {};\nreturn linhas.map((n, i) => {\n  const link = n.link || '';\n  const m = link.match(/MLB-?[0-9]+/i);\n  const c = cats[i].nome;\n  let rank = null;\n  if (c && blocos[c] === 1) {\n    visto[c] = (visto[c] || 0) + 1;\n    rank = visto[c] + ' de ' + total[c];\n  }\n  return { json: {\n    item_id: m ? m[0].replace('-', '') : null,\n    titulo: n.titulo || null,\n    preco: n.preco || null,\n    preco_antigo: n.preco_antigo || null,\n    desconto: n.desconto || null,\n    link: link || null,\n    categoria_pagina: c,\n    categoria_id: cats[i].id,\n    rank: rank,\n    selo_mais_vendido: n.selo_mais_vendido || null,\n    coletado_em: agora\n  }};\n});\n"
+      }
+    },
+    {
+      "id": "c7cb4f5c-1ca1-4f58-83ed-47e3d1b01157",
+      "name": "Gravar Bronze ML",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        0
+      ],
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB",
+          "cachedResultName": "tcc_bronze_ml"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "ed934a40-bedb-4f4c-a2c5-c55159f84205",
+      "name": "Fonte deu 5xx? (1a)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        240
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fonte_5xx",
+              "leftValue": "={{ JSON.stringify($json) }}",
+              "rightValue": "entregou a página (HTTP 5",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "6d9f97a7-07dd-4007-a11a-c71f548ca805",
+      "name": "Esperar 10 min",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        672,
+        220
+      ],
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "webhookId": "aaa02d03-1aa2-4235-823f-865196200d23"
+    },
+    {
+      "id": "7657152b-dd04-43d6-8439-13f89564bf4e",
+      "name": "enxame-api: coletar ML (2a tentativa)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        896,
+        220
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://enxame-api:8000/agentes/coletar",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "81b12ddf-1459-49b1-95b2-f0c6f6acc22c",
+      "name": "Parar com o erro original",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        640
+      ],
+      "parameters": {
+        "errorMessage": "={{ ($json.error && $json.error.message) || JSON.stringify($json).slice(0, 2000) }}"
+      }
+    },
+    {
+      "id": "50602436-9f87-4568-8298-48c7c64ef31b",
+      "name": "Fonte deu 5xx? (2a)",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1120,
+        440
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fonte_5xx",
+              "leftValue": "={{ JSON.stringify($json) }}",
+              "rightValue": "entregou a página (HTTP 5",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "da60f139-6541-4a11-85e8-38a2026e2576",
+      "name": "Esperar 20 min",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1344,
+        420
+      ],
+      "parameters": {
+        "amount": 20,
+        "unit": "minutes"
+      },
+      "webhookId": "417855d2-568a-470d-ac0c-d7ab9a0fccd6"
+    },
+    {
+      "id": "c9fcf882-52d8-4b2c-9219-cb2f794a36ac",
+      "name": "enxame-api: coletar ML (3a tentativa)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1568,
+        420
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "http://enxame-api:8000/agentes/coletar",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "options": {
+          "timeout": 120000
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "enxame-api: coletar ML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML": {
+      "main": [
+        [
+          {
+            "node": "Achatar Produtos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fonte deu 5xx? (1a)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Achatar Produtos": {
+      "main": [
+        [
+          {
+            "node": "Gravar Bronze ML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fonte deu 5xx? (1a)": {
+      "main": [
+        [
+          {
+            "node": "Esperar 10 min",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parar com o erro original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar 10 min": {
+      "main": [
+        [
+          {
+            "node": "enxame-api: coletar ML (2a tentativa)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML (2a tentativa)": {
+      "main": [
+        [
+          {
+            "node": "Achatar Produtos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fonte deu 5xx? (2a)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fonte deu 5xx? (2a)": {
+      "main": [
+        [
+          {
+            "node": "Esperar 20 min",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parar com o erro original",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Esperar 20 min": {
+      "main": [
+        [
+          {
+            "node": "enxame-api: coletar ML (3a tentativa)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML (3a tentativa)": {
+      "main": [
+        [
+          {
+            "node": "Achatar Produtos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "versao_rascunho": "a011f74b-774e-4657-8c0a-30a593517634"
+}

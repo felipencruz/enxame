@@ -1,0 +1,172 @@
+{
+  "active": 0,
+  "connections": {
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Inspecionar Seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Simular Filtro YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Inspecionar Seeds",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Simular Filtro YouTube": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Resumo do Filtro",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-15 20:19:39.050",
+  "description": "Read-only: le a tcc_seeds e quebra por origem, ativo, coletar_youtube e youtube_slot; lista as inativas. Tambem simula o filtro do coletor YouTube (mesmas condicoes) sem gastar cota. Manual, nao grava nada.",
+  "id": "fenQvqnDa1eU82YM",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Inspecionar Seeds",
+  "nodes": [
+    {
+      "id": "71710f96-f611-4077-b5cb-00025077ad4e",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "executeOnce": true,
+      "id": "2d4193e2-772d-4640-98c9-6e6a959d3826",
+      "name": "Ler Seeds",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "c1c74abe-e0ae-4af6-9103-6df7ca5b1832",
+      "name": "Inspecionar Seeds",
+      "parameters": {
+        "jsCode": "// Inspetor read-only da tcc_seeds. Nao grava nada.\n// Existe para responder com dado, e nao com hipotese: o que sao as linhas\n// inativas, como as origens se distribuem e qual o estado do youtube_slot.\nconst seeds = $('Ler Seeds').all().map(i => i.json);\n\nconst contar = (rows, campo) => {\n  const m = {};\n  for (const r of rows) {\n    const v = r[campo];\n    const k = (v === null || v === undefined || v === '') ? '(vazio)' : String(v);\n    m[k] = (m[k] || 0) + 1;\n  }\n  return m;\n};\n\nconst ativos = seeds.filter(r => r.ativo === true);\nconst inativos = seeds.filter(r => r.ativo !== true);\nconst comBuzz = seeds.filter(r => r.coletar_youtube === true);\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  total: seeds.length,\n  colunas: seeds.length ? Object.keys(seeds[0]) : [],\n  ativos: ativos.length,\n  inativos: inativos.length,\n  por_origem: contar(seeds, 'origem'),\n  por_origem_somente_ativos: contar(ativos, 'origem'),\n  com_youtube: comBuzz.length,\n  slot_todos: contar(seeds, 'youtube_slot'),\n  slot_entre_os_com_buzz: contar(comBuzz, 'youtube_slot'),\n  buzz_sem_slot: comBuzz.filter(r => !r.youtube_slot).map(r => r.termo),\n  as_linhas_inativas: inativos.map(r => ({ id: r.id, termo: r.termo, categoria: r.categoria, origem: r.origem, justificativa: String(r.justificativa || '').slice(0, 160) })),\n  amostra_com_buzz: comBuzz.slice(0, 3).map(r => ({ id: r.id, termo: r.termo, categoria: r.categoria, origem: r.origem, youtube_slot: r.youtube_slot }))\n} }];",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "executeOnce": true,
+      "id": "75a80f17-b4ad-45b7-9caa-f7c7031d6208",
+      "name": "Simular Filtro YouTube",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isTrue",
+              "keyName": "ativo"
+            },
+            {
+              "condition": "isTrue",
+              "keyName": "coletar_youtube"
+            },
+            {
+              "condition": "eq",
+              "keyName": "youtube_slot",
+              "keyValue": "={{ $now.hour < 12 ? \"A\" : \"B\" }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        960,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "1175c3c2-9606-442c-8231-c38ccf66a831",
+      "name": "Resumo do Filtro",
+      "parameters": {
+        "jsCode": "// Simula a leitura que o coletor do YouTube faz (mesmas 3 condicoes), sem gastar\n// cota nenhuma: aqui so se le a tabela, nao se chama a API. Serve para provar que o\n// filtro por slot devolve a metade certa antes de publicar o coletor.\nconst doSlot = $('Simular Filtro YouTube').all().map(i => i.json);\nconst slots = new Set(doSlot.map(r => r.youtube_slot));\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  slot_escolhido_pela_hora: [...slots],\n  termos_que_seriam_coletados: doSlot.length,\n  custo_em_unidades_de_cota: doSlot.length * 100,\n  cabe_nas_10000: doSlot.length * 100 <= 10000,\n  algum_sem_slot: doSlot.some(r => !r.youtube_slot),\n  categorias: [...new Set(doSlot.map(r => r.categoria))].sort(),\n  amostra: doSlot.slice(0, 5).map(r => ({ termo: r.termo, categoria: r.categoria, youtube_slot: r.youtube_slot }))\n} }];",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        1200,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-15 21:28:56",
+  "versionId": "7856827e-b62a-462c-b957-8e38cca2b5fe"
+}

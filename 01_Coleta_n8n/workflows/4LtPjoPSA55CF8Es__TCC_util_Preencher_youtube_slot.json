@@ -1,0 +1,143 @@
+{
+  "active": 0,
+  "connections": {
+    "Calcular Slot": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar Slot",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Calcular Slot",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-15 21:08:20.650",
+  "description": "Governanca: atribui o youtube_slot (A/B) aos termos com buzz da tcc_seeds. Ordena por (categoria, termo) e alterna dentro da categoria. Re-executavel. Manual. Para simular sem gravar, ligar dryRun.",
+  "id": "4LtPjoPSA55CF8Es",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Preencher youtube_slot",
+  "nodes": [
+    {
+      "id": "c439e1ca-d04e-485e-ad7b-ec740a4026e2",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "c3c1cdfa-23b7-4ecb-87bc-fa105f239d1f",
+      "name": "Ler Seeds",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "f3073f03-b052-4a85-8697-66924721d361",
+      "name": "Calcular Slot",
+      "parameters": {
+        "jsCode": "// Atribui o youtube_slot (A/B) aos termos com buzz.\n// REGRA (determinista e re-executavel): ordena os termos com coletar_youtube=true\n// por (categoria, termo) e alterna A/B DENTRO de cada categoria \u2014 assim nenhum slot\n// fica enviesado para uma vertical. O slot e DERIVADO do dado, nao escolhido: rodar\n// de novo depois de a amostra crescer reatribui tudo pela mesma regra.\n// Comparacao por codepoint (nao localeCompare) para bater com o sorted() do Python.\n//\n// ATENCAO: O QUE CUSTA RODAR NO MEIO DO DIA (medido em 12/08/2026, antes de rodar):\n// o coletor filtra por \"$now.hour < 12 ? A : B\", e o $now do n8n responde no FUSO DO\n// WORKFLOW (America/Sao_Paulo), nao em UTC. As rodadas sao 00:00 e 12:00 BRT\n// (03:00 e 15:00 UTC), entao A = rodada da madrugada, B = rodada do meio-dia.\n// Quem vai de A para B coleta duas vezes no mesmo dia \u2014 sem dano, porque o perfil\n// agrupa por (termo, dia). Quem vai de B para A NAO coleta naquele dia: o A ja\n// passou. Em 12/08 foram 6 termos, e o buraco ficou declarado.\n// \u2192 Rodar logo depois da rodada das 12:00 BRT deixa o dia inteiro para todos.\nconst seeds = $('Ler Seeds').all().map(i => i.json);\nconst comBuzz = seeds.filter(r => r.coletar_youtube === true);\n\nconst cmp = (a, b) => {\n  if (a.categoria !== b.categoria) return a.categoria < b.categoria ? -1 : 1;\n  if (a.termo !== b.termo) return a.termo < b.termo ? -1 : 1;\n  return 0;\n};\ncomBuzz.sort(cmp);\n\nconst contador = {};\nreturn comBuzz.map(r => {\n  const cat = r.categoria;\n  contador[cat] = contador[cat] || 0;\n  const slot = contador[cat] % 2 === 0 ? 'A' : 'B';\n  contador[cat] += 1;\n  return { json: { id: r.id, termo: r.termo, categoria: cat, slot_atual: r.youtube_slot, youtube_slot: slot } };\n});",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "2ad752e1-1fb2-49f6-ae54-1c77db4034a1",
+      "name": "Gravar Slot",
+      "parameters": {
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "youtube_slot": "={{ $json.youtube_slot }}"
+          }
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "eq",
+              "keyName": "id",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "update",
+        "options": {
+          "dryRun": false
+        },
+        "resource": "row"
+      },
+      "position": [
+        960,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-08-12 11:16:21.563",
+  "versionId": "26b4025f-aab7-4e72-b7f1-6487f60b8f21"
+}

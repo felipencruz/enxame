@@ -1,0 +1,2818 @@
+{
+ "_leia_me": {
+  "o_que_e": "Manifesto de integridade dos CSV da coleta manual do Google Trends (02_Dados/trends/), com sha256 de cada arquivo.",
+  "por_que": "A fonte reescreve o passado: o 16/08/2026 valia zero nos lotes de 02/09 e virou valor-lixo em 03/09, com os mesmos termos e a mesma janela. Baixar de novo nao reproduz o dado, entao a citacao de qualquer numero derivado destes arquivos so se sustenta pelo hash do arquivo que foi usado.",
+  "o_que_prova": "Que o arquivo usado numa analise e exatamente este.",
+  "o_que_NAO_prova": "Que alguem reobtem este arquivo refazendo o download. Ninguem reobtem - e essa e a razao de o manifesto existir.",
+  "como_conferir": "06_enxame_api/.venv/Scripts/python 03_Analise/manifesto_trends.py (sem argumento; sai com codigo 1 se algo divergir)",
+  "os_csv_ficam_fora_do_git": "Desde 03/09. Este JSON entra no repositorio: e ele que torna a copia local conferivel."
+ },
+ "gerado_em_utc": "2026-11-04T19:38:38.853921+00:00",
+ "pasta": "02_Dados/trends",
+ "total_arquivos": 179,
+ "total_dias_de_dado": 5565,
+ "janelas": [
+  [
+   "2026-07-09",
+   "2026-08-15"
+  ],
+  [
+   "2026-07-09",
+   "2026-09-02"
+  ],
+  [
+   "2026-07-09",
+   "2026-09-03"
+  ],
+  [
+   "2026-08-17",
+   "2026-09-06"
+  ],
+  [
+   "2026-09-07",
+   "2026-10-19"
+  ]
+ ],
+ "arquivos": [
+  {
+   "arquivo": "trends_lote01.csv",
+   "sha256": "e3ff825badcaa07fdb05addcf2902a05d57ce3051704436a883d320b00ad55ec",
+   "bytes": 1577,
+   "termos": [
+    "relogio de pulso",
+    "espelho com led",
+    "bomba de encher bola",
+    "caixa de ferramentas",
+    "conjunto de panelas"
+   ],
+   "dias": 56,
+   "janela": [
+    "2026-07-09",
+    "2026-09-02"
+   ]
+  },
+  {
+   "arquivo": "trends_lote01c.csv",
+   "sha256": "3cd7246d5bde51f8aa6cbbe175c8a1fc07928b3564baf5f8758994afa409618a",
+   "bytes": 1237,
+   "termos": [
+    "relogio de pulso",
+    "espelho com led",
+    "bomba de encher bola",
+    "caixa de ferramentas",
+    "conjunto de panelas"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote02.csv",
+   "sha256": "21e4fb38a1cc13fbe9e3246db67a9f81ea05e34c26596614982a46bc59278f46",
+   "bytes": 1536,
+   "termos": [
+    "utensilios de cozinha",
+    "sanduicheira",
+    "cabo hdmi",
+    "guarda roupa",
+    "lixeira"
+   ],
+   "dias": 56,
+   "janela": [
+    "2026-07-09",
+    "2026-09-02"
+   ]
+  },
+  {
+   "arquivo": "trends_lote02c.csv",
+   "sha256": "4ca57b798602b7fb8dda95a97cbe4b58e5074c655761156b0495f759aa3bb1de",
+   "bytes": 1218,
+   "termos": [
+    "utensilios de cozinha",
+    "sanduicheira",
+    "cabo hdmi",
+    "guarda roupa",
+    "lixeira"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote03.csv",
+   "sha256": "1ed1ac841270f4c275fffcb9eb97d60ec71822f4ad3573f1441aa207b8be7ba2",
+   "bytes": 1504,
+   "termos": [
+    "camiseta masculina",
+    "pijama",
+    "bebedouro de galao",
+    "energetico",
+    "aparelho de barbear"
+   ],
+   "dias": 56,
+   "janela": [
+    "2026-07-09",
+    "2026-09-02"
+   ]
+  },
+  {
+   "arquivo": "trends_lote03c.csv",
+   "sha256": "301cf1408aa4dec446fb9e2f6de16f0e2e1a52a94c8b1119842cd2cb8210158c",
+   "bytes": 1194,
+   "termos": [
+    "camiseta masculina",
+    "pijama",
+    "bebedouro de galao",
+    "energetico",
+    "aparelho de barbear"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote04.csv",
+   "sha256": "e87256f691d440ba88bd079e951556191a1862ab2ec469396dde7dad3e820f1f",
+   "bytes": 1459,
+   "termos": [
+    "mop de limpeza",
+    "bebida alcoolica",
+    "legging fitness",
+    "frigideira",
+    "poltrona"
+   ],
+   "dias": 56,
+   "janela": [
+    "2026-07-09",
+    "2026-09-02"
+   ]
+  },
+  {
+   "arquivo": "trends_lote04c.csv",
+   "sha256": "2e795e3964338926b4d658f2953ae0d9110448efa62025514aa8a699598dec00",
+   "bytes": 1165,
+   "termos": [
+    "mop de limpeza",
+    "bebida alcoolica",
+    "legging fitness",
+    "frigideira",
+    "poltrona"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote05.csv",
+   "sha256": "43f0a4046288963df2ed2ae1918e0190a79f25d2286988d872c5119284c5f784",
+   "bytes": 1388,
+   "termos": [
+    "mala de viagem",
+    "cola",
+    "micro ondas",
+    "mangueira de jardim",
+    "blusa de frio"
+   ],
+   "dias": 56,
+   "janela": [
+    "2026-07-09",
+    "2026-09-02"
+   ]
+  },
+  {
+   "arquivo": "trends_lote05c.csv",
+   "sha256": "a7f7e99d10bc3f2227532f1ea430c7b1c798a139efdbbcd06d6867649d52a3e8",
+   "bytes": 1103,
+   "termos": [
+    "mala de viagem",
+    "cola",
+    "micro ondas",
+    "mangueira de jardim",
+    "blusa de frio"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote06a.csv",
+   "sha256": "aefeeee2bacc8418d56e2f8995f73c00fbde7c6624e95e3973ef6b8e804ea8de",
+   "bytes": 1070,
+   "termos": [
+    "smartwatch",
+    "ralo de pia",
+    "panela de pressao",
+    "lubrificante multiuso",
+    "pelucia"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote06b.csv",
+   "sha256": "3b8ed8683537b634100510ae5b032b113b111e0ab4a3ec1dac855a6342d3a354",
+   "bytes": 668,
+   "termos": [
+    "smartwatch",
+    "ralo de pia",
+    "panela de pressao",
+    "lubrificante multiuso",
+    "pelucia"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote06c.csv",
+   "sha256": "cdfe278a8ca6f6376a7e34e1457bcb13eb5d60dde00212e3e4f92dde161fd775",
+   "bytes": 1187,
+   "termos": [
+    "smartwatch",
+    "ralo de pia",
+    "panela de pressao",
+    "lubrificante multiuso",
+    "pelucia"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote07a.csv",
+   "sha256": "3fda53587be994dbc4d0fc027e51fee89bc94c97bd0ae443d1c40edeee0a72a3",
+   "bytes": 1039,
+   "termos": [
+    "antena digital para tv",
+    "caderno",
+    "filtro de linha",
+    "escova de limpeza",
+    "desodorante"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote07b.csv",
+   "sha256": "970eb4cb60e4d38408cb22ead65dabdf5cc5a8f9733c39b0c5c4fb7110267c1b",
+   "bytes": 648,
+   "termos": [
+    "antena digital para tv",
+    "caderno",
+    "filtro de linha",
+    "escova de limpeza",
+    "desodorante"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote07c.csv",
+   "sha256": "846ef1967ad27e05504d84e5026ed669c0248c515736cd392c84fccc68575829",
+   "bytes": 1158,
+   "termos": [
+    "antena digital para tv",
+    "caderno",
+    "filtro de linha",
+    "escova de limpeza",
+    "desodorante"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote08a.csv",
+   "sha256": "2deeea2347756d652a9179a7b0c018b09bdbff7847e708a61047e86fc9356d0b",
+   "bytes": 1007,
+   "termos": [
+    "cadeira",
+    "power bank",
+    "tira manchas em po",
+    "umidificador de ar",
+    "carregador de celular"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote08b.csv",
+   "sha256": "b28b373046ff4b37eeada88fa0f146c2b742f22613c2119150d16c2464b831cc",
+   "bytes": 630,
+   "termos": [
+    "cadeira",
+    "power bank",
+    "tira manchas em po",
+    "umidificador de ar",
+    "carregador de celular"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote08c.csv",
+   "sha256": "b68aebe922fcb32aad9327214c2963dbdc2eabbc5b55d0769772e139becbe04a",
+   "bytes": 1117,
+   "termos": [
+    "cadeira",
+    "power bank",
+    "tira manchas em po",
+    "umidificador de ar",
+    "carregador de celular"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote09a.csv",
+   "sha256": "68fb4fbf17114edecee673ebb4327ef1510b45ff9497f80ac4842f463e9989eb",
+   "bytes": 1033,
+   "termos": [
+    "bateria de litio",
+    "pomada para assadura",
+    "shampoo",
+    "bolsa feminina",
+    "ventilador"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote09b.csv",
+   "sha256": "3c7734af1c4899b14aa81a53654fcb2d288970c4f6911934a58e9769411f612b",
+   "bytes": 642,
+   "termos": [
+    "bateria de litio",
+    "pomada para assadura",
+    "shampoo",
+    "bolsa feminina",
+    "ventilador"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote09c.csv",
+   "sha256": "b90a3d6646265e41f2513e8baa11d0bda6e77cb32f260c06215c84ad75665bc3",
+   "bytes": 1148,
+   "termos": [
+    "bateria de litio",
+    "pomada para assadura",
+    "shampoo",
+    "bolsa feminina",
+    "ventilador"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote10a.csv",
+   "sha256": "d1fee84976ffe8f21fb23108f6078248dc1451c68a0d8d26613b59249f524e76",
+   "bytes": 1110,
+   "termos": [
+    "bicicleta ergometrica",
+    "chocalho de bebe",
+    "smartphone",
+    "lapis",
+    "chaleira eletrica"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote10b.csv",
+   "sha256": "6279a52bf584a7d7a94b5e12ee5de27f28d41b1d505dd87303624d92bbbf6fb0",
+   "bytes": 694,
+   "termos": [
+    "bicicleta ergometrica",
+    "chocalho de bebe",
+    "smartphone",
+    "lapis",
+    "chaleira eletrica"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote10c.csv",
+   "sha256": "f1cc1eaf7689b09c3ea0ddc0c9c827c15e03c62e184d7e3fa4bf690f5f7457e9",
+   "bytes": 1197,
+   "termos": [
+    "bicicleta ergometrica",
+    "chocalho de bebe",
+    "smartphone",
+    "lapis",
+    "chaleira eletrica"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote11a.csv",
+   "sha256": "32ac771a1ad6ed179f503fd720f8c3f4dfe284cfd2785e58ba1e36c927ac5f96",
+   "bytes": 1051,
+   "termos": [
+    "mascara capilar",
+    "forma de bolo",
+    "colchao inflavel",
+    "organizador",
+    "controle remoto de tv"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote11b.csv",
+   "sha256": "58767c1df2b0453ee7ec5bcc4a465078cf8c7cd1b07a4da11d23fb483c886cc0",
+   "bytes": 656,
+   "termos": [
+    "mascara capilar",
+    "forma de bolo",
+    "colchao inflavel",
+    "organizador",
+    "controle remoto de tv"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote11c.csv",
+   "sha256": "2160d7b79f6bf4912a7e6c135e5f348971b62c55e1fa399ce21b6476292de179",
+   "bytes": 1163,
+   "termos": [
+    "mascara capilar",
+    "forma de bolo",
+    "colchao inflavel",
+    "organizador",
+    "controle remoto de tv"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote12a.csv",
+   "sha256": "f969e0b4d5f31da24e07a8596769b8cd3deec334c3a1d1d45cb002a017c3f048",
+   "bytes": 1041,
+   "termos": [
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "mochila",
+    "luminaria",
+    "luva de seguranca"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote12b.csv",
+   "sha256": "ed6af6985200b2a79a0dc6dd61121900d68a5496227165b30b1e53dbff439445",
+   "bytes": 659,
+   "termos": [
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "mochila",
+    "luminaria",
+    "luva de seguranca"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote12c.csv",
+   "sha256": "86a7fa4cc220b250fcde74f883994eac77b39e233b97d2c37509f32a61560dc5",
+   "bytes": 1153,
+   "termos": [
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "mochila",
+    "luminaria",
+    "luva de seguranca"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote13a.csv",
+   "sha256": "5a7a9a7b4947c5d8b56ba5531b3e788370f39081664a71c8100a2ed9295561b6",
+   "bytes": 1075,
+   "termos": [
+    "colchao",
+    "papel higienico",
+    "massa de modelar",
+    "fone de ouvido bluetooth",
+    "touca de natacao"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote13b.csv",
+   "sha256": "eacdadcf6917c0012dd53c3d3140eae28559c02f0bd31b7d14f62f442a7b3741",
+   "bytes": 675,
+   "termos": [
+    "colchao",
+    "papel higienico",
+    "massa de modelar",
+    "fone de ouvido bluetooth",
+    "touca de natacao"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote13c.csv",
+   "sha256": "cf53630e24d09eee434272428415dbee3cf43210830b33d10dd51a4749b9ebfa",
+   "bytes": 1195,
+   "termos": [
+    "colchao",
+    "papel higienico",
+    "massa de modelar",
+    "fone de ouvido bluetooth",
+    "touca de natacao"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote14a.csv",
+   "sha256": "afe8e39b46d14fd112dee9060f6e86ee1c2e1cb2e022e69d4e5ad35ce293b56d",
+   "bytes": 999,
+   "termos": [
+    "mesa para notebook",
+    "microfone de lapela",
+    "serum facial",
+    "kit de brocas",
+    "air fryer"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote14b.csv",
+   "sha256": "4395e04071b88018be69cb8c12416165fa39042b206b0cdb1739813251288fa0",
+   "bytes": 630,
+   "termos": [
+    "mesa para notebook",
+    "microfone de lapela",
+    "serum facial",
+    "kit de brocas",
+    "air fryer"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote14c.csv",
+   "sha256": "9c03875df12d99721a80251fc169ed62cce145cb88fb8fd586f148af27d470f1",
+   "bytes": 1109,
+   "termos": [
+    "mesa para notebook",
+    "microfone de lapela",
+    "serum facial",
+    "kit de brocas",
+    "air fryer"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote15a.csv",
+   "sha256": "d71ea83daafdc7ce9df88249b774d7437b939c46b403d016d6857530ba33ee26",
+   "bytes": 1047,
+   "termos": [
+    "mixer de cozinha",
+    "balanca digital de cozinha",
+    "bicicleta de equilibrio",
+    "sabao de roupa",
+    "kit de lavagem automotiva"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote15b.csv",
+   "sha256": "bd5dde0cb7ed556b3ee9e2b33a985ef634b05b9969fb7c2969bae3ea71d2a3df",
+   "bytes": 674,
+   "termos": [
+    "mixer de cozinha",
+    "balanca digital de cozinha",
+    "bicicleta de equilibrio",
+    "sabao de roupa",
+    "kit de lavagem automotiva"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote15c.csv",
+   "sha256": "1365c4a3dd8a6ab8c5b5bffc572232b0ec9f932c5e6e7c3b2b18596354a8ccd8",
+   "bytes": 1159,
+   "termos": [
+    "mixer de cozinha",
+    "balanca digital de cozinha",
+    "bicicleta de equilibrio",
+    "sabao de roupa",
+    "kit de lavagem automotiva"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote16a.csv",
+   "sha256": "9b575354a4c742b3e703a712ba8ef0e778201b0a63f8d06ec5981d39a1e476cd",
+   "bytes": 1109,
+   "termos": [
+    "tablet",
+    "garrafa termica",
+    "escova de dentes",
+    "liquidificador",
+    "perfume masculino"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote16b.csv",
+   "sha256": "a4525efb41a51ffd52781be0887bc1ca53bfd046c2aaa56737ceb9323afdf758",
+   "bytes": 685,
+   "termos": [
+    "tablet",
+    "garrafa termica",
+    "escova de dentes",
+    "liquidificador",
+    "perfume masculino"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote16c.csv",
+   "sha256": "5c1b9a2b41f7e70d947f9ef04de923c8419a3fa20617f45428aa971e0fe40cfd",
+   "bytes": 1229,
+   "termos": [
+    "tablet",
+    "garrafa termica",
+    "escova de dentes",
+    "liquidificador",
+    "perfume masculino"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote17a.csv",
+   "sha256": "0ba8ecf1c56e26211deed089b0fa94a984d592c94824b3eb03f6e143c1d39a23",
+   "bytes": 1037,
+   "termos": [
+    "tapete",
+    "console de videogame",
+    "omega 3",
+    "tenis esportivo",
+    "jogo educativo e cartas"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote17b.csv",
+   "sha256": "a28c367c2002c41610e06740bf2263ca4ce8afd03f7d7a8c3973c48781b2f2f3",
+   "bytes": 660,
+   "termos": [
+    "tapete",
+    "console de videogame",
+    "omega 3",
+    "tenis esportivo",
+    "jogo educativo e cartas"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote17c.csv",
+   "sha256": "4ec11c3ff22ad2c4586edac4be2cdee48d238441491f414648f5700c2f8eb273",
+   "bytes": 1151,
+   "termos": [
+    "tapete",
+    "console de videogame",
+    "omega 3",
+    "tenis esportivo",
+    "jogo educativo e cartas"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote18a.csv",
+   "sha256": "80f79bac23de24e9089fc463d0a0ac52ac2031c8154b2ef5e6e1dc5873286f25",
+   "bytes": 1077,
+   "termos": [
+    "cooktop eletrico",
+    "absorvente",
+    "creatina",
+    "bola de futebol",
+    "chinelo"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote18b.csv",
+   "sha256": "00909ae3556b8a040d5e09f1a04ce9ded6f1c4cf782397732caee51fc011685b",
+   "bytes": 653,
+   "termos": [
+    "cooktop eletrico",
+    "absorvente",
+    "creatina",
+    "bola de futebol",
+    "chinelo"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote18c.csv",
+   "sha256": "475d3620637be42578b36b7fb7cb9ef205cefe6d40afc3091e898fec05bc775e",
+   "bytes": 1192,
+   "termos": [
+    "cooktop eletrico",
+    "absorvente",
+    "creatina",
+    "bola de futebol",
+    "chinelo"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote19a.csv",
+   "sha256": "4a346ae27b5bafe60921eb9306947e1daf183ec3df8684351a600e56012c4d5f",
+   "bytes": 1022,
+   "termos": [
+    "oculos de natacao",
+    "caneta",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "ferro de passar roupa"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote19b.csv",
+   "sha256": "78f52a709ed7b965b8cea7c38128de25b9057ce1676e3bebbf47f6b542ae482c",
+   "bytes": 681,
+   "termos": [
+    "oculos de natacao",
+    "caneta",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "ferro de passar roupa"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote19c.csv",
+   "sha256": "18ddc35bb226e52412713a382f68f2221bbf049bf044832b4d50715c529429c6",
+   "bytes": 1141,
+   "termos": [
+    "oculos de natacao",
+    "caneta",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "ferro de passar roupa"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote20a.csv",
+   "sha256": "1146be9d33498591b992903c7fc5a1d68634d48568da3566fd1836ece7502516",
+   "bytes": 1105,
+   "termos": [
+    "suporte para notebook",
+    "capacete de moto",
+    "compressor de ar automotivo",
+    "potes hermeticos",
+    "gel de limpeza facial"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote20b.csv",
+   "sha256": "b8757f903be50a7880fba17e87f11d6f1cd0b01eb57759541a04da0c73746e95",
+   "bytes": 710,
+   "termos": [
+    "suporte para notebook",
+    "capacete de moto",
+    "compressor de ar automotivo",
+    "potes hermeticos",
+    "gel de limpeza facial"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote20c.csv",
+   "sha256": "c47c0012fe8aa7138d6b6c2edd133608b2bd06e5aedc36d6458533e0e03221dd",
+   "bytes": 1218,
+   "termos": [
+    "suporte para notebook",
+    "capacete de moto",
+    "compressor de ar automotivo",
+    "potes hermeticos",
+    "gel de limpeza facial"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote21a.csv",
+   "sha256": "1051174e1d4c06ef4479a8dbf7a72db1ea80f56462b2d9f261c6d7b51864a65d",
+   "bytes": 1120,
+   "termos": [
+    "aspirador de po",
+    "lavadora de alta pressao",
+    "gloss labial",
+    "pasta de amendoim",
+    "faixa elastica de exercicio"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote21b.csv",
+   "sha256": "051e1b0eefe219b23c4339740653e4805a8479524ef9388dd2a318b2e99ca93d",
+   "bytes": 707,
+   "termos": [
+    "aspirador de po",
+    "lavadora de alta pressao",
+    "gloss labial",
+    "pasta de amendoim",
+    "faixa elastica de exercicio"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote21c.csv",
+   "sha256": "b9104b4c16c88bf105218a29fac0676f374faa1ae30c2f1e16d79027bfff778c",
+   "bytes": 1235,
+   "termos": [
+    "aspirador de po",
+    "lavadora de alta pressao",
+    "gloss labial",
+    "pasta de amendoim",
+    "faixa elastica de exercicio"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote22a.csv",
+   "sha256": "c35578f8de0f67c6bd4d0bf40389f3a5f5a81db37a9d80c007d3879875918177",
+   "bytes": 1093,
+   "termos": [
+    "arranhador para gatos",
+    "racao para cachorro",
+    "condimento e molho",
+    "fechadura digital",
+    "papel sulfite"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote22b.csv",
+   "sha256": "e2bf77f59384a8cb66fa9d266e60f288a00f80d9ceac3083e8dda2c159d42b02",
+   "bytes": 693,
+   "termos": [
+    "arranhador para gatos",
+    "racao para cachorro",
+    "condimento e molho",
+    "fechadura digital",
+    "papel sulfite"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote22c.csv",
+   "sha256": "6efed362504b93b9ddbfdf206c0e696fc79dec19ffdf68a8a0df780a9d214049",
+   "bytes": 1200,
+   "termos": [
+    "arranhador para gatos",
+    "racao para cachorro",
+    "condimento e molho",
+    "fechadura digital",
+    "papel sulfite"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote23a.csv",
+   "sha256": "705a6dd4143c2ca1c79a1e519edc27a4afaa1658c37523b076eb0cd09db11fca",
+   "bytes": 1006,
+   "termos": [
+    "adaptador usb",
+    "cadeira de escritorio",
+    "impressora",
+    "material escolar",
+    "jogo de tabuleiro"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote23b.csv",
+   "sha256": "e69898d11ec36eb09af76308cf564313198e287fc47540f6d80c5d09252cc7a3",
+   "bytes": 631,
+   "termos": [
+    "adaptador usb",
+    "cadeira de escritorio",
+    "impressora",
+    "material escolar",
+    "jogo de tabuleiro"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote23c.csv",
+   "sha256": "fd4ce90197c44a6065ea116f99c86a47322c8680510da8242b4dd0936fd80b24",
+   "bytes": 1115,
+   "termos": [
+    "adaptador usb",
+    "cadeira de escritorio",
+    "impressora",
+    "material escolar",
+    "jogo de tabuleiro"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote24a.csv",
+   "sha256": "21199a400884dd36c671e0f92502b985daa10d565f1ec9ca8913ac55546f7d9d",
+   "bytes": 1103,
+   "termos": [
+    "caixa organizadora",
+    "adubo e fertilizante",
+    "camera de seguranca",
+    "amaciante de roupa",
+    "patinete eletrico"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote24b.csv",
+   "sha256": "83fca17d423aaaa1bc9183591b3eae3088f52301190d562afe1cd5e00799cc7e",
+   "bytes": 694,
+   "termos": [
+    "caixa organizadora",
+    "adubo e fertilizante",
+    "camera de seguranca",
+    "amaciante de roupa",
+    "patinete eletrico"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote24c.csv",
+   "sha256": "1edab52ff1f126495e5dad24f3a1e8288ad757f4e5673b8678d669f3aade5c2a",
+   "bytes": 1184,
+   "termos": [
+    "caixa organizadora",
+    "adubo e fertilizante",
+    "camera de seguranca",
+    "amaciante de roupa",
+    "patinete eletrico"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote25a.csv",
+   "sha256": "ef0673af286b2e8ec8996a44ed9a4eea916d5c3ba36957cb7b73abf87f20c651",
+   "bytes": 1072,
+   "termos": [
+    "lenco umedecido",
+    "whey protein",
+    "tv box streaming",
+    "teclado",
+    "geladeira"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote25b.csv",
+   "sha256": "20ebe38268fd14abba635c0c4dca10c536f6109c427b7ecc8edeacedb6d13e46",
+   "bytes": 669,
+   "termos": [
+    "lenco umedecido",
+    "whey protein",
+    "tv box streaming",
+    "teclado",
+    "geladeira"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote25c.csv",
+   "sha256": "f7b863ff9d75fb9988da6470932c9c048ba8a5420c890ad872faf8355cec38bf",
+   "bytes": 1180,
+   "termos": [
+    "lenco umedecido",
+    "whey protein",
+    "tv box streaming",
+    "teclado",
+    "geladeira"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote26a.csv",
+   "sha256": "e3ef85086eeba11295b21895ca6abac44394630b6feeac540104afea4d9252a7",
+   "bytes": 990,
+   "termos": [
+    "desinfetante",
+    "cafe",
+    "depurador de ar",
+    "creme hidratante",
+    "cueca boxer"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote26b.csv",
+   "sha256": "756a02a423a008e03412ab7ca43ba3c8bdb91df23f438e72fddd06d008324062",
+   "bytes": 612,
+   "termos": [
+    "desinfetante",
+    "cafe",
+    "depurador de ar",
+    "creme hidratante",
+    "cueca boxer"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote26c.csv",
+   "sha256": "6e59971ea2e2a96bb1709071c025df848c24612088e9537061bc13b2277b197c",
+   "bytes": 1104,
+   "termos": [
+    "desinfetante",
+    "cafe",
+    "depurador de ar",
+    "creme hidratante",
+    "cueca boxer"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote27a.csv",
+   "sha256": "73d7eea26883718ada31ea9a19c5911c1eb322aecbf91489db3466ad62847cfa",
+   "bytes": 1015,
+   "termos": [
+    "conjunto infantil menina",
+    "inseticida e repelente",
+    "lavadora de roupas",
+    "pistola de pintura",
+    "mouse"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote27b.csv",
+   "sha256": "604b413c4e6576f033b507c1a5a1650a1bda0857a6aec9e1920375b840c2d872",
+   "bytes": 641,
+   "termos": [
+    "conjunto infantil menina",
+    "inseticida e repelente",
+    "lavadora de roupas",
+    "pistola de pintura",
+    "mouse"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote27c.csv",
+   "sha256": "0099181b8806e6cb50dddae91b6d3bfaea83e4c897daef1a23916eb58e824e7f",
+   "bytes": 1127,
+   "termos": [
+    "conjunto infantil menina",
+    "inseticida e repelente",
+    "lavadora de roupas",
+    "pistola de pintura",
+    "mouse"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote28a.csv",
+   "sha256": "b6e59ea450a5b1510e194f402d22eb59c7b9c6d7733ca3276ed80ed2b85afab4",
+   "bytes": 1021,
+   "termos": [
+    "meias",
+    "tapete higienico para caes",
+    "controle de videogame",
+    "antipulgas para pet",
+    "detergente lava loucas"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote28b.csv",
+   "sha256": "78b160a12bde34a68997938c75871b2ab848da0b5ebed3fca59acf4712e0171b",
+   "bytes": 658,
+   "termos": [
+    "meias",
+    "tapete higienico para caes",
+    "controle de videogame",
+    "antipulgas para pet",
+    "detergente lava loucas"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote28c.csv",
+   "sha256": "280899570cc8834d05450947759ffb65d4b4f6fb1d053a2abd7d17503e7dd65a",
+   "bytes": 1131,
+   "termos": [
+    "meias",
+    "tapete higienico para caes",
+    "controle de videogame",
+    "antipulgas para pet",
+    "detergente lava loucas"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote29a.csv",
+   "sha256": "7fc3a60e6eeb5114d0bffc4cf61caa3caf6a0b9f15aba2b3daf73da6c4a269a3",
+   "bytes": 1043,
+   "termos": [
+    "smart tv",
+    "leitor de ebook kindle",
+    "pilha alcalina",
+    "smart speaker alexa",
+    "protetor solar"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote29b.csv",
+   "sha256": "c56bc5859f4c777f72838d00ef621b7167c16b5bd4a46e40ebbc4e607e5bbfc7",
+   "bytes": 667,
+   "termos": [
+    "smart tv",
+    "leitor de ebook kindle",
+    "pilha alcalina",
+    "smart speaker alexa",
+    "protetor solar"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote29c.csv",
+   "sha256": "c38db56d4fdc591becc6f6d8e79e4da18a935a2577073975f62682b874843150",
+   "bytes": 1158,
+   "termos": [
+    "smart tv",
+    "leitor de ebook kindle",
+    "pilha alcalina",
+    "smart speaker alexa",
+    "protetor solar"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote30a.csv",
+   "sha256": "a00d0c78918ba336ab1e61994f05911266b2281a0f5e515ac8e4250c833e29c5",
+   "bytes": 795,
+   "termos": [
+    "sabonete",
+    "racao para gato",
+    "fralda descartavel"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote30b.csv",
+   "sha256": "d15406c13abb10dd09a8e8e34951796646ceef3477c4d21c8344d7aed2eca4f2",
+   "bytes": 502,
+   "termos": [
+    "sabonete",
+    "racao para gato",
+    "fralda descartavel"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote30c.csv",
+   "sha256": "74a04e7774473f03e49fa86b4365321e26dab218f0abc01a7f0e5c689d8f4ae4",
+   "bytes": 885,
+   "termos": [
+    "sabonete",
+    "racao para gato",
+    "fralda descartavel"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote31a.csv",
+   "sha256": "459385f51c8653cf5f4526d07db590ed0757c4f03267adbf9435c9ae7cd71101",
+   "bytes": 1092,
+   "termos": [
+    "utensilios de cozinha",
+    "bomba de encher bola",
+    "aparelho de barbear",
+    "filtro de linha",
+    "mascara capilar"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote31b.csv",
+   "sha256": "c06e068588e78da88f937b558718e0e0b4bf494bbeb25d5c3930cca7f8bfac3b",
+   "bytes": 682,
+   "termos": [
+    "utensilios de cozinha",
+    "bomba de encher bola",
+    "aparelho de barbear",
+    "filtro de linha",
+    "mascara capilar"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote31c.csv",
+   "sha256": "9ad5f1829383b6f05fd6a3759534457625650e09036abddeaae80d0af1a24949",
+   "bytes": 1194,
+   "termos": [
+    "utensilios de cozinha",
+    "bomba de encher bola",
+    "aparelho de barbear",
+    "filtro de linha",
+    "mascara capilar"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote32a.csv",
+   "sha256": "c2d19c375f853e93fd1a71daf286f92c83aeec5aaf37a9e1fa2ec3202ecaaa82",
+   "bytes": 1158,
+   "termos": [
+    "garrafa termica",
+    "absorvente",
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "bola de futebol"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote32b.csv",
+   "sha256": "8d51514a04cf23d8c7fed0ce5f1779317cd35eed58c664b3b40b2abb88b25bc7",
+   "bytes": 718,
+   "termos": [
+    "garrafa termica",
+    "absorvente",
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "bola de futebol"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote32c.csv",
+   "sha256": "5eb15d50948a05c258f77cf5294462de1f9e2c75e5909a0b39f8166d704eddcb",
+   "bytes": 1277,
+   "termos": [
+    "garrafa termica",
+    "absorvente",
+    "parafusadeira e furadeira",
+    "fita dupla face",
+    "bola de futebol"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote33a.csv",
+   "sha256": "19b0e004c378829f1f67a3ee1dc52a4b772e390c61b3b6b81d02a031e91e1156",
+   "bytes": 1052,
+   "termos": [
+    "whey protein",
+    "controle de videogame",
+    "legging fitness",
+    "controle remoto de tv",
+    "pistola de pintura"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote33b.csv",
+   "sha256": "d7d23aa30f946e675ec53e3a7922c6a88bfceb422bef7ddf904e055ed8a1030c",
+   "bytes": 662,
+   "termos": [
+    "whey protein",
+    "controle de videogame",
+    "legging fitness",
+    "controle remoto de tv",
+    "pistola de pintura"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote33c.csv",
+   "sha256": "7f21a98556086631c316630f55e0ddb364312c0a326f1d80f4f53bfbf326485d",
+   "bytes": 1161,
+   "termos": [
+    "whey protein",
+    "controle de videogame",
+    "legging fitness",
+    "controle remoto de tv",
+    "pistola de pintura"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote34a.csv",
+   "sha256": "47d1c58dda2c4f79cace37855bba971125efc1dc8e9f7fc09f81ddfb3711c6fb",
+   "bytes": 1068,
+   "termos": [
+    "mop de limpeza",
+    "escova de limpeza",
+    "power bank",
+    "colchao inflavel",
+    "microfone de lapela"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote34b.csv",
+   "sha256": "7c399d3d7079a5e0d48e501406e1b657b9b40a295bebf8d481feb4ee0d3f775d",
+   "bytes": 669,
+   "termos": [
+    "mop de limpeza",
+    "escova de limpeza",
+    "power bank",
+    "colchao inflavel",
+    "microfone de lapela"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote34c.csv",
+   "sha256": "d3709719300845aa282745ecf9bd0521fbf365518b81c7ab654cc538472d3d7b",
+   "bytes": 1123,
+   "termos": [
+    "mop de limpeza",
+    "escova de limpeza",
+    "power bank",
+    "colchao inflavel",
+    "microfone de lapela"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote35a.csv",
+   "sha256": "94217aba49f19eaba12b533fa87736fcfb223f9244c4917611cae999bda147c3",
+   "bytes": 1113,
+   "termos": [
+    "serum facial",
+    "ferro de passar roupa",
+    "bebedouro de galao",
+    "ralo de pia",
+    "umidificador de ar"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote35b.csv",
+   "sha256": "005f348dfd13f6b269e5a3a226f5239dc076424540f9a9337760357fb9569d1c",
+   "bytes": 697,
+   "termos": [
+    "serum facial",
+    "ferro de passar roupa",
+    "bebedouro de galao",
+    "ralo de pia",
+    "umidificador de ar"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote35c.csv",
+   "sha256": "033b4bf443d43a22196840cc13db26cd443e17d1b82ed292acf210a9aebe89dd",
+   "bytes": 1229,
+   "termos": [
+    "serum facial",
+    "ferro de passar roupa",
+    "bebedouro de galao",
+    "ralo de pia",
+    "umidificador de ar"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote36a.csv",
+   "sha256": "871d849f5b6a33a98bddb119528b3505eda849c48db38c1faf693a7234c31d7d",
+   "bytes": 1108,
+   "termos": [
+    "carregador de celular",
+    "bolsa feminina",
+    "escova de dentes",
+    "potes hermeticos",
+    "adaptador usb"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote36b.csv",
+   "sha256": "82c164ad56a342e67a16e9ba3f0cbafb198f2a99cd7369fbd9fe66c993af491d",
+   "bytes": 698,
+   "termos": [
+    "carregador de celular",
+    "bolsa feminina",
+    "escova de dentes",
+    "potes hermeticos",
+    "adaptador usb"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote36c.csv",
+   "sha256": "326442ee55c9c5f210b92e2c2c1781770c267a7e540b4cc220e5f8eea15c534c",
+   "bytes": 1242,
+   "termos": [
+    "carregador de celular",
+    "bolsa feminina",
+    "escova de dentes",
+    "potes hermeticos",
+    "adaptador usb"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote37a.csv",
+   "sha256": "3435bcf1ccb14e1274ddf89a5195502af8e061a267d9d8cd06a8cc015a49df2e",
+   "bytes": 1156,
+   "termos": [
+    "cadeira de escritorio",
+    "material escolar",
+    "jogo de tabuleiro",
+    "desinfetante",
+    "creme hidratante"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote37b.csv",
+   "sha256": "f03635bc188c735257b1703c010ceb88f8098e342e0a01496901d40f95c66feb",
+   "bytes": 720,
+   "termos": [
+    "cadeira de escritorio",
+    "material escolar",
+    "jogo de tabuleiro",
+    "desinfetante",
+    "creme hidratante"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote37c.csv",
+   "sha256": "ac7c17e11ae0db999e3dfa9996327638e5476a649563dcc76ee91e866135f128",
+   "bytes": 1284,
+   "termos": [
+    "cadeira de escritorio",
+    "material escolar",
+    "jogo de tabuleiro",
+    "desinfetante",
+    "creme hidratante"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote38a.csv",
+   "sha256": "94a1824b08d8d97e992b4c13c71d024429ef4e932fd4f393ae8ddf1856a0032c",
+   "bytes": 1142,
+   "termos": [
+    "lavadora de roupas",
+    "pilha alcalina",
+    "antena digital para tv",
+    "bateria de litio",
+    "pomada para assadura"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote38b.csv",
+   "sha256": "6b04268ade170a7751a9a2074c112ddc6aaacedb28a3506392e7e898e69135c3",
+   "bytes": 720,
+   "termos": [
+    "lavadora de roupas",
+    "pilha alcalina",
+    "antena digital para tv",
+    "bateria de litio",
+    "pomada para assadura"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote38c.csv",
+   "sha256": "55a9179b4509e1966c8fd1b388d0750015d5ba2ec0111aa99ceee2ac4df1ad49",
+   "bytes": 1247,
+   "termos": [
+    "lavadora de roupas",
+    "pilha alcalina",
+    "antena digital para tv",
+    "bateria de litio",
+    "pomada para assadura"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote39a.csv",
+   "sha256": "49bb7255a75dfce0d4cbc4a89e23c027812ad6541554a50a6f97fbc29f0f0ee1",
+   "bytes": 1124,
+   "termos": [
+    "massa de modelar",
+    "mesa para notebook",
+    "tenis esportivo",
+    "cooktop eletrico",
+    "lenco umedecido"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote39b.csv",
+   "sha256": "f7ba5ac56ae55d03d875b9aab55dd4a81cce9e77df700acf41e518e66ba05b29",
+   "bytes": 713,
+   "termos": [
+    "massa de modelar",
+    "mesa para notebook",
+    "tenis esportivo",
+    "cooktop eletrico",
+    "lenco umedecido"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote39c.csv",
+   "sha256": "d74373ab866c6f414ecf7f8250b3b09df9ee6a9ae07bdc753bc7687424ac596a",
+   "bytes": 1224,
+   "termos": [
+    "massa de modelar",
+    "mesa para notebook",
+    "tenis esportivo",
+    "cooktop eletrico",
+    "lenco umedecido"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote40a.csv",
+   "sha256": "806530eef0197a1cb575e44df5ddc15933503e41225666642f63eb285217d9aa",
+   "bytes": 1053,
+   "termos": [
+    "cueca boxer",
+    "conjunto infantil menina",
+    "racao para gato",
+    "luva de seguranca",
+    "touca de natacao"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote40b.csv",
+   "sha256": "800e610f577959221b33ee3364eb1d9b40f1b24fe8a175ce980248c4244e3946",
+   "bytes": 683,
+   "termos": [
+    "cueca boxer",
+    "conjunto infantil menina",
+    "racao para gato",
+    "luva de seguranca",
+    "touca de natacao"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote40c.csv",
+   "sha256": "d82a2f1ee7964f54703503969a72b46f9325eb369774f91fa84def896d088164",
+   "bytes": 1164,
+   "termos": [
+    "cueca boxer",
+    "conjunto infantil menina",
+    "racao para gato",
+    "luva de seguranca",
+    "touca de natacao"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote41a.csv",
+   "sha256": "c7f972bdb83b0d00178ccb468ceeb35e8d5aac36314a46506d49fb622a002616",
+   "bytes": 1008,
+   "termos": [
+    "kit de brocas",
+    "oculos de natacao",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "adubo e fertilizante"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote41b.csv",
+   "sha256": "d16d1ec22d40866f91e21d950ebf3eeab21c5a249b4a6e68bea87042c3e49bf7",
+   "bytes": 684,
+   "termos": [
+    "kit de brocas",
+    "oculos de natacao",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "adubo e fertilizante"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote41c.csv",
+   "sha256": "5947ec6437d427968166a6dfa5c535cfd0069b3680514f75bc53fb8686894a45",
+   "bytes": 1105,
+   "termos": [
+    "kit de brocas",
+    "oculos de natacao",
+    "refil de filtro de agua",
+    "creme de tratamento capilar",
+    "adubo e fertilizante"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote42a.csv",
+   "sha256": "4c5a93062db510ab8bd9d9fe0c5efd786a80788e0a9c3171ff8654c658c2417f",
+   "bytes": 1017,
+   "termos": [
+    "depurador de ar",
+    "fralda descartavel",
+    "lubrificante multiuso",
+    "tira manchas em po",
+    "chocalho de bebe"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote42b.csv",
+   "sha256": "adedb41a4bb9335ac32813987200c4f2eb6a98f37b7d8714aacb816023879cd6",
+   "bytes": 657,
+   "termos": [
+    "depurador de ar",
+    "fralda descartavel",
+    "lubrificante multiuso",
+    "tira manchas em po",
+    "chocalho de bebe"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote42c.csv",
+   "sha256": "29a1ddc0d9ea134377acd11963f44d7fe06d75977ccc89ef430d1f07e3c023a1",
+   "bytes": 1124,
+   "termos": [
+    "depurador de ar",
+    "fralda descartavel",
+    "lubrificante multiuso",
+    "tira manchas em po",
+    "chocalho de bebe"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote47a.csv",
+   "sha256": "a6a28618af9394cf67ba8e4b29cf46dfc4ec7bdef1df9daab166337d72ee6209",
+   "bytes": 67,
+   "termos": [
+    "adubo e fertilizante"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote48a.csv",
+   "sha256": "3b58a445b638b52edfda39d7f5f88f7f846d5a488d7232779b5eebac328cac3d",
+   "bytes": 66,
+   "termos": [
+    "antipulgas para pet"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote49a.csv",
+   "sha256": "c8cb535fd8780ffb976e95a1ca4d5323cf83b97c2ab3b7cdce59ea7627b08548",
+   "bytes": 73,
+   "termos": [
+    "balanca digital de cozinha"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote50a.csv",
+   "sha256": "0f71dcaf35980e4c80318fcbbb01ebbf721029d85e523ecf5e63ba9f5c8bbdd3",
+   "bytes": 65,
+   "termos": [
+    "bebedouro de galao"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote51a.csv",
+   "sha256": "e536ff079d25cdb3842420cf90d040376d3aa75e27ae82917287a663967a0f97",
+   "bytes": 67,
+   "termos": [
+    "bomba de encher bola"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote52a.csv",
+   "sha256": "8d87050ecb55ffade027f44a8c23606fcaa4f32f788faf8e7fef8d6d421485e8",
+   "bytes": 63,
+   "termos": [
+    "chocalho de bebe"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote53a.csv",
+   "sha256": "bdcef4214d61fd87c891cf45583ac8e4ce871f99f9c89dc0a59272f2ebdfa4b8",
+   "bytes": 583,
+   "termos": [
+    "colchao inflavel"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote53b.csv",
+   "sha256": "720df684a10c36ee4fb5bf5aa0ff74e8aaac2ce8858365a814738504ee653712",
+   "bytes": 354,
+   "termos": [
+    "colchao inflavel"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote53c.csv",
+   "sha256": "318bc4148976732cebd24a2d33978fa233d9d899669f429a1112c58d2e59e1b2",
+   "bytes": 644,
+   "termos": [
+    "colchao inflavel"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote54a.csv",
+   "sha256": "fc970c65ff11bbd776262b4eade2df097dd829730c513c50ee9bc48d8623a83e",
+   "bytes": 74,
+   "termos": [
+    "compressor de ar automotivo"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote55a.csv",
+   "sha256": "db1050176bb02c519b9e9cf7e742450096827ab221c0349d24a9ef253dc33f20",
+   "bytes": 65,
+   "termos": [
+    "condimento e molho"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote56a.csv",
+   "sha256": "225482b83316b9e4f083fdbbfd5ffb309403f703afefe27e4afac06a197bb3fd",
+   "bytes": 67,
+   "termos": [
+    "console de videogame"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote57a.csv",
+   "sha256": "c0e216398bab0302bee97731551379415ae3a888489046e6e7ada93d915a8296",
+   "bytes": 586,
+   "termos": [
+    "controle de videogame"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote57b.csv",
+   "sha256": "b53281153be7e1f128459c2b1e41f101b399ef59b14e7dcbaa366004900cf76a",
+   "bytes": 359,
+   "termos": [
+    "controle de videogame"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote57c.csv",
+   "sha256": "bf4618009ac26fec3498441ffdcdcb39de227cbc5069812ae10444c1857a17a5",
+   "bytes": 653,
+   "termos": [
+    "controle de videogame"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote58a.csv",
+   "sha256": "330b49d58e134900076b5de5357bb64171e66d776694de4ea9c15725af4e78f6",
+   "bytes": 593,
+   "termos": [
+    "controle remoto de tv"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote58b.csv",
+   "sha256": "20c7a1df339bf78d161ec4b037982dfc8c958b237e9a80a0889a3271ac3a8659",
+   "bytes": 363,
+   "termos": [
+    "controle remoto de tv"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote58c.csv",
+   "sha256": "66b58f12a58b7d954d5c25af8b32cf9e2ea138f4a1e0ce3ebe17dc05a4828235",
+   "bytes": 658,
+   "termos": [
+    "controle remoto de tv"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote59a.csv",
+   "sha256": "86ca18b7f0f0a22a1139f96f8868904292b42636b45998e4f746aaa9e1ee1f1f",
+   "bytes": 570,
+   "termos": [
+    "creme de tratamento capilar"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote60a.csv",
+   "sha256": "8a9de719929fd8c16e60dd1b59075a42d1d31a899ba4592c24a60a3a68678146",
+   "bytes": 69,
+   "termos": [
+    "detergente lava loucas"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote61a.csv",
+   "sha256": "9a2360736230a88c59e319acc323412c2372b1b7538473f40066d2b4ce648c70",
+   "bytes": 74,
+   "termos": [
+    "faixa elastica de exercicio"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote62a.csv",
+   "sha256": "9f2321ba3366c907872c443fdac0a8046bb35a1bf0ba1afde373a7117b0c4a7d",
+   "bytes": 564,
+   "termos": [
+    "fralda descartavel"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote63a.csv",
+   "sha256": "23c37e5da50507887f901b6d34861b84100fa0dbc701ba57a7239ad893e14c05",
+   "bytes": 565,
+   "termos": [
+    "inseticida e repelente"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote64a.csv",
+   "sha256": "63e53fa976bcf20a8d45d6a4798f5909577f7b10df2f9855023e640d435a5ba6",
+   "bytes": 72,
+   "termos": [
+    "jogo de chaves e soquetes"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote65a.csv",
+   "sha256": "4ceb128bbbeb00e78019e4629b01ecf617703c92b8199add99274ce300e414c8",
+   "bytes": 70,
+   "termos": [
+    "jogo educativo e cartas"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote66a.csv",
+   "sha256": "08642bc21a9ef7295000ffa42571999767ee19d720c4a1135855472fd0b2a30d",
+   "bytes": 72,
+   "termos": [
+    "kit de lavagem automotiva"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote67a.csv",
+   "sha256": "0dd1068c44e651cced4b74f45a27d756811fcf1530f383317724288fa9c0cecc",
+   "bytes": 559,
+   "termos": [
+    "legging fitness"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote68a.csv",
+   "sha256": "d8bbbdf639794e9a40184142205d1db031ad3eaf955f13e7b7608beaa45b0619",
+   "bytes": 69,
+   "termos": [
+    "leitor de ebook kindle"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote69a.csv",
+   "sha256": "e4fa10d80778254e00418ea775bc88d510b0b6216a25983db92411ba40a264cd",
+   "bytes": 587,
+   "termos": [
+    "lixeira"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote69b.csv",
+   "sha256": "9698104f7013fbd658b74bcc11c372b8f6d86d93aac7a53a1954019120cf3d5c",
+   "bytes": 349,
+   "termos": [
+    "lixeira"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote69c.csv",
+   "sha256": "fc1acd218943c6a01f8f9a6a725d5b3bbd55b651e8d8f6b47d7abdbd2f0c26f4",
+   "bytes": 657,
+   "termos": [
+    "lixeira"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote70a.csv",
+   "sha256": "2e81045cf89876bb2aa68ed5985cffe5d4250d95bdf0c44611d2d4b184c9246b",
+   "bytes": 68,
+   "termos": [
+    "lubrificante multiuso"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote71a.csv",
+   "sha256": "7c18c8be51cf936c4081b861c877ef6f283cd3ccda079aebbfc24e64aac16adf",
+   "bytes": 560,
+   "termos": [
+    "luva de seguranca"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote72a.csv",
+   "sha256": "de93b7e7089e284f584044e7ce6edbcff02a48109b5046c71875f9ba6059142f",
+   "bytes": 63,
+   "termos": [
+    "mixer de cozinha"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote73a.csv",
+   "sha256": "f4e91038a9a9174c5ef1ddeb550507520ac243c400d86355837ee002ebc1fef3",
+   "bytes": 569,
+   "termos": [
+    "mop de limpeza"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote73b.csv",
+   "sha256": "971ba5689f2584f471c5454289a3bd4ac80ca9529067af932abb39dd92da556f",
+   "bytes": 353,
+   "termos": [
+    "mop de limpeza"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_lote73c.csv",
+   "sha256": "d53d4a78e559737ddf70b733b106e9e4e9c83db54d8cb715e31a539503a4a95d",
+   "bytes": 633,
+   "termos": [
+    "mop de limpeza"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_lote74a.csv",
+   "sha256": "248d2b235088c430ff1f7033811dc438142bf7279c49f66199ff01c69aa6f0a6",
+   "bytes": 561,
+   "termos": [
+    "oculos de natacao"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote75a.csv",
+   "sha256": "d9d6ac1fddb1ed93d52c99a8a588b291d4819da020475c2188ed3b9ee814ea64",
+   "bytes": 566,
+   "termos": [
+    "potes hermeticos"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote76a.csv",
+   "sha256": "690fb0144039ce3a70afb21343223071b5d9fc8d711de3ceca44aace75b9b558",
+   "bytes": 570,
+   "termos": [
+    "refil de filtro de agua"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote77a.csv",
+   "sha256": "9e0f97de58b4357a97565b76468cb2e9770edcff3668804d05e1fa0d636a56cf",
+   "bytes": 79,
+   "termos": [
+    "renovador de plastico automotivo"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote78a.csv",
+   "sha256": "a01f20108631aa86e0b0387c04e2c3d69563a632bb13aa48c6ba21a5cd83d635",
+   "bytes": 66,
+   "termos": [
+    "smart speaker alexa"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote79a.csv",
+   "sha256": "faf74b084c1872ca7dfca9cbe443419ba561800d58d1f5371155150d1b8f75a6",
+   "bytes": 569,
+   "termos": [
+    "tapete higienico para caes"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_lote80a.csv",
+   "sha256": "fcfb8537c3d2097695a3ba531b665aac40173424c596888c9e9939f392c2c05c",
+   "bytes": 65,
+   "termos": [
+    "tira manchas em po"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote81a.csv",
+   "sha256": "63c2333f70da4779be05019698a702ce8c9aa7f6cd2f8fbe4e3460869d49d1ab",
+   "bytes": 63,
+   "termos": [
+    "touca de natacao"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote82a.csv",
+   "sha256": "15c9b0b2749f8b3abbb48ed7b1d3d20c518c9eac9a32b263110cdff581fa653a",
+   "bytes": 63,
+   "termos": [
+    "tv box streaming"
+   ],
+   "dias": 0,
+   "janela": null
+  },
+  {
+   "arquivo": "trends_lote83a.csv",
+   "sha256": "bc9e33d60f9c92c134408e49b34495aa752e789916f189cc44dca6f8a84b510b",
+   "bytes": 569,
+   "termos": [
+    "utensilios de cozinha"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP1.csv",
+   "sha256": "7f37bc2c09130a6bce9da8c4f152455a2a1b7a5c096de89cd21d101c0a849184",
+   "bytes": 1501,
+   "termos": [
+    "bebedouro de galao",
+    "mangueira de jardim",
+    "utensilios de cozinha",
+    "legging fitness",
+    "micro ondas"
+   ],
+   "dias": 57,
+   "janela": [
+    "2026-07-09",
+    "2026-09-03"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP1c.csv",
+   "sha256": "f94b04532f255316e3700d1648920cc21c6a7593b352bf026a80d8fcef217c4a",
+   "bytes": 1163,
+   "termos": [
+    "bebedouro de galao",
+    "mangueira de jardim",
+    "utensilios de cozinha",
+    "legging fitness",
+    "micro ondas"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP2a.csv",
+   "sha256": "c711a6cc11fa21303ca0224e43c9ca195a26ce810498d87d09c178066b9976eb",
+   "bytes": 1111,
+   "termos": [
+    "bebida alcoolica",
+    "bomba de encher bola",
+    "sanduicheira",
+    "cabo hdmi",
+    "blusa de frio"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP2b.csv",
+   "sha256": "fe9f4ccb9a7ee93a2476e8bc5a242448edbde6a1a523ca3561386f2b8e9b3031",
+   "bytes": 687,
+   "termos": [
+    "bebida alcoolica",
+    "bomba de encher bola",
+    "sanduicheira",
+    "cabo hdmi",
+    "blusa de frio"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP2c.csv",
+   "sha256": "0e3148468d78b08c4dd8e77db11dcb12fb011efe2d432d2cacc6b3f406cf8117",
+   "bytes": 1231,
+   "termos": [
+    "bebida alcoolica",
+    "bomba de encher bola",
+    "sanduicheira",
+    "cabo hdmi",
+    "blusa de frio"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP3a.csv",
+   "sha256": "169a54162b32dcda005d5aeebf90d1f8034e0351285ca599dd18c8281df3bfa6",
+   "bytes": 1016,
+   "termos": [
+    "mala de viagem",
+    "aparelho de barbear",
+    "mop de limpeza",
+    "legging fitness",
+    "utensilios de cozinha"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP3b.csv",
+   "sha256": "7dc2270ab6fbc62bee15ce6a67607c617a219a80b2bf9a5cf8b786afc89e0fd2",
+   "bytes": 643,
+   "termos": [
+    "mala de viagem",
+    "aparelho de barbear",
+    "mop de limpeza",
+    "legging fitness",
+    "utensilios de cozinha"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP3c.csv",
+   "sha256": "6e2d8f58b20fc271c628bdd7775294d3e21b65b320a1e7da86196b718cf6fe66",
+   "bytes": 1140,
+   "termos": [
+    "mala de viagem",
+    "aparelho de barbear",
+    "mop de limpeza",
+    "legging fitness",
+    "utensilios de cozinha"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP4a.csv",
+   "sha256": "38bfc2945d7f3bc07a84a08121484da529aa75b1f5a61a2b02949effdc685351",
+   "bytes": 925,
+   "termos": [
+    "bebedouro de galao",
+    "aquecedor eletrico",
+    "jogo de chaves e soquetes",
+    "renovador de plastico automotivo"
+   ],
+   "dias": 38,
+   "janela": [
+    "2026-07-09",
+    "2026-08-15"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP4b.csv",
+   "sha256": "b6f252ff2b42d94c66138f0c1388a5d174f7671a26c9716f5ff88ab5f876faf0",
+   "bytes": 605,
+   "termos": [
+    "bebedouro de galao",
+    "aquecedor eletrico",
+    "jogo de chaves e soquetes",
+    "renovador de plastico automotivo"
+   ],
+   "dias": 21,
+   "janela": [
+    "2026-08-17",
+    "2026-09-06"
+   ]
+  },
+  {
+   "arquivo": "trends_loteP4c.csv",
+   "sha256": "af4d74b83e4f5bbc8691a15994a37357231135e3ff6e2e4eaf4da77f1db08842",
+   "bytes": 1007,
+   "termos": [
+    "bebedouro de galao",
+    "aquecedor eletrico",
+    "jogo de chaves e soquetes",
+    "renovador de plastico automotivo"
+   ],
+   "dias": 43,
+   "janela": [
+    "2026-09-07",
+    "2026-10-19"
+   ]
+  }
+ ]
+}

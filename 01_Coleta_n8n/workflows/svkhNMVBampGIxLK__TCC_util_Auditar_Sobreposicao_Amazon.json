@@ -1,0 +1,127 @@
+{
+  "active": 0,
+  "connections": {
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Vitrines",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Vitrines": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Auditar Sobreposicao",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-16 02:28:33.709",
+  "description": "Util READ-ONLY: cruza tcc_bronze_amazon com tcc_amazon_vitrines e mede quantos produtos a Amazon publica em mais de um departamento, separando os que colidem DENTRO da mesma categoria da Parte A. Insumo da regra de dedup da Silver. So-manual, nao grava.",
+  "id": "svkhNMVBampGIxLK",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Auditar Sobreposicao Amazon",
+  "nodes": [
+    {
+      "id": "1241cfb5-a268-4c66-ad11-bfaac955d06f",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "executeOnce": true,
+      "id": "e29b53b4-60a4-46ae-9c02-4d09c7ef822d",
+      "name": "Ler Bronze Amazon",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_amazon",
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "3ef25330-2758-4f63-b54c-ba794ff72905",
+      "name": "Ler Vitrines",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_amazon_vitrines",
+          "mode": "id",
+          "value": "vche5aYj6BUs9yL9"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "7e71bc5b-1031-44c6-b412-3954971122d9",
+      "name": "Auditar Sobreposicao",
+      "parameters": {
+        "jsCode": "// Auditoria READ-ONLY da sobreposicao de departamentos da Amazon (16/07).\n// Existe porque a troca da pagina geral para as 22 vitrines por departamento fez\n// aparecer o mesmo produto em mais de uma vitrine: os departamentos da Amazon SE\n// SOBREPOEM (o Echo Dot esta em Dispositivos Amazon E em Eletronicos). Na pagina\n// geral isso era zero. Nao e bug \u2014 e a natureza da fonte.\n//\n// POR QUE IMPORTA: o Score normaliza POR CATEGORIA da Parte A, e as 22 vitrines\n// colapsam em 14 categorias \u2014 11 vitrines caem numa categoria compartilhada\n// (4 em Eletronicos, 4 em Casa e jardim, 3 em Saude e beleza) -> o mesmo produto\n// entraria 2x na MESMA categoria, inflando a concorrencia (dim. C).\n//\n// AS 3 PERGUNTAS QUE ELE RESPONDE:\n//  1. as duplicatas DISCORDAM entre si (problema de qualidade) ou sao o mesmo\n//     produto em dois pools? -> campos_que_discordam\n//  2. quem da o melhor rank, a vitrine estreita ou a ampla? -> desenha o desempate\n//  3. alguma vitrine entregou MENOS que o esperado? -> vitrines_abaixo_do_esperado\n//     (a regua de aceite mede proporcao, nao volume: uma vitrine com 1 item de 50\n//     passa com 100% de preenchimento. Ver fila, item 6b.)\n//\n// O Bronze guarda cru de proposito; a deduplicacao e regra da SILVER. Este util\n// mede e mostra os casos concretos. So le. Nao grava nada.\nconst linhas = $('Ler Bronze Amazon').all().map(i => i.json);\nconst vitrines = $('Ler Vitrines').all().map(i => i.json);\n\nconst catDe = {};\nconst ativas = [];\nfor (const v of vitrines) {\n  catDe[v.rotulo_amazon] = v.categoria_parte_a;\n  if (v.ativo === true) { ativas.push(v.rotulo_amazon); }\n}\n\n// So a ultima rodada: cada rodada carimba um unico coletado_em.\nconst stamps = linhas.map(r => r.coletado_em).filter(Boolean).sort();\nconst ultimo = stamps[stamps.length - 1];\nconst daRodada = linhas.filter(r => r.coletado_em === ultimo);\nconst erros = daRodada.filter(r => String(r.titulo || '').startsWith('[ERRO]'));\nconst rodada = daRodada.filter(r => r.item_id && !String(r.titulo || '').startsWith('[ERRO]'));\n\n// VOLUME POR VITRINE: a pagina de departamento entrega 50. Menos que isso e sinal.\nconst contagemVitrine = {};\nfor (const r of rodada) {\n  contagemVitrine[r.categoria_pagina] = (contagemVitrine[r.categoria_pagina] || 0) + 1;\n}\nconst abaixoDoEsperado = [];\nfor (const rot of ativas) {\n  const n = contagemVitrine[rot] || 0;\n  if (n < 50) { abaixoDoEsperado.push({ vitrine: rot, itens: n, esperado: 50, categoria_parte_a: catDe[rot] }); }\n}\n\nconst porItem = {};\nfor (const r of rodada) {\n  if (!porItem[r.item_id]) porItem[r.item_id] = [];\n  porItem[r.item_id].push({\n    vitrine: r.categoria_pagina,\n    categoria_parte_a: catDe[r.categoria_pagina] || '(sem mapa)',\n    rank: r.rank,\n    preco: r.preco,\n    avaliacao: r.avaliacao,\n    titulo: String(r.titulo || '').slice(0, 70)\n  });\n}\n\nconst ids = Object.keys(porItem);\nconst multiVitrine = ids.filter(id => porItem[id].length > 1);\n\nconst colisaoMesmaCat = [];\nconst colisaoOutraCat = [];\nfor (const id of multiVitrine) {\n  const cats = {};\n  for (const o of porItem[id]) { cats[o.categoria_parte_a] = (cats[o.categoria_parte_a] || 0) + 1; }\n  let dup = false;\n  for (const k of Object.keys(cats)) { if (cats[k] > 1) dup = true; }\n  if (dup) { colisaoMesmaCat.push(id); } else { colisaoOutraCat.push(id); }\n}\n\n// AS LINHAS DUPLICADAS CONCORDAM? Se preco/titulo/avaliacao batem, o desempate\n// so decide qual RANK sobrevive \u2014 o resto e a mesma medida repetida.\nconst discordam = { preco: 0, titulo: 0, avaliacao: 0, rank: 0 };\nconst casosDeDiscordancia = [];\nfor (const id of multiVitrine) {\n  const oc = porItem[id];\n  const campos = ['preco', 'titulo', 'avaliacao', 'rank'];\n  for (const campo of campos) {\n    const vals = new Set(oc.map(o => String(o[campo] === null || o[campo] === undefined ? '' : o[campo])));\n    if (vals.size > 1) {\n      discordam[campo]++;\n      if (campo !== 'rank' && casosDeDiscordancia.length < 8) {\n        casosDeDiscordancia.push({ item_id: id, campo: campo, valores: [...vals] });\n      }\n    }\n  }\n}\n\n// Inflacao por categoria: linhas / itens distintos. 1.0 = sem duplicata.\nconst porCat = {};\nfor (const r of rodada) {\n  const c = catDe[r.categoria_pagina] || '(sem mapa)';\n  if (!porCat[c]) { porCat[c] = { linhas: 0, itens: new Set(), vitrines: new Set() }; }\n  porCat[c].linhas++;\n  porCat[c].itens.add(r.item_id);\n  porCat[c].vitrines.add(r.categoria_pagina);\n}\nconst resumoCat = {};\nfor (const c of Object.keys(porCat)) {\n  resumoCat[c] = {\n    vitrines: porCat[c].vitrines.size,\n    linhas: porCat[c].linhas,\n    itens_distintos: porCat[c].itens.size,\n    inflacao: Number((porCat[c].linhas / porCat[c].itens.size).toFixed(3))\n  };\n}\n\nconst pares = {};\nfor (const id of multiVitrine) {\n  const vs = porItem[id].map(o => o.vitrine).sort();\n  for (let a = 0; a < vs.length; a++) {\n    for (let b = a + 1; b < vs.length; b++) {\n      const k = vs[a] + ' || ' + vs[b];\n      pares[k] = (pares[k] || 0) + 1;\n    }\n  }\n}\n\n// O PADRAO QUE DESENHA A REGRA: nas colisoes, a vitrine ESTREITA da rank melhor\n// que a ampla? Se sim, \"melhor rank vence\" escolheria sistematicamente a medida\n// mais lisonjeira (um #1 num pool pequeno nao vale um #1 num pool grande).\nconst quemDaOMelhorRank = {};\nfor (const id of colisaoMesmaCat) {\n  const oc = porItem[id].slice().sort((a, b) =>\n    Number(String(a.rank || '#999').replace('#', '')) - Number(String(b.rank || '#999').replace('#', '')));\n  quemDaOMelhorRank[oc[0].vitrine] = (quemDaOMelhorRank[oc[0].vitrine] || 0) + 1;\n}\n\n// EFEITO DA REGRA DECIDIDA (16/07, ver 00_Projeto/04_Preparacao_Silver.md \u00a72.3):\n// chave (item_id, categoria_parte_a); sobrevive o PIOR rank. Simulado, nao gravado.\nconst sobreviventes = {};\nfor (const r of rodada) {\n  const c = catDe[r.categoria_pagina] || '(sem mapa)';\n  const chave = r.item_id + '|' + c;\n  const n = Number(String(r.rank || '#999').replace('#', ''));\n  if (!sobreviventes[chave] || n > sobreviventes[chave].n) { sobreviventes[chave] = { n: n, vitrine: r.categoria_pagina }; }\n}\n\nconst exemplos = colisaoMesmaCat.slice(0, 15).map(id => ({\n  item_id: id,\n  titulo: porItem[id][0].titulo,\n  ocorrencias: porItem[id]\n}));\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  snapshot_auditado: ultimo,\n  vitrines_ativas_esperadas: ativas.length,\n  vitrines_que_entregaram: Object.keys(contagemVitrine).length,\n  vitrines_abaixo_do_esperado: abaixoDoEsperado,\n  linhas_de_erro_na_rodada: erros.length,\n  linhas_na_rodada: rodada.length,\n  itens_distintos: ids.length,\n  itens_em_mais_de_uma_vitrine: multiVitrine.length,\n  itens_duplicados_na_MESMA_categoria_parte_a: colisaoMesmaCat.length,\n  itens_em_categorias_parte_a_DIFERENTES: colisaoOutraCat.length,\n  campos_que_discordam_entre_as_duplicatas: discordam,\n  casos_de_discordancia: casosDeDiscordancia,\n  quem_da_o_melhor_rank_nas_colisoes: quemDaOMelhorRank,\n  linhas_apos_a_regra_pior_rank_vence: Object.keys(sobreviventes).length,\n  por_categoria_parte_a: resumoCat,\n  pares_de_vitrine_que_colidem: pares,\n  exemplos_para_desenhar_a_regra: exemplos\n} }];",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        960,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-16 02:36:02.763",
+  "versionId": "be1afcf5-638d-4d7f-9782-9bc6f08a12c5"
+}

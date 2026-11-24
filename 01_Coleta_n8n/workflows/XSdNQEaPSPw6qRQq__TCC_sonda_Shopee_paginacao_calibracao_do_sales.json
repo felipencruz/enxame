@@ -1,0 +1,146 @@
+{
+  "active": 0,
+  "connections": {
+    "Assinar 2 Paginas": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Shopee API - 2 Paginas",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Assinar 2 Paginas",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Shopee API - 2 Paginas": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Comparar Paginas",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-16 15:46:20.746",
+  "description": "Sonda READ-ONLY. Provou em 16/07 que a API da Shopee NAO PAGINA: page=1 e page=2 devolvem os mesmos 50 itemId, e a API ecoa page=2 e hasNextPage=true. Traz tambem shopId e productLink, que o coletor nao pede. Nao grava nada.",
+  "id": "XSdNQEaPSPw6qRQq",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [sonda] Shopee: paginacao + calibracao do sales",
+  "nodes": [
+    {
+      "id": "fdcf4a81-03a7-41c4-aeb8-60a14b9f3c9f",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "da23ac23-52b0-4797-a996-9bd0059b7197",
+      "name": "Assinar 2 Paginas",
+      "parameters": {
+        "jsCode": "const appId = '<APP_ID_DA_AFILIADA>';\nconst secret = $env.SHOPEE_APP_SECRET;\nif (!secret) { throw new Error('SHOPEE_APP_SECRET nao definido no ambiente do n8n'); }\nconst crypto = require('crypto');\nconst timestamp = Math.floor(Date.now() / 1000);\n\nconst CAMPOS = 'itemId productName price sales shopId productLink offerLink';\n\nreturn [1, 2].map(page => {\n  const query = '{ productOfferV2(sortType: 2, limit: 50, page: ' + page + ') { nodes { ' + CAMPOS + ' } pageInfo { page hasNextPage } } }';\n  const payload = JSON.stringify({ query });\n  const fator = appId + timestamp + payload + secret;\n  const signature = crypto.createHash('sha256').update(fator).digest('hex');\n  const authHeader = 'SHA256 Credential=' + appId + ', Timestamp=' + timestamp + ', Signature=' + signature;\n  return { json: { authHeader, payload, timestamp, page_pedida: page } };\n});\n",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        460,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "31b518e1-d2a3-4c31-b65e-5b7b0cbb21ef",
+      "name": "Shopee API - 2 Paginas",
+      "parameters": {
+        "body": "={{ $json.payload }}",
+        "contentType": "raw",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "={{ $json.authHeader }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "method": "POST",
+        "options": {},
+        "rawContentType": "application/json",
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "string",
+        "url": "https://open-api.affiliate.shopee.com.br/graphql"
+      },
+      "position": [
+        680,
+        300
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4
+    },
+    {
+      "id": "48076c80-fc44-46a1-93e9-3302bf3d44ec",
+      "name": "Comparar Paginas",
+      "parameters": {
+        "jsCode": "const respostas = $input.all().map(i => i.json);\nconst pedidos = $('Assinar 2 Paginas').all().map(i => i.json);\n\nconst erros = [];\nconst paginas = {};\nfor (let i = 0; i < respostas.length; i++) {\n  const r = respostas[i];\n  const pedida = pedidos[i] ? pedidos[i].page_pedida : ('?' + i);\n  if (r && r.errors) { erros.push({ page_pedida: pedida, errors: r.errors }); continue; }\n  const d = (r && r.data && r.data.productOfferV2) ? r.data.productOfferV2 : null;\n  if (!d) { erros.push({ page_pedida: pedida, resposta_crua: JSON.stringify(r).slice(0, 400) }); continue; }\n  paginas[pedida] = {\n    page_ecoada_pela_api: d.pageInfo ? d.pageInfo.page : null,\n    hasNextPage: d.pageInfo ? d.pageInfo.hasNextPage : null,\n    nodes: (d.nodes || []).map(n => ({\n      item_id: String(n.itemId),\n      titulo: String(n.productName || '').slice(0, 60),\n      sales: n.sales,\n      shop_id: n.shopId,\n      product_link: n.productLink,\n      offer_link: n.offerLink\n    }))\n  };\n}\n\nconst chaves = Object.keys(paginas);\nlet veredito = 'INDETERMINADO (ver erros_graphql)';\nlet comparacao = null;\nif (chaves.length === 2) {\n  const a = paginas[chaves[0]].nodes.map(n => n.item_id);\n  const b = paginas[chaves[1]].nodes.map(n => n.item_id);\n  const setB = {};\n  for (const id of b) { setB[id] = true; }\n  const setA = {};\n  for (const id of a) { setA[id] = true; }\n  const intersecao = a.filter(id => setB[id]);\n  const soEmA = a.filter(id => !setB[id]);\n  const soEmB = b.filter(id => !setA[id]);\n  const iguais = (soEmA.length === 0 && soEmB.length === 0 && a.length === b.length);\n  veredito = iguais\n    ? 'A API NAO PAGINA \u2014 e mente que pagina. page=1 e page=2 devolvem os MESMOS itens, e a API ecoa pageInfo.page e afirma hasNextPage=true. NAO E BUG NOSSO: o coletor assina e envia o parametro corretamente; a API aceita, confirma e ignora. Efeito: 250 linhas/rodada = 50 produtos x5 -> 80% do Bronze da Shopee e redundante (a Silver deduplica por item_id + coletado_em). CONSEQUENCIA PARA A DOC: o feed NAO tem 67 produtos (Guia 7) \u2014 e uma JANELA ROTATIVA DE 50, com ~300 distintos por semana. A limitacao da fonte e OUTRA e e melhor: 50 por consulta e o TETO OBSERVAVEL, e nao da para saber se o feed e mais fundo.'\n    : 'A PAGINACAO FUNCIONA (ao menos em parte): page=2 traz itens que page=1 nao tem. Entao a rasez do Bronze (~50 distintos/snapshot) tem OUTRA causa \u2014 investigar antes de escrever qualquer coisa.';\n  comparacao = {\n    itens_na_page_1: a.length,\n    itens_na_page_2: b.length,\n    em_AMBAS: intersecao.length,\n    so_na_page_1: soEmA.length,\n    so_na_page_2: soEmB.length,\n    SAO_IDENTICAS: iguais,\n    primeiros_5_da_page_1: a.slice(0, 5),\n    primeiros_5_da_page_2: b.slice(0, 5)\n  };\n}\n\nconst amostra = [];\nif (chaves.length > 0) {\n  for (const n of paginas[chaves[0]].nodes.slice(0, 8)) {\n    amostra.push({\n      item_id: n.item_id,\n      titulo: n.titulo,\n      sales_da_API: n.sales,\n      product_link: n.product_link,\n      offer_link_NAO_USAR: String(n.offer_link || '').slice(0, 60) + ' ...'\n    });\n  }\n}\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  ATENCAO: 'Sonda READ-ONLY. Nao grava no Bronze. Nao mexe no coletor de producao.',\n  PERGUNTA_1_paginacao: veredito,\n  comparacao_page1_vs_page2: comparacao,\n  PERGUNTA_2_calibracao: 'RESPONDIDA EM 16/07, E A RESPOSTA FOI NAO DA. A amostra abaixo traz o product_link (URL ORIGINAL, sem utm \u2014 o offer_link nao serve, o robots proibe utm_medium=affiliates). O Agente 1 LIBEROU a rota /product/... (crawl_delay 1.0) e BLOQUEOU /top_products e /daily_discover/. Mas a pagina NAO TEM O DADO: 176.674 bytes, ZERO ocorrencias de vendido, sem <title> -> SPA pura, o contador so existe depois do JavaScript. E a imagem de producao nao tem Chromium/Playwright (removidos 15/07, -136 MB). DECISAO (16/07): nao forcar. O sales vira volume de vendas numa janela temporal NAO DOCUMENTADA pela fonte, e isso e LIMITACAO DECLARADA. A H1 nao precisa da janela: basta o sales ser monotonico na velocidade.',\n  ACHADO_DE_BRINDE_user_agent: 'Medido na mesma pagina em 16/07: EnxameBot recebe 176.674 bytes e Chrome 155.353 \u2014 o cracha HONESTO recebe MAIS. E Googlebot leva HTTP 403: a Shopee BARRA quem finge ser o Google e SERVE quem diz a verdade. Frase para a banca: nao e so que mentir seja errado; nesta fonte, mentir nao funciona.',\n  amostra_para_calibracao: amostra,\n  campos_novos_que_esta_sonda_pediu: 'shopId e productLink \u2014 o coletor de producao NAO os pede (so itemId, productName, price, priceDiscountRate, sales, ratingStar, commissionRate, imageUrl, shopName, offerLink).',\n  erros_graphql: erros,\n  paginas_cruas: paginas\n} }];\n",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        900,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "74451061-2d48-431e-8679-84b36f3be732",
+      "name": "Sticky Note 3e5fcebf",
+      "parameters": {
+        "color": 3,
+        "content": "## [sonda] Shopee: paginacao + calibracao \u2014 SO LEITURA\n\n### 1. A API NAO PAGINA (medido 16/07)\n`page=1` e `page=2` devolvem os **mesmos 50 itemId**. A API **ecoa** `pageInfo.page: 2`\ne afirma `hasNextPage: true` \u2014 e devolve a pagina 1.\n**Nao e bug nosso:** o coletor envia o parametro certo; a API **aceita, confirma e ignora**.\n\u2192 250 linhas/rodada = 50 produtos x5. **80% do Bronze da Shopee e redundante.**\n\u2192 **Conserta o Guia 7:** o feed nao tem \"67 produtos\" \u2014 e uma **janela rotativa de 50**\n  (~300 distintos/semana). A limitacao real: **50 por consulta e o teto observavel**.\n\n### 2. A calibracao do `sales` NAO DEU \u2014 e virou limitacao declarada\nAgente 1 **liberou** `/product/...` (crawl_delay 1.0) e **bloqueou** `/top_products`.\nMas a pagina **nao tem o dado**: 176 KB, **zero \"vendido\"**, sem `<title>` \u2192 **SPA pura**.\nE a imagem nao tem Chromium (removido 15/07, -136 MB).\n**Decisao:** o `sales` e \"volume numa janela NAO documentada\". A H1 nao\nprecisa da janela \u2014 basta ser monotonico na velocidade.\n\n### 3. Achado adicional: MENTIR NAO FUNCIONA\n`EnxameBot` \u2192 **176.674 bytes**. `Chrome` \u2192 155.353. **O honesto recebe MAIS.**\n`Googlebot` \u2192 **HTTP 403**. A Shopee **barra quem finge ser o Google**.\n\n**A licao que une tudo:** a doc da Shopee **lista os campos sem definir o comportamento**.\nO `page` e aceito e ignorado; o `sales` e servido sem dizer o que conta.\n\nNao grava nada. Nao toca no coletor. Disparo manual.",
+        "height": 200,
+        "width": 960
+      },
+      "position": [
+        190,
+        250
+      ],
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-16 16:09:05.415",
+  "versionId": "ff749d15-21de-4276-b71a-54ef4c030cfd"
+}

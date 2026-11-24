@@ -1,0 +1,60 @@
+{
+  "seletor_item": ".andes-carousel-snapped__slide",
+  "campos": {
+    "titulo": {
+      "seletor": ".dynamic-carousel__title",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".dynamic-carousel__price > span",
+      "origem": "texto"
+    },
+    "preco_antigo": {
+      "seletor": ".dynamic-carousel__oldprice",
+      "origem": "texto"
+    },
+    "desconto": {
+      "seletor": ".dynamic-carousel__discount",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": "a.splinter-link",
+      "origem": "atributo",
+      "atributo": "href"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://www.mercadolivre.com.br/mais-vendidos/",
+    "dominio": "www.mercadolivre.com.br",
+    "modelo": "gpt-4o-mini",
+    "criado_em": "2026-07-13T21:30:45.057180+00:00",
+    "agente": "analista_estrutura",
+    "versao_formato": 1,
+    "validacao": {
+      "itens_encontrados": 157,
+      "campos": {
+        "titulo": {
+          "preenchidos": 157,
+          "taxa": 1.0
+        },
+        "preco": {
+          "preenchidos": 157,
+          "taxa": 1.0
+        },
+        "preco_antigo": {
+          "preenchidos": 111,
+          "taxa": 0.707
+        },
+        "desconto": {
+          "preenchidos": 111,
+          "taxa": 0.707
+        },
+        "link": {
+          "preenchidos": 157,
+          "taxa": 1.0
+        }
+      }
+    },
+    "aprovada": true
+  }
+}

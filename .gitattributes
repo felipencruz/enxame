@@ -1,0 +1,3 @@
+# Os dados têm sha256 por arquivo nos manifestos: o git nunca converte fim de linha aqui.
+02_Dados/raw/** -text
+02_Dados/trends/** -text

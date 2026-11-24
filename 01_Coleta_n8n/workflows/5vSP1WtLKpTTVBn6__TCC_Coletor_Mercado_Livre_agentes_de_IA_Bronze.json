@@ -1,0 +1,387 @@
+{
+  "active": 0,
+  "connections": {
+    "Achatar Produtos": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar Bronze ML",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Esperar 10 min": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "enxame-api: coletar ML (2a tentativa)",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Esperar 20 min": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "enxame-api: coletar ML (3a tentativa)",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fonte deu 5xx? (1a)": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Esperar 10 min",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Parar com o erro original",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fonte deu 5xx? (2a)": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Esperar 20 min",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Parar com o erro original",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "enxame-api: coletar ML",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Achatar Produtos",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Fonte deu 5xx? (1a)",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML (2a tentativa)": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Achatar Produtos",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Fonte deu 5xx? (2a)",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "enxame-api: coletar ML (3a tentativa)": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Achatar Produtos",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-13 21:45:57.144",
+  "description": "Coletor Bronze do ML. 6/6h chama o enxame-api (receita v4); se a fonte der HTTP 5xx, tenta de novo ap\u00f3s 10 e 20 min. Converte o ID do link Ver mais na categoria, numera o rank k de M e grava em tcc_bronze_ml.",
+  "id": "5vSP1WtLKpTTVBn6",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Coletor Mercado Livre (agentes de IA, Bronze)",
+  "nodes": [
+    {
+      "id": "c67b94e7-65bb-49a2-bcbe-51b6c100e3a4",
+      "name": "Schedule Trigger",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        120
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    },
+    {
+      "id": "fa8450c9-1ba2-4413-af38-80c9018ff6c2",
+      "name": "enxame-api: coletar ML",
+      "onError": "continueErrorOutput",
+      "parameters": {
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "method": "POST",
+        "options": {
+          "timeout": 120000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "http://enxame-api:8000/agentes/coletar"
+      },
+      "position": [
+        224,
+        120
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4
+    },
+    {
+      "id": "be496b1c-0def-4b01-83ff-c6beccee4f55",
+      "name": "Achatar Produtos",
+      "parameters": {
+        "jsCode": "// Bronze = dado cru: precos entram como texto (\"R$ 400\"); a Silver parseia.\n// Normalizacao minima: extrair o codigo MLB do link (o id do item).\n//\n// categoria (25/09/2026): o ML trocou o layout e o titulo do carrossel\n// passou a vir em espanhol e DESALINHADO do conteudo. Desde a receita v4 a categoria vem do\n// link \"Ver mais\" de cada carrossel (href com o codigo MLB da categoria), nos dois layouts.\n// O nome sai do MAPA abaixo, conferido nos HTML de 29/07 e 24/09 (mesmo id, mesmo nome, mesma\n// ordem): categoria_pagina continua com os mesmos 10 nomes da serie, e o id cru vai para\n// categoria_id. Id fora do mapa grava o proprio id como nome (a Silver avisa carrossel\n// desconhecido). Valor que nao e link (receita v3, layout antigo) passa como veio.\n//\n// rank (24/09/2026): a POSICAO no carrossel, no formato \"k de M\" que a\n// fonte declara no aria-label de cada slide. A receita nao alcanca esse atributo (ele mora\n// no proprio slide), entao a posicao e NUMERADA AQUI, na ordem em que o enxame-api devolve as\n// linhas - a ordem do DOM, igual ao aria-label nos 3 HTML versionados (537 de 537 slides).\n// Decisao: numerar no n8n, sem recriar o container. k conta dentro do carrossel;\n// M e o total do carrossel na resposta. Linha sem categoria, ou de carrossel partido em mais\n// de um bloco, fica SEM rank.\n//\n// selo_mais_vendido: ate 25/09 o texto \"N MAIS VENDIDO\" (rank declarado, com buracos); no\n// layout novo o rotulo do slide SEM numero (\"MAIS VENDIDO\", \"OFERTA IMPERDIVEL\"...).\n// Guardado cru; nao alimenta o percentil.\nconst MAPA = {\n  MLB1144: 'Games',\n  MLB5726: 'Eletrodom\u00e9sticos',\n  MLB263532: 'Ferramentas',\n  MLB1246: 'Beleza e Cuidado Pessoal',\n  MLB1051: 'Celulares e Telefones',\n  MLB1648: 'Inform\u00e1tica',\n  MLB1000: 'Eletr\u00f4nicos, \u00c1udio e V\u00eddeo',\n  MLB1276: 'Esportes e Fitness',\n  MLB1430: 'Cal\u00e7ados, Roupas e Bolsas',\n  MLB5672: 'Acess\u00f3rios para Ve\u00edculos'\n};\nconst LINK_CATEGORIA = new RegExp('/mais-vendidos/(MLB[0-9]+)');\nconst resp = $input.first().json;\nconst linhas = resp.linhas || [];\nconst agora = new Date().toISOString();\nconst cats = linhas.map(n => {\n  const bruto = n.categoria || null;\n  if (!bruto) return { nome: null, id: null };\n  const m = String(bruto).match(LINK_CATEGORIA);\n  if (!m) return { nome: bruto, id: null };\n  return { nome: MAPA[m[1]] || m[1], id: m[1] };\n});\nconst total = {};\nconst blocos = {};\nlet anterior = null;\ncats.forEach(k => {\n  const c = k.nome;\n  if (c) {\n    total[c] = (total[c] || 0) + 1;\n    if (c !== anterior) { blocos[c] = (blocos[c] || 0) + 1; }\n  }\n  anterior = c;\n});\nconst visto = {};\nreturn linhas.map((n, i) => {\n  const link = n.link || '';\n  const m = link.match(/MLB-?[0-9]+/i);\n  const c = cats[i].nome;\n  let rank = null;\n  if (c && blocos[c] === 1) {\n    visto[c] = (visto[c] || 0) + 1;\n    rank = visto[c] + ' de ' + total[c];\n  }\n  return { json: {\n    item_id: m ? m[0].replace('-', '') : null,\n    titulo: n.titulo || null,\n    preco: n.preco || null,\n    preco_antigo: n.preco_antigo || null,\n    desconto: n.desconto || null,\n    link: link || null,\n    categoria_pagina: c,\n    categoria_id: cats[i].id,\n    rank: rank,\n    selo_mais_vendido: n.selo_mais_vendido || null,\n    coletado_em: agora\n  }};\n});\n"
+      },
+      "position": [
+        1792,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c7cb4f5c-1ca1-4f58-83ed-47e3d1b01157",
+      "name": "Gravar Bronze ML",
+      "parameters": {
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {}
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_ml",
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB"
+        },
+        "options": {}
+      },
+      "position": [
+        2016,
+        0
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "ed934a40-bedb-4f4c-a2c5-c55159f84205",
+      "name": "Fonte deu 5xx? (1a)",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "fonte_5xx",
+              "leftValue": "={{ JSON.stringify($json) }}",
+              "operator": {
+                "operation": "contains",
+                "type": "string"
+              },
+              "rightValue": "entregou a p\u00e1gina (HTTP 5"
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          }
+        },
+        "options": {}
+      },
+      "position": [
+        448,
+        192
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3
+    },
+    {
+      "id": "6d9f97a7-07dd-4007-a11a-c71f548ca805",
+      "name": "Esperar 10 min",
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "position": [
+        672,
+        120
+      ],
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "webhookId": "aaa02d03-1aa2-4235-823f-865196200d23"
+    },
+    {
+      "id": "7657152b-dd04-43d6-8439-13f89564bf4e",
+      "name": "enxame-api: coletar ML (2a tentativa)",
+      "onError": "continueErrorOutput",
+      "parameters": {
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "method": "POST",
+        "options": {
+          "timeout": 120000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "http://enxame-api:8000/agentes/coletar"
+      },
+      "position": [
+        896,
+        120
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4
+    },
+    {
+      "id": "81b12ddf-1459-49b1-95b2-f0c6f6acc22c",
+      "name": "Parar com o erro original",
+      "parameters": {
+        "errorMessage": "={{ ($json.error && $json.error.message) || JSON.stringify($json).slice(0, 2000) }}"
+      },
+      "position": [
+        1344,
+        360
+      ],
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1
+    },
+    {
+      "id": "50602436-9f87-4568-8298-48c7c64ef31b",
+      "name": "Fonte deu 5xx? (2a)",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "fonte_5xx",
+              "leftValue": "={{ JSON.stringify($json) }}",
+              "operator": {
+                "operation": "contains",
+                "type": "string"
+              },
+              "rightValue": "entregou a p\u00e1gina (HTTP 5"
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          }
+        },
+        "options": {}
+      },
+      "position": [
+        1120,
+        192
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3
+    },
+    {
+      "id": "da60f139-6541-4a11-85e8-38a2026e2576",
+      "name": "Esperar 20 min",
+      "parameters": {
+        "amount": 20,
+        "unit": "minutes"
+      },
+      "position": [
+        1344,
+        144
+      ],
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "webhookId": "417855d2-568a-470d-ac0c-d7ab9a0fccd6"
+    },
+    {
+      "id": "c9fcf882-52d8-4b2c-9219-cb2f794a36ac",
+      "name": "enxame-api: coletar ML (3a tentativa)",
+      "parameters": {
+        "jsonBody": "={ \"url\": \"https://www.mercadolivre.com.br/mais-vendidos/\" }",
+        "method": "POST",
+        "options": {
+          "timeout": 120000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "http://enxame-api:8000/agentes/coletar"
+      },
+      "position": [
+        1568,
+        144
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": [
+        0
+      ]
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-09-29 23:19:00.339",
+  "versionId": "bb5f117a-0af0-4fa0-bc4f-91e8202704ee"
+}

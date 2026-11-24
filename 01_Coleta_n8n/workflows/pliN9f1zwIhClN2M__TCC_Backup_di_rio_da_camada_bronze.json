@@ -1,0 +1,1126 @@
+{
+  "active": 0,
+  "connections": {
+    "Conferir amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delete row(s)2",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Conferir google": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delete row(s)1",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Conferir ml": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delete row(s)",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Conferir shopee": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delete row(s)4",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Conferir yt": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delete row(s)3",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file1",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File2": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file2",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File3": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file3",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File4": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file4",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File5": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file5",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Convert to File6": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload file6",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "ml",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "google",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "amazon",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "yt",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "shopee",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "seeds",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "amazon vitrines",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "ml",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "google",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "amazon",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "yt",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "shopee",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "seeds",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "amazon vitrines",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload file": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Conferir ml",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload file2": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Conferir google",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload file3": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Conferir amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload file4": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Conferir yt",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload file6": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Conferir shopee",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File3",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "amazon vitrines": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File5",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "google": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File2",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "ml": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File1",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "shopee": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File6",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "yt": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Convert to File4",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-13 18:14:09.208",
+  "description": "Exporta as 7 tabelas para CSV no Google Drive e purga o historico ja copiado das 5 Bronze (id <= id_corte, preservando o snapshot mais recente). seeds e amazon vitrines so sao exportadas. Um no Conferir falha fechado antes de cada purga.",
+  "id": "pliN9f1zwIhClN2M",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Backup di\u00e1rio da camada bronze",
+  "nodes": [
+    {
+      "id": "9e184fb6-d177-49ff-ba4e-f9d717a9e059",
+      "name": "Schedule Trigger",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 15
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        544
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    },
+    {
+      "executeOnce": true,
+      "id": "b8284157-1069-40fd-9b50-3b24a48a7928",
+      "name": "ml",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        160
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "ed54dd4a-7249-470f-80ac-a84e38ace89e",
+      "name": "Convert to File",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        160
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "c0843a47-9a88-4d2e-b9b2-6c669ac9762c",
+      "name": "Upload file",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=ml_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        160
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "07ff8814-0edc-438d-8550-694c09859c15",
+      "name": "Conferir ml",
+      "parameters": {
+        "jsCode": "const origem = $('ml').all();\nconst enviado = $input.first().json;\nconst linhas = origem.length;\nif (linhas === 0) { throw new Error('tcc_bronze_ml: leitura vazia - nada exportado, nada a apagar'); }\nif (!enviado || !enviado.id) { throw new Error('tcc_bronze_ml: o upload nao devolveu id de arquivo'); }\nconst bytes = Number(enviado.size || 0);\nif (bytes < linhas * 40) { throw new Error('tcc_bronze_ml: CSV pequeno demais para ' + linhas + ' linhas (' + bytes + ' bytes) - possivel truncamento'); }\nconst ids = origem.map(i => Number(i.json.id)).filter(n => !isNaN(n));\nif (ids.length !== linhas) { throw new Error('tcc_bronze_ml: ha linha sem id numerico - corte inseguro'); }\nconst ultimo = origem.map(i => String(i.json.coletado_em || '')).reduce((a, b) => (b > a ? b : a), '');\nif (!ultimo) { throw new Error('tcc_bronze_ml: sem coletado_em - corte inseguro'); }\nconst antigos = origem.filter(i => String(i.json.coletado_em || '') < ultimo).map(i => Number(i.json.id));\nconst idCorte = antigos.reduce((a, b) => (b > a ? b : a), 0);\nreturn [{ json: { tabela: 'tcc_bronze_ml', linhas: linhas, id_corte: idCorte, a_purgar: antigos.length, preservadas: linhas - antigos.length, ultimo_snapshot: ultimo, arquivo: enviado.name, arquivo_id: enviado.id, bytes: bytes, sha256: enviado.sha256Checksum || null, exportado_em: new Date().toISOString() } }];"
+      },
+      "position": [
+        896,
+        160
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "35243acd-c83a-4bcc-9d76-3d6907fb4e74",
+      "name": "Delete row(s)",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "lte",
+              "keyValue": "={{ $json.id_corte }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "deleteRows",
+        "options": {
+          "dryRun": false
+        }
+      },
+      "position": [
+        1120,
+        160
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "21773b1e-039a-42d2-9365-790553e235a4",
+      "name": "google",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "HTp0xMFBFsY4OZzx"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        352
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "2494a25e-bb0a-4fa3-a3dd-19877c347a34",
+      "name": "Convert to File2",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        352
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "e6e08f87-a63a-420c-a186-99bf68d69cea",
+      "name": "Upload file2",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=google_suggest_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        352
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "2bc5b75d-94e5-481d-967b-6fd43f2f63a8",
+      "name": "Conferir google",
+      "parameters": {
+        "jsCode": "const origem = $('google').all();\nconst enviado = $input.first().json;\nconst linhas = origem.length;\nif (linhas === 0) { throw new Error('tcc_bronze_google_suggest: leitura vazia - nada exportado, nada a apagar'); }\nif (!enviado || !enviado.id) { throw new Error('tcc_bronze_google_suggest: o upload nao devolveu id de arquivo'); }\nconst bytes = Number(enviado.size || 0);\nif (bytes < linhas * 40) { throw new Error('tcc_bronze_google_suggest: CSV pequeno demais para ' + linhas + ' linhas (' + bytes + ' bytes) - possivel truncamento'); }\nconst ids = origem.map(i => Number(i.json.id)).filter(n => !isNaN(n));\nif (ids.length !== linhas) { throw new Error('tcc_bronze_google_suggest: ha linha sem id numerico - corte inseguro'); }\nconst ultimo = origem.map(i => String(i.json.coletado_em || '')).reduce((a, b) => (b > a ? b : a), '');\nif (!ultimo) { throw new Error('tcc_bronze_google_suggest: sem coletado_em - corte inseguro'); }\nconst antigos = origem.filter(i => String(i.json.coletado_em || '') < ultimo).map(i => Number(i.json.id));\nconst idCorte = antigos.reduce((a, b) => (b > a ? b : a), 0);\nreturn [{ json: { tabela: 'tcc_bronze_google_suggest', linhas: linhas, id_corte: idCorte, a_purgar: antigos.length, preservadas: linhas - antigos.length, ultimo_snapshot: ultimo, arquivo: enviado.name, arquivo_id: enviado.id, bytes: bytes, sha256: enviado.sha256Checksum || null, exportado_em: new Date().toISOString() } }];"
+      },
+      "position": [
+        896,
+        352
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c9f11b92-e2d0-4441-8435-b2cf560d4942",
+      "name": "Delete row(s)1",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "HTp0xMFBFsY4OZzx"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "lte",
+              "keyValue": "={{ $json.id_corte }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "deleteRows",
+        "options": {
+          "dryRun": false
+        }
+      },
+      "position": [
+        1120,
+        352
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "d94b231a-f334-48c7-9af5-7eaea9522e05",
+      "name": "amazon",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        544
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "ae729339-545e-4b6f-9ec1-807c72103ecd",
+      "name": "Convert to File3",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        544
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "b2898eee-fd7d-438f-a8e1-e39a9ffdd492",
+      "name": "Upload file3",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=amazon_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        544
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "4a9380d6-7fd2-42cb-9a47-92330cfd373a",
+      "name": "Conferir amazon",
+      "parameters": {
+        "jsCode": "const origem = $('amazon').all();\nconst enviado = $input.first().json;\nconst linhas = origem.length;\nif (linhas === 0) { throw new Error('tcc_bronze_amazon: leitura vazia - nada exportado, nada a apagar'); }\nif (!enviado || !enviado.id) { throw new Error('tcc_bronze_amazon: o upload nao devolveu id de arquivo'); }\nconst bytes = Number(enviado.size || 0);\nif (bytes < linhas * 40) { throw new Error('tcc_bronze_amazon: CSV pequeno demais para ' + linhas + ' linhas (' + bytes + ' bytes) - possivel truncamento'); }\nconst ids = origem.map(i => Number(i.json.id)).filter(n => !isNaN(n));\nif (ids.length !== linhas) { throw new Error('tcc_bronze_amazon: ha linha sem id numerico - corte inseguro'); }\nconst ultimo = origem.map(i => String(i.json.coletado_em || '')).reduce((a, b) => (b > a ? b : a), '');\nif (!ultimo) { throw new Error('tcc_bronze_amazon: sem coletado_em - corte inseguro'); }\nconst antigos = origem.filter(i => String(i.json.coletado_em || '') < ultimo).map(i => Number(i.json.id));\nconst idCorte = antigos.reduce((a, b) => (b > a ? b : a), 0);\nreturn [{ json: { tabela: 'tcc_bronze_amazon', linhas: linhas, id_corte: idCorte, a_purgar: antigos.length, preservadas: linhas - antigos.length, ultimo_snapshot: ultimo, arquivo: enviado.name, arquivo_id: enviado.id, bytes: bytes, sha256: enviado.sha256Checksum || null, exportado_em: new Date().toISOString() } }];"
+      },
+      "position": [
+        896,
+        544
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "a105b23a-283f-4c28-93e2-bdec81921631",
+      "name": "Delete row(s)2",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "lte",
+              "keyValue": "={{ $json.id_corte }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "deleteRows",
+        "options": {
+          "dryRun": false
+        }
+      },
+      "position": [
+        1120,
+        544
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "95497d1f-5031-4a23-8e9a-6956b9d9063c",
+      "name": "yt",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "txAtoMRsWO351Pm2"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        736
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "8f40e98d-7b0d-4783-82d3-df03e3c2b7df",
+      "name": "Convert to File4",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        736
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "c6be2acb-46c6-4d58-920c-e2eed068a818",
+      "name": "Upload file4",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=yt_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        736
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "3ef60435-260f-4961-992f-47319058f3cc",
+      "name": "Conferir yt",
+      "parameters": {
+        "jsCode": "const origem = $('yt').all();\nconst enviado = $input.first().json;\nconst linhas = origem.length;\nif (linhas === 0) { throw new Error('tcc_bronze_youtube: leitura vazia - nada exportado, nada a apagar'); }\nif (!enviado || !enviado.id) { throw new Error('tcc_bronze_youtube: o upload nao devolveu id de arquivo'); }\nconst bytes = Number(enviado.size || 0);\nif (bytes < linhas * 40) { throw new Error('tcc_bronze_youtube: CSV pequeno demais para ' + linhas + ' linhas (' + bytes + ' bytes) - possivel truncamento'); }\nconst ids = origem.map(i => Number(i.json.id)).filter(n => !isNaN(n));\nif (ids.length !== linhas) { throw new Error('tcc_bronze_youtube: ha linha sem id numerico - corte inseguro'); }\nconst ultimo = origem.map(i => String(i.json.coletado_em || '')).reduce((a, b) => (b > a ? b : a), '');\nif (!ultimo) { throw new Error('tcc_bronze_youtube: sem coletado_em - corte inseguro'); }\nconst antigos = origem.filter(i => String(i.json.coletado_em || '') < ultimo).map(i => Number(i.json.id));\nconst idCorte = antigos.reduce((a, b) => (b > a ? b : a), 0);\nreturn [{ json: { tabela: 'tcc_bronze_youtube', linhas: linhas, id_corte: idCorte, a_purgar: antigos.length, preservadas: linhas - antigos.length, ultimo_snapshot: ultimo, arquivo: enviado.name, arquivo_id: enviado.id, bytes: bytes, sha256: enviado.sha256Checksum || null, exportado_em: new Date().toISOString() } }];"
+      },
+      "position": [
+        896,
+        736
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "672a3f6e-59ef-4247-8074-fda1b02ae10a",
+      "name": "Delete row(s)3",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "txAtoMRsWO351Pm2"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "lte",
+              "keyValue": "={{ $json.id_corte }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "deleteRows",
+        "options": {
+          "dryRun": false
+        }
+      },
+      "position": [
+        1120,
+        736
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "a42d6810-34ae-4c34-aff8-e975c6aa2586",
+      "name": "shopee",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "oodaLwjRQOZdMcO7"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        928
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "34cd5e43-70a6-4db4-bf67-9bbbecdf7e37",
+      "name": "Convert to File6",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        928
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "50c973b3-d083-4b98-8d7b-08c85cf89929",
+      "name": "Upload file6",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=shopee_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        928
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "7b244edd-1f8b-44cd-bf34-39854fcabfdd",
+      "name": "Conferir shopee",
+      "parameters": {
+        "jsCode": "const origem = $('shopee').all();\nconst enviado = $input.first().json;\nconst linhas = origem.length;\nif (linhas === 0) { throw new Error('tcc_bronze_shopee: leitura vazia - nada exportado, nada a apagar'); }\nif (!enviado || !enviado.id) { throw new Error('tcc_bronze_shopee: o upload nao devolveu id de arquivo'); }\nconst bytes = Number(enviado.size || 0);\nif (bytes < linhas * 40) { throw new Error('tcc_bronze_shopee: CSV pequeno demais para ' + linhas + ' linhas (' + bytes + ' bytes) - possivel truncamento'); }\nconst ids = origem.map(i => Number(i.json.id)).filter(n => !isNaN(n));\nif (ids.length !== linhas) { throw new Error('tcc_bronze_shopee: ha linha sem id numerico - corte inseguro'); }\nconst ultimo = origem.map(i => String(i.json.coletado_em || '')).reduce((a, b) => (b > a ? b : a), '');\nif (!ultimo) { throw new Error('tcc_bronze_shopee: sem coletado_em - corte inseguro'); }\nconst antigos = origem.filter(i => String(i.json.coletado_em || '') < ultimo).map(i => Number(i.json.id));\nconst idCorte = antigos.reduce((a, b) => (b > a ? b : a), 0);\nreturn [{ json: { tabela: 'tcc_bronze_shopee', linhas: linhas, id_corte: idCorte, a_purgar: antigos.length, preservadas: linhas - antigos.length, ultimo_snapshot: ultimo, arquivo: enviado.name, arquivo_id: enviado.id, bytes: bytes, sha256: enviado.sha256Checksum || null, exportado_em: new Date().toISOString() } }];"
+      },
+      "position": [
+        896,
+        928
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8513879a-f2d3-45ac-ab4d-571a402382d8",
+      "name": "Delete row(s)4",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "oodaLwjRQOZdMcO7"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "lte",
+              "keyValue": "={{ $json.id_corte }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "deleteRows",
+        "options": {
+          "dryRun": false
+        }
+      },
+      "position": [
+        1120,
+        928
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "8e06d372-cb92-41ba-936d-3118c272c5dc",
+      "name": "seeds",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        1120
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "10fc1ab9-53c5-4eba-ae95-a8f9f5c92d5f",
+      "name": "Convert to File1",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        1120
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "53ea4e5d-cced-436d-ba24-814f437ae558",
+      "name": "Upload file1",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=seeds_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        1120
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "executeOnce": true,
+      "id": "1c20c8e0-50ee-4581-abb2-0b094988a50b",
+      "name": "amazon vitrines",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "vche5aYj6BUs9yL9"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isNotEmpty"
+            }
+          ]
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        224,
+        1312
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "1965c165-54e4-42ae-bedf-510db3422264",
+      "name": "Convert to File5",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        448,
+        1312
+      ],
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "GwHfNyGJs2LIKVDm",
+          "name": "Google Drive Principal"
+        }
+      },
+      "id": "1ae666df-3402-493b-84b5-a20861d4315e",
+      "name": "Upload file5",
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "<ID_DA_PASTA_NO_DRIVE>"
+        },
+        "name": "=amazon_vitrines_{{ $now.toUTC().toFormat(\"yyyyLLdd_HH-mm\") }}Z.csv",
+        "options": {}
+      },
+      "position": [
+        672,
+        1312
+      ],
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3
+    },
+    {
+      "id": "9f400811-64e5-436e-bfce-67abecb88051",
+      "name": "Disparo Manual",
+      "parameters": {},
+      "position": [
+        0,
+        64
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "73897887-f786-49a9-8969-7e2fc43890ff",
+      "name": "Sticky Note 9e111ee2",
+      "parameters": {
+        "color": 3,
+        "content": "## PURGA LIGADA (dryRun: false) - as 5 tabelas Bronze sao limpas a cada rodada\n\nCorte: id <= id_corte. O id_corte PRESERVA O SNAPSHOT MAIS RECENTE de cada tabela e apaga todo o resto.\n\nPor que preservar a ultima rodada: o alerta de coletor parado (Pla4o3Wvk10O76QP) trata coletado_em ausente como PARADA. Tabela zerada faria as 5 fontes dispararem alarme falso.\n\nO no Conferir FALHA FECHADO antes de cada purga: leitura vazia, upload sem id de arquivo, CSV pequeno demais para o numero de linhas (possivel truncamento), linha sem id numerico ou ausencia de coletado_em interrompem a execucao sem apagar nada.\n\nseeds e amazon vitrines SO SAO EXPORTADAS, nunca purgadas: sao amostra viva, lida pelos coletores a cada rodada, e resultado das Partes A/B/B2/B3/B4.",
+        "height": 968,
+        "width": 300
+      },
+      "position": [
+        1072,
+        112
+      ],
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-08-12 10:57:48.700",
+  "versionId": "373b43c6-558b-4781-a2e1-14ee292232fc"
+}

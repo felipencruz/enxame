@@ -1,0 +1,32 @@
+{
+  "seletor_item": ".item-class",
+  "campos": {
+    "titulo": {
+      "seletor": ".item-title",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".item-price",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": ".item-link",
+      "origem": "atributo",
+      "atributo": "href"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://lista.mercadolivre.com.br/tenis-corrida",
+    "dominio": "lista.mercadolivre.com.br",
+    "modelo": "gpt-4o-mini",
+    "criado_em": "2026-07-13T20:46:21.948948+00:00",
+    "agente": "analista_estrutura",
+    "versao_formato": 1,
+    "aprovada": false,
+    "validacao": {
+      "itens_encontrados": 0,
+      "campos": {}
+    },
+    "motivo_rejeicao": "REPROVADA pela regua deterministica: 0 itens. O ML serviu uma pagina anti-bot (suspicious-traffic-frontend) ao httpx; sem produtos para ver, o LLM alucinou o seletor generico \".item-class\". Mantida como EVIDENCIA para o apendice da monografia: e a prova de que a validacao por codigo reprova sozinha uma proposta convincente do modelo. NAO carregar em producao."
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "active": 0,
+  "connections": {
+    "Contar Perda na Janela": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "So se houver perda",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Linhas de Erro": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Contar Perda na Janela",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "So se houver perda": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Avisar no WhatsApp",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Todo dia 12:20 BRT": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Linhas de Erro",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-08-11 20:38:56.336",
+  "description": "Vigia diario (12:20 BRT) da perda de PEDACO de rodada na Amazon: conta na janela de 24h as vitrines que gravaram linha de erro (item_id nulo) e avisa no WhatsApp a partir de 1. O alerta de 18h nao pega isto porque a rodada grava.",
+  "id": "srxlA0ItOoj0BCGX",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Alerta de Perda Silenciosa na Amazon (util)",
+  "nodes": [
+    {
+      "id": "03f9a346-320d-4295-9c9b-b8dbd7d594a2",
+      "name": "Todo dia 12:20 BRT",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12,
+              "triggerAtMinute": 20
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    },
+    {
+      "alwaysOutputData": true,
+      "id": "f7945cd0-2ac5-415c-9e21-cc9334de9ed6",
+      "name": "Ler Linhas de Erro",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_amazon",
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isEmpty",
+              "keyName": "item_id"
+            }
+          ]
+        },
+        "limit": 200,
+        "matchType": "allConditions",
+        "operation": "get",
+        "orderBy": true,
+        "orderByColumn": "coletado_em"
+      },
+      "position": [
+        224,
+        0
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "bac45456-8154-4d28-8a01-aed5f5a9040b",
+      "name": "Contar Perda na Janela",
+      "parameters": {
+        "jsCode": "// Alerta de PERDA SILENCIOSA na Amazon. Nasceu em 11/08/2026: este buraco estava classificado como limite\n// declarado, e limite declarado e onde mora o que se decidiu NAO fazer.\n//\n// O QUE ELE VIGIA, e por que o alerta de 18h nao servia. Aquele pergunta \"quando\n// foi a ultima linha?\" e existe para pegar COLETOR PARADO. Uma rodada em que 3 das\n// 22 vitrines falharam GRAVA, e grava no horario certo: para ele, e uma rodada\n// normal. A perda nao e de rodada, e de PEDACO de rodada.\n//\n// COMO ELE ACHA A LINHA DE ERRO: pelo item_id vazio, nao pelo texto do titulo.\n// O invariante esta medido na serie exportada inteira, deduplicada por id (11/08):\n// 59 linhas de erro, as 59 com item_id vazio, e ZERO linha de item_id vazio que\n// nao seja erro -- reconferido em 24/08 na serie ate la: 82 de 82 nos dois\n// sentidos. (Dizia 90: era o concat CRU dos 13 exports, que se sobrepoem. O\n// invariante sempre esteve certo; o numero descrevia populacao duplicada.) E o\n// mesmo invariante que a Silver usa para descartar essas linhas.\n// E o operador foi MEDIDO, nao suposto (sonda de 11/08, execucao 3248): no no\n// dataTable, 'isEmpty' casa NULO -- 'eq' com string vazia nao casa nada.\n//\n// ATENCAO: SEM executeOnce NOS NOS ACIMA E AQUI, E ISSO NAO E DESCUIDO. Copiei o flag do\n// alerta de coletor parado, onde cada leitura traz UMA linha e ele nunca mordeu.\n// Aqui ele truncava a leitura na PRIMEIRA linha: com 3 vitrines em erro, o alerta\n// diria \"1 vitrine(s) em erro\" -- confiante e errado. Pego pelo teste com dado\n// pinado em 11/08 (execucao 3249), que injetou 4 linhas e viu chegar 1.\n//\n// O ENVIO FOI PROVADO em 11/08 (execucao 3256): um rascunho temporario injetou uma\n// vitrine ficticia so para o Filtro deixar passar, e o evolution-api aceitou a\n// mensagem (fromMe: true). O rascunho foi desfeito no mesmo minuto -- esta versao\n// NAO tem bloco de teste nenhum, e e a que esta publicada. Sem esse disparo, a\n// credencial ficaria sem prova ate o primeiro episodio real, que e justamente o\n// dia em que nao se quer descobrir que ela esta errada.\n//\n// JANELA DE 24h EM VEZ DE MEMORIA. A Amazon coleta 12/12h. Rodando 1x por dia,\n// depois da segunda rodada, uma janela de 24h cobre as duas -- e o workflow nao\n// precisa guardar o que ja avisou. Vigia sem memoria nao tem como mentir sobre o\n// que ja disse. (Alternativas descartadas em 11/08: avisar a cada rodada, que\n// dispararia em ~30% delas, e limiar >=3 vitrines, que perderia a maioria dos\n// casos, porque a maioria e de 1 a 2 vitrines.)\n//\n// ATENCAO: A JANELA CONVERSA COM A PURGA, e a margem foi conferida: o backup diario\n// purga a tabela as 15:00 BRT (18:00 UTC) deixando so o snapshot mais recente.\n// Este alerta roda as 12:20 BRT (15:20 UTC), 2h40 ANTES da purga, e a essa hora a\n// tabela tem as duas rodadas do dia (03:00 e 15:00 UTC) mais a de 15:00 do dia\n// anterior, que a janela de 24h exclui por 20 minutos. Mover qualquer um dos dois\n// horarios mexe nessa margem.\n//\n// ESTE NO SEMPRE EMITE O QUE VIU, inclusive zero vitrine em erro -- quem decide\n// avisar e o Filtro seguinte. Monitor que devolve [] quando esta tudo bem e\n// indistinguivel de monitor morto (regra do projeto, nascida em 25/07).\n//\n// O QUE ELE NAO FAZ: traduzir rotulo -> slug. Esse mapa e versionado, mora no\n// 03_Analise/amazon_vitrines_inventario.py, e copia-lo para ca criaria uma segunda\n// copia que envelhece sozinha. A mensagem aponta para o script que traduz.\nconst NL = String.fromCharCode(10);\nconst JANELA_H = 24;\nconst LIMIAR_VITRINES = 1;\nconst agora = Date.now();\nconst recentes = [];\nlet lidas = 0;\nfor (const item of $input.all()) {\n  const j = item.json || {};\n  if (!j.coletado_em) { continue; }\n  lidas = lidas + 1;\n  const idadeH = (agora - new Date(j.coletado_em).getTime()) / 3600000;\n  if (idadeH <= JANELA_H) { recentes.push(j); }\n}\nconst porVitrine = {};\nconst rodadas = {};\nfor (const r of recentes) {\n  const nome = r.categoria_pagina || \"(sem categoria)\";\n  if (!porVitrine[nome]) { porVitrine[nome] = { vitrine: nome, ocorrencias: 0, ultima_rodada: null, ultimo_motivo: null }; }\n  porVitrine[nome].ocorrencias = porVitrine[nome].ocorrencias + 1;\n  if (!porVitrine[nome].ultima_rodada || r.coletado_em > porVitrine[nome].ultima_rodada) {\n    porVitrine[nome].ultima_rodada = r.coletado_em;\n    porVitrine[nome].ultimo_motivo = r.titulo || null;\n  }\n  rodadas[r.coletado_em] = true;\n}\nconst vitrines = [];\nfor (const nome of Object.keys(porVitrine)) { vitrines.push(porVitrine[nome]); }\nvitrines.sort(function (a, b) { return a.vitrine < b.vitrine ? -1 : 1; });\nconst nRodadas = Object.keys(rodadas).length;\nconst alertar = vitrines.length >= LIMIAR_VITRINES;\nlet txt = \"\";\nif (alertar) {\n  txt = \"*ENXAME - perda silenciosa na Amazon*\" + NL + NL;\n  txt = txt + \"Nas ultimas \" + JANELA_H + \"h: \" + vitrines.length + \" vitrine(s) em erro, em \" + nRodadas + \" rodada(s).\" + NL + NL;\n  for (const v of vitrines) {\n    const quando = v.ultima_rodada ? v.ultima_rodada.slice(0, 16).replace(\"T\", \" \") + \" UTC\" : \"?\";\n    txt = txt + \"- \" + v.vitrine + \" (\" + v.ocorrencias + \"x, ultima \" + quando + \")\" + NL;\n  }\n  txt = txt + NL + \"Motivo gravado: \" + (vitrines[0].ultimo_motivo || \"?\") + NL;\n  txt = txt + \"A rodada GRAVOU: o alerta de 18h nao pega isto.\" + NL;\n  txt = txt + \"Para sondar as vitrines: python 03_Analise/vitrines_amazon_em_erro.py\";\n}\nreturn [{ json: {\n  alertar: alertar,\n  resumo: alertar ? vitrines.length + \" vitrine(s) em erro em \" + JANELA_H + \"h\" : \"nenhuma vitrine em erro na janela, nada a enviar\",\n  janela_horas: JANELA_H,\n  limiar_vitrines: LIMIAR_VITRINES,\n  linhas_de_erro_lidas: lidas,\n  linhas_de_erro_na_janela: recentes.length,\n  rodadas_afetadas: nRodadas,\n  verificado_em: new Date().toISOString(),\n  vitrines: vitrines,\n  mensagem: txt\n} }];"
+      },
+      "position": [
+        448,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "fa491463-dbc5-4f4a-b1e9-4a1aa3f57168",
+      "name": "So se houver perda",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "tem-perda",
+              "leftValue": "={{ $json.alertar }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          }
+        },
+        "options": {}
+      },
+      "position": [
+        672,
+        0
+      ],
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3
+    },
+    {
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "A0xdPHclav6xIw6j",
+          "name": "Evolution API - Enxame"
+        }
+      },
+      "id": "2c817ef6-e035-4fbd-ad3f-e0d1ab6c315e",
+      "name": "Avisar no WhatsApp",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "jsonBody": "={{ JSON.stringify({ number: \"<TELEFONE_DO_ALERTA>\", options: { delay: 800, presence: \"composing\" }, textMessage: { text: $json.mensagem } }) }}",
+        "method": "POST",
+        "options": {
+          "timeout": 20000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "http://evolution-api:8080/message/sendText/enxame-alertas"
+      },
+      "position": [
+        896,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Todo dia 12:20 BRT": {
+      "recurrenceRules": []
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-08-28 05:35:08.501",
+  "versionId": "c9cc2254-deb8-459a-a21f-d1b11f58d08a"
+}

@@ -1,0 +1,114 @@
+{
+  "seletor_item": ".a-carousel-card",
+  "campos": {
+    "titulo": {
+      "seletor": ".p13n-sc-truncate",
+      "origem": "texto"
+    },
+    "preco": null,
+    "link": {
+      "seletor": "a.a-link-normal",
+      "origem": "atributo",
+      "atributo": "href"
+    },
+    "rank": {
+      "seletor": ".zg-bdg-text",
+      "origem": "texto"
+    },
+    "avaliacao": {
+      "seletor": ".a-icon-row a",
+      "origem": "atributo",
+      "atributo": "aria-label"
+    },
+    "categoria": {
+      "seletor": ".a-carousel-heading",
+      "origem": "texto"
+    }
+  },
+  "seletor_grupo": ".a-carousel-container",
+  "campos_grupo": {
+    "categoria": {
+      "seletor": ".a-carousel-heading",
+      "origem": "texto"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://www.amazon.com.br/gp/bestsellers/",
+    "dominio": "www.amazon.com.br",
+    "modelo": "gpt-4o-mini",
+    "criado_em": "2026-07-15T03:14:05.462953+00:00",
+    "agente": "supervisor",
+    "versao_formato": 1,
+    "reparo": true,
+    "origem_html": "execucao n8n 2408 (wf pliN9f1zwIhClN2M), HTML servido ao VPS em 2026-07-13",
+    "nota_validacao": null,
+    "historia": "proposta pelo Agente 2 (0 itens: seletor_grupo apontava o titulo do carrossel) e reparada pelo Agente 4 na 1a tentativa",
+    "campos_ausentes": {
+      "preco": "A Amazon NAO publica preco na pagina de mais-vendidos para clientes que se identificam como robo (token Bot/Crawler/Spider no User-Agent). Experimento controlado no VPS em 15/07/2026: EnxameBot -> 457KB e 0 ocorrencias de R$; axios/sem-UA/Chrome -> 617KB e 34 precos. Nao e receita quebrada nem mudanca de layout: e a fonte sonegando o campo a um bot honesto. Decisao do projeto: manter a identidade EnxameBot e abrir mao do preco (Shopee e ML ja fornecem preco). Nao acionar reparo neste campo."
+    },
+    "aprovada": true,
+    "validacao": {
+      "itens_encontrados": 36,
+      "campos": {
+        "categoria": {
+          "preenchidos": 36,
+          "taxa": 1.0
+        },
+        "titulo": {
+          "preenchidos": 36,
+          "taxa": 1.0
+        },
+        "preco": {
+          "preenchidos": 0,
+          "taxa": 0.0
+        },
+        "link": {
+          "preenchidos": 36,
+          "taxa": 1.0
+        },
+        "rank": {
+          "preenchidos": 36,
+          "taxa": 1.0
+        },
+        "avaliacao": {
+          "preenchidos": 36,
+          "taxa": 1.0
+        }
+      }
+    },
+    "campos_pedidos": [
+      {
+        "nome": "categoria",
+        "descricao": "nome da vitrine/categoria de mais vendidos",
+        "tipo": "texto"
+      },
+      {
+        "nome": "titulo",
+        "descricao": "nome do produto",
+        "tipo": "texto"
+      },
+      {
+        "nome": "preco",
+        "descricao": "preco em reais, ex R$ 99,90",
+        "tipo": "preco"
+      },
+      {
+        "nome": "link",
+        "descricao": "href do link do produto",
+        "tipo": "url"
+      },
+      {
+        "nome": "rank",
+        "descricao": "posicao no ranking de mais vendidos, ex #1",
+        "tipo": "rank"
+      },
+      {
+        "nome": "avaliacao",
+        "descricao": "nota em estrelas e numero de avaliacoes",
+        "tipo": "nota"
+      }
+    ],
+    "campos_pedidos_nota": "campos_pedidos preenchido em 2026-07-15 (noite), depois de a receita ter sido criada. As descricoes originais nao foram guardadas; estas sao as que valem para reparos futuros. Nenhum seletor foi alterado.",
+    "campos_pedidos_tipo_nota": "tipo declarado em 2026-07-15 (noite), junto com a validacao de tipo/faixa do Agente 3. Simulado contra a pagina real antes de declarar: nenhuma reprovacao. Nenhum seletor alterado."
+  }
+}

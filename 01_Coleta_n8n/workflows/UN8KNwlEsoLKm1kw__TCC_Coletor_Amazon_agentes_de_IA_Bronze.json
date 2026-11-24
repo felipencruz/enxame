@@ -1,0 +1,158 @@
+{
+  "active": 0,
+  "connections": {
+    "Agendado 12h": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Vitrines Ativas",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Coletar Vitrines": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar Bronze Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Vitrines Ativas": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Coletar Vitrines",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-15 03:42:04.283",
+  "description": "Coletor Bronze Amazon (12/12h): le as 22 vitrines em escopo e chama o enxame-api. Ate 3 tentativas por vitrine (desde 08/09/2026); so vira linha de erro quem a fonte recusa nas TRES, com o numero de tentativas no proprio titulo.",
+  "id": "UN8KNwlEsoLKm1kw",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Coletor Amazon (agentes de IA, Bronze)",
+  "nodes": [
+    {
+      "id": "49e48faa-c9bb-4fd9-a89c-5dac2eb93b31",
+      "name": "Agendado 12h",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "position": [
+        224,
+        176
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    },
+    {
+      "id": "fa4c7dad-17ba-433d-9f7d-5aa01c58bd3a",
+      "name": "Ler Vitrines Ativas",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_amazon_vitrines",
+          "mode": "id",
+          "value": "vche5aYj6BUs9yL9"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isTrue",
+              "keyName": "ativo"
+            }
+          ]
+        },
+        "matchType": "anyCondition",
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        448,
+        176
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "6124467d-95cf-47c6-b974-fff233ed13a6",
+      "name": "Coletar Vitrines",
+      "parameters": {
+        "jsCode": "// Percorre as 22 vitrines EM ESCOPO (tcc_amazon_vitrines) chamando o enxame-api\n// para cada uma. Substituiu a pagina geral em 16/07: ela ROTACIONAVA as vitrines (6\n// por rodada de um pool de 9, incluindo 3 fora do escopo da Parte A) e nao entregava\n// preco ao EnxameBot. A rota por departamento entrega 50 itens COM preco e com rank\n// continuo #1..#50 \u2014 medido em 3 replicas, e testado em 8 vitrines antes da troca.\n//\n// A categoria NAO vem da pagina: vem da tabela governada. Na pagina de departamento\n// a categoria E a propria pagina, entao ler da tabela e mais confiavel que raspar.\n//\n// ATE 3 TENTATIVAS POR VITRINE \u2014 entrou em 08/09/2026 (tres tentativas,\n// sem tabela nova).\n//\n// POR QUE: a Amazon e fonte de melhor esforco e recusa com 503 por vitrine, naquele\n// segundo. Ate aqui havia UMA tentativa e o que ela recusasse estava perdido para\n// sempre \u2014 o Bronze e insert-only, e a rodada seguinte so vem 12h depois. Em\n// 05-07/09 isso custou 33 de 132 pares (vitrine, rodada) = 25%, e em 08/09 bateu o\n// recorde da serie: 12 das 22 vitrines numa rodada so.\n// QUE A REPETICAO RESOLVE ESTA MEDIDO, nao suposto: em 08/09 sondei as 9 vitrines\n// que tinham falhado e 7 voltaram 50/50 de primeira; as 2 que recusaram de novo\n// voltaram 50/50 na SEGUNDA chamada, tres minutos depois. 9 de 9.\n//\n// COMO AS PASSADAS SAO ORGANIZADAS, e o porque de cada escolha:\n// - a 2a e a 3a passada percorrem SO quem falhou, no fim da fila, nunca em seguida\n//   a propria falha: quando a rodada chega ao fim ja se passaram minutos, que e a\n//   ordem de grandeza em que a fonte voltou na sonda;\n// - a pausa entre vitrines sobe de 3s para 5s nas passadas de retry. Insistir mais\n//   DEVAGAR com uma fonte que esta recusando e o comportamento correto;\n// - 60s entre passadas.\n// O custo foi medido antes de escrever: a rodada atual leva 80-89s (22 vitrines),\n// e o pior caso absoluto (as 22 recusando tres vezes) fica em ~8 min, contra\n// N8N_RUNNERS_TASK_TIMEOUT=1800 do runner. A folga e de 4x.\n//\n// SO VIRA LINHA DE ERRO QUEM A FONTE RECUSOU NAS TRES. Isso e deliberado: se a\n// vitrine recusa e depois entrega, ela NAO se perdeu, e gravar erro faria o\n// \"Alerta de Perda Silenciosa\" (srxlA0ItOoj0BCGX) avisar sobre dado que esta la.\n// O invariante de que o alerta e a Silver dependem continua de pe: linha de erro\n// tem item_id NULO e titulo comecando com \"[ERRO]\".\n//\n// O TITULO PASSOU A DECLARAR QUANTAS TENTATIVAS HOUVE \u2014 \"[ERRO] (3 tentativas)\".\n// Sem isso a serie ficaria incomparavel em silencio: linha ANTES de 08/09/2026 mede\n// uma tentativa; linha depois mede tres, e a taxa de 503 medida antes nao\n// significa mais a mesma coisa. Com a marca, o proprio dado diz qual regime o\n// produziu (numero certo medindo outra coisa e o erro que nenhum auditor\n// pega).\n//\n// UM UNICO coletado_em PARA A RODADA INTEIRA, inclusive nas linhas recuperadas na\n// 3a passada. A purga diaria guarda \"o snapshot mais recente\" e o alerta agrupa\n// rodada por esse campo: recarimbar no meio partiria a rodada em dois snapshots.\n//\n// Teste deterministico dos quatro ramos (inclusive \"recusa e recupera\", que nenhuma\n// execucao real produz sob comando): 01_Coleta_n8n/teste_retry_amazon.mjs.\nconst vitrines = $input.all().map(i => i.json);\nconst agora = new Date().toISOString();\nconst BASE = \"https://www.amazon.com.br\";\nconst MAX_TENTATIVAS = 3;\nconst PAUSA_VITRINE_MS = 3000;\nconst PAUSA_VITRINE_RETRY_MS = 5000;\nconst PAUSA_PASSADA_MS = 60000;\n\nconst linhas = [];\nconst motivos = {};\nlet pendentes = vitrines;\n\nfor (let tentativa = 1; tentativa <= MAX_TENTATIVAS; tentativa++) {\n  if (pendentes.length === 0) { break; }\n  if (tentativa > 1) { await new Promise(r => setTimeout(r, PAUSA_PASSADA_MS)); }\n  const pausa = tentativa === 1 ? PAUSA_VITRINE_MS : PAUSA_VITRINE_RETRY_MS;\n  const falharam = [];\n  for (const v of pendentes) {\n    try {\n      const resp = await this.helpers.httpRequest({\n        method: \"POST\",\n        url: \"http://enxame-api:8000/agentes/coletar\",\n        body: { url: v.url },\n        json: true,\n        timeout: 120000,\n      });\n      // Acumula em lista PROPRIA e so anexa quando a vitrine fecha inteira: se a\n      // chamada falhasse depois de ja ter produzido linhas, o retry duplicaria.\n      const daVitrine = [];\n      for (const n of (resp.linhas || [])) {\n        const rel = n.link || \"\";\n        const link = rel.startsWith(\"http\") ? rel : (rel ? BASE + rel : null);\n        const m = rel.match(/\\/dp\\/([A-Z0-9]{10})/i);\n        daVitrine.push({ json: {\n          item_id: m ? m[1] : null,\n          titulo: n.titulo || null,\n          preco: n.preco || null,\n          categoria_pagina: v.rotulo_amazon,\n          rank: n.rank || null,\n          avaliacao: n.avaliacao || null,\n          link: link,\n          coletado_em: agora,\n        }});\n      }\n      for (const l of daVitrine) { linhas.push(l); }\n    } catch (e) {\n      const detalhe = (e.message || String(e)).slice(0, 180);\n      if (!motivos[v.rotulo_amazon]) { motivos[v.rotulo_amazon] = []; }\n      motivos[v.rotulo_amazon].push(detalhe);\n      falharam.push(v);\n    }\n    await new Promise(r => setTimeout(r, pausa));\n  }\n  pendentes = falharam;\n}\n\n// Vitrine que a fonte recusou nas TRES tentativas: linha de erro auditavel, no\n// padrao dos outros coletores. Falha silenciosa nao existe aqui.\nfor (const v of pendentes) {\n  const ds = motivos[v.rotulo_amazon] || [];\n  let motivo = \"sem detalhe\";\n  if (ds.length > 0) {\n    let iguais = true;\n    for (const d of ds) { if (d !== ds[0]) { iguais = false; } }\n    if (iguais) {\n      motivo = ds[0];\n    } else {\n      // Motivos diferentes entre as tentativas: guarda os tres. Sem .join(), que o\n      // runner bloqueia (\"Security violation\") nas duas camadas do SDK.\n      motivo = \"\";\n      for (const d of ds) { motivo = motivo ? motivo + \" | \" + d : d; }\n      motivo = motivo.slice(0, 180);\n    }\n  }\n  linhas.push({ json: {\n    item_id: null,\n    titulo: \"[ERRO] (\" + ds.length + \" tentativas) \" + motivo,\n    preco: null,\n    categoria_pagina: v.rotulo_amazon,\n    rank: null,\n    avaliacao: null,\n    link: v.url,\n    coletado_em: agora,\n  }});\n}\nreturn linhas;",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        672,
+        176
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "56e35fbf-ab74-4fba-bfac-a452a3ed2e2c",
+      "name": "Gravar Bronze Amazon",
+      "parameters": {
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {}
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_amazon",
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "operation": "insert",
+        "options": {},
+        "resource": "row"
+      },
+      "position": [
+        896,
+        176
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Agendado 12h": {
+      "recurrenceRules": [
+        0
+      ]
+    },
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-09-09 01:51:47.587",
+  "versionId": "4753ff52-a75d-4973-8c1f-2859fa3fa043"
+}

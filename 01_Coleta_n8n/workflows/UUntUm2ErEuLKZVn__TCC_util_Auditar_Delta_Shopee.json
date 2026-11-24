@@ -1,0 +1,108 @@
+{
+  "active": 0,
+  "connections": {
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Shopee",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Shopee": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Auditar Delta",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-16 14:49:08.250",
+  "description": "Util READ-ONLY. Responde o que a doc da Shopee nao responde: o campo sales e ACUMULADO ou JANELA MOVEL? Mede o teste primeiro-vs-ultimo ponto, as trajetorias, o refresh 1x/dia e os buracos. Auditor da secao 3.1 do 04_Preparacao_Silver.md.",
+  "id": "UUntUm2ErEuLKZVn",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Auditar Delta Shopee",
+  "nodes": [
+    {
+      "id": "6b4a15f1-dd82-471d-82a6-c772ba5d5026",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "4cd95884-a22d-4032-a828-b8c1777db976",
+      "name": "Ler Bronze Shopee",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_shopee",
+          "mode": "id",
+          "value": "oodaLwjRQOZdMcO7"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        460,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "f542692f-a4e3-452d-81ca-210a5e87ad92",
+      "name": "Auditar Delta",
+      "parameters": {
+        "jsCode": "const linhas = $('Ler Bronze Shopee').all().map(i => i.json);\n\nconst porStamp = {};\nfor (const r of linhas) {\n  const s = r.coletado_em;\n  if (!s) continue;\n  if (!porStamp[s]) porStamp[s] = [];\n  porStamp[s].push(r);\n}\nconst stamps = Object.keys(porStamp).sort();\n\nconst salesDe = {};\nfor (const s of stamps) {\n  const m = {};\n  for (const r of porStamp[s]) {\n    const v = Number(r.sales);\n    if (!Number.isFinite(v)) continue;\n    if (m[r.item_id] === undefined || v > m[r.item_id]) { m[r.item_id] = v; }\n  }\n  salesDe[s] = m;\n}\n\nconst obsPorItem = {};\nfor (const s of stamps) {\n  for (const id of Object.keys(salesDe[s])) { obsPorItem[id] = (obsPorItem[id] || 0) + 1; }\n}\nconst todosIds = Object.keys(obsPorItem);\nconst serieCompleta = todosIds.filter(id => obsPorItem[id] === stamps.length);\n\nconst balanco = { subiu: 0, igual: 0, caiu: 0 };\nconst casosQueCairam = [];\nfor (const id of todosIds) {\n  if (obsPorItem[id] < 2) continue;\n  const pts = [];\n  for (const s of stamps) { if (salesDe[s][id] !== undefined) { pts.push(salesDe[s][id]); } }\n  const d = pts[pts.length - 1] - pts[0];\n  if (d > 0) { balanco.subiu++; }\n  else if (d === 0) { balanco.igual++; }\n  else {\n    balanco.caiu++;\n    if (casosQueCairam.length < 12) { casosQueCairam.push({ item_id: id, primeiro: pts[0], ultimo: pts[pts.length - 1], variacao_total: d, pontos_na_serie: pts.length }); }\n  }\n}\n\nconst trajetorias = serieCompleta.map(id => ({ item_id: id, serie_completa_28_pontos: stamps.map(s => salesDe[s][id]) }));\n\nconst pares = [];\nconst todosNegativos = [];\nlet totPos = 0; let totZero = 0; let totNeg = 0;\nlet totSumiram = 0; let totEntraram = 0;\nfor (let i = 1; i < stamps.length; i++) {\n  const a = stamps[i - 1]; const b = stamps[i];\n  const ma = salesDe[a]; const mb = salesDe[b];\n  const horas = (new Date(b).getTime() - new Date(a).getTime()) / 3600000;\n  let pos = 0; let zero = 0; let neg = 0; let somaPos = 0;\n  const idsA = Object.keys(ma); const idsB = Object.keys(mb);\n  for (const id of idsB) {\n    if (ma[id] === undefined) continue;\n    const d = mb[id] - ma[id];\n    if (d > 0) { pos++; somaPos += d; }\n    else if (d === 0) { zero++; }\n    else { neg++; todosNegativos.push({ item_id: id, de: ma[id], para: mb[id], delta: d, snapshot: b }); }\n  }\n  const sumiram = idsA.filter(id => mb[id] === undefined);\n  const entraram = idsB.filter(id => ma[id] === undefined);\n  totSumiram += sumiram.length; totEntraram += entraram.length;\n  totPos += pos; totZero += zero; totNeg += neg;\n  pares.push({ de: a, para: b, horas_de_intervalo: Number(horas.toFixed(2)), itens_pareados: pos + zero + neg, delta_positivo: pos, delta_zero: zero, delta_negativo: neg, sumiram_do_top: sumiram.length, entraram_no_top: entraram.length });\n}\n\nconst dupDentroSnapshot = [];\nconst porSnapshot = [];\nfor (const s of stamps) {\n  const rs = porStamp[s];\n  const cont = {};\n  for (const r of rs) { cont[r.item_id] = (cont[r.item_id] || 0) + 1; }\n  const ids = Object.keys(cont);\n  const dups = ids.filter(id => cont[id] > 1);\n  if (dups.length > 0) { dupDentroSnapshot.push({ snapshot: s, itens_repetidos: dups.length, exemplos: dups.slice(0, 3).map(id => ({ item_id: id, vezes: cont[id] })) }); }\n  const paginas = {};\n  for (const r of rs) { paginas['p' + r.page] = (paginas['p' + r.page] || 0) + 1; }\n  porSnapshot.push({ snapshot: s, linhas: rs.length, itens_distintos: ids.length, por_pagina: paginas });\n}\n\nconst totalPareados = totPos + totZero + totNeg;\nconst pct = (n) => (totalPareados > 0 ? Number((100 * n / totalPareados).toFixed(2)) : 0);\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  ATENCAO: 'Util READ-ONLY. Nao grava nada.',\n  PERGUNTA: 'O sales e ACUMULADO (total historico) ou JANELA MOVEL? A doc oficial da Shopee NAO define o campo (conferido 16/07). Entao o dado decide.',\n  COMO_LER: 'Se acumulado: a serie de um item NUNCA cai, e TESTE_primeiro_vs_ultimo.caiu deve ser 0. Se janela movel: sobe e desce, e caiu fica perto de subiu. Medido em 16/07: 81 subiu / 80 igual / 76 CAIU -> NAO e acumulado.',\n  snapshots: stamps.length,\n  itens_distintos_no_periodo: todosIds.length,\n  TESTE_primeiro_vs_ultimo_ponto: balanco,\n  casos_que_terminaram_ABAIXO_de_onde_comecaram: casosQueCairam,\n  trajetorias_dos_itens_presentes_em_TODOS_os_snapshots: trajetorias,\n  REFRESH_1x_por_dia: { explicacao: 'So os pares 15:00->21:00 UTC tem movimento; nas outras transicoes o delta e zero em 100% dos itens. A coleta 6/6h remede o mesmo numero 4x.', por_par_de_snapshot: pares },\n  DELTA_no_periodo_inteiro: { total_de_deltas_calculados: totalPareados, positivos: totPos, positivos_pct: pct(totPos), zeros: totZero, zeros_pct: pct(totZero), negativos: totNeg, negativos_pct: pct(totNeg) },\n  NEGATIVOS_exemplos: todosNegativos.slice(0, 15),\n  BURACOS: { sumiram_do_top_total: totSumiram, entraram_no_top_total: totEntraram },\n  PAGINACAO_duplicata_dentro_do_snapshot: { explicacao: 'O coletor pede 5 paginas de 50; a API ecoa pageInfo.page 1..5 e devolve o MESMO conjunto -> 250 linhas, ~50 itens, cada um 5x. A Silver deduplica por (item_id, coletado_em). Sonda page=1 vs page=2 pendente.', casos: dupDentroSnapshot, por_snapshot: porSnapshot }\n} }];\n",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        680,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "afaa27ce-b3f5-4877-acc9-da84f83cd71f",
+      "name": "Sticky Note a24beb08",
+      "parameters": {
+        "color": 4,
+        "content": "## [util] Auditar Delta Shopee \u2014 SO LEITURA\n\nResponde a pergunta que a doc da Shopee nao responde:\n**o campo `sales` e total historico ou janela movel?**\n\nA doc oficial LISTA o campo e NAO o define (conferido em 16/07,\naffiliateshopee.com.br/documentacao) \u2014 os vizinhos tem descricao, ele nao.\nEntao quem decide e o dado.\n\n### COMO LER O RESULTADO\n- se ACUMULADO -> a serie de um item nunca cai; `caiu` = 0\n- se JANELA MOVEL -> sobe e desce; `caiu` fica perto de `subiu`\n\n**Medido em 16/07: 81 subiu / 80 igual / 76 CAIU -> NAO e acumulado.**\nUm item foi de 4.361 para 3.704 em 7 dias.\n\nTambem expoe: o **refresh 1x/dia** (so os pares 15:00->21:00 UTC se mexem;\nnos outros o delta e zero em 100% dos itens) e a **duplicata de paginacao**\n(250 linhas, ~50 itens, cada um 5x).\n\nE o auditor da secao 3.1 de `00_Projeto/04_Preparacao_Silver.md`.\nSe um numero do doc divergir daqui, ESTE util esta certo.\n\nNao grava nada. Disparo manual.",
+        "height": 200,
+        "width": 740
+      },
+      "position": [
+        190,
+        250
+      ],
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-16 15:22:21.984",
+  "versionId": "4d0c6899-e57a-422c-929a-c407e113eaf2"
+}

@@ -1,0 +1,147 @@
+{
+  "seletor_item": ".andes-carousel-snapped__slide",
+  "campos": {
+    "titulo": {
+      "seletor": ".dynamic-carousel__title",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".dynamic-carousel__price > span",
+      "origem": "texto"
+    },
+    "preco_antigo": {
+      "seletor": ".dynamic-carousel__oldprice",
+      "origem": "texto"
+    },
+    "desconto": {
+      "seletor": ".dynamic-carousel__discount",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": "a.splinter-link",
+      "origem": "atributo",
+      "atributo": "href"
+    },
+    "selo_mais_vendido": {
+      "seletor": ".dynamic-carousel__pill-container--text-best-seller",
+      "origem": "texto"
+    }
+  },
+  "seletor_grupo": ".dynamic__carousel",
+  "campos_grupo": {
+    "categoria": {
+      "seletor": "h2.andes-typography--type-title",
+      "origem": "texto"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://www.mercadolivre.com.br/mais-vendidos/",
+    "dominio": "www.mercadolivre.com.br",
+    "criado_em": "2026-09-25T00:00:39.877041+00:00",
+    "agente": "manual (24/09/2026) - sem LLM",
+    "versao_formato": 1,
+    "historia": "Receita v3: a v2 (15/07) mais o campo `selo_mais_vendido` (o texto 'N MAIS VENDIDO' de cada slide, o rank DECLARADO pela fonte, equivalente ao #N da Amazon e COM buracos) e `campos_essenciais` = titulo, preco, link. Os seis campos antigos tem os MESMOS seletores. A POSICAO no carrossel (aria-label 'k de M' do proprio slide) NAO esta aqui: a receita so alcanca descendentes do item; ela e numerada pelo coletor do n8n na ordem da resposta (decisao de 24/09), para nao recriar o container.",
+    "substitui": "receita_20260715_045658.json (v2)",
+    "campos_essenciais": [
+      "titulo",
+      "preco",
+      "link"
+    ],
+    "campos_essenciais_por_que": "Campo novo a 100% SOBE a media e dilui a perda dos antigos: com ele, 7 combinacoes de defeito que a v2 reprova passariam a ser aprovadas (10 com dois campos novos), e todas contem preco ou link. Declarar os dois essenciais elimina as 7 e reprovaria 0 das 262 rodadas legitimas da serie (13/07 a 21/09: preco e link em 100% em todas). Medido em 24/09 - artefato 02_Dados/raw/sonda_rank_ml_20260924/.",
+    "campos_pedidos": [
+      {
+        "nome": "categoria",
+        "descricao": "titulo do carrossel (a categoria), acima dos produtos",
+        "tipo": null
+      },
+      {
+        "nome": "titulo",
+        "descricao": "nome do produto",
+        "tipo": null
+      },
+      {
+        "nome": "preco",
+        "descricao": "preco atual em reais, ex R$ 99,90",
+        "tipo": null
+      },
+      {
+        "nome": "preco_antigo",
+        "descricao": "preco riscado, so existe em item com desconto",
+        "tipo": null
+      },
+      {
+        "nome": "desconto",
+        "descricao": "percentual de desconto, so existe em item com desconto",
+        "tipo": null
+      },
+      {
+        "nome": "link",
+        "descricao": "href do link do produto",
+        "tipo": null
+      },
+      {
+        "nome": "selo_mais_vendido",
+        "descricao": "selo de ranking do produto, ex 1o MAIS VENDIDO",
+        "tipo": null
+      }
+    ],
+    "campos_pedidos_por_que": "So para o Agente 4 enxergar o que cada campo e num reparo (a v2 nao guardava o pedido). `tipo` fica nulo de proposito: com tipo, a taxa_valida dos campos antigos mudaria e a regua deixaria de medir a v3 como media a v2.",
+    "validacao": {
+      "itens_encontrados": 180,
+      "campos": {
+        "categoria": {
+          "preenchidos": 180,
+          "taxa": 1.0,
+          "validos": 180,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "titulo": {
+          "preenchidos": 180,
+          "taxa": 1.0,
+          "validos": 180,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "preco": {
+          "preenchidos": 180,
+          "taxa": 1.0,
+          "validos": 180,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "preco_antigo": {
+          "preenchidos": 138,
+          "taxa": 0.767,
+          "validos": 138,
+          "taxa_valida": 0.767,
+          "tipo": null
+        },
+        "desconto": {
+          "preenchidos": 138,
+          "taxa": 0.767,
+          "validos": 138,
+          "taxa_valida": 0.767,
+          "tipo": null
+        },
+        "link": {
+          "preenchidos": 180,
+          "taxa": 1.0,
+          "validos": 180,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "selo_mais_vendido": {
+          "preenchidos": 180,
+          "taxa": 1.0,
+          "validos": 180,
+          "taxa_valida": 1.0,
+          "tipo": null
+        }
+      }
+    },
+    "validacao_origem": "..\\02_Dados\\raw\\sonda_rank_ml_20260924\\20260924T235228Z_ml_mais-vendidos_EnxameBot.html",
+    "aprovada": true,
+    "salvo_em": "2026-09-25T00:00:39.877041+00:00"
+  }
+}

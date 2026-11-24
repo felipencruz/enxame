@@ -1,0 +1,282 @@
+{
+  "active": 0,
+  "connections": {
+    "Ler Amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "CSV Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler ML": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "CSV ML",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Shopee": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "CSV Shopee",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Suggest": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "CSV Suggest",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler YouTube": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "CSV YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Suggest",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Ler YouTube",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Ler Shopee",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Ler ML",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Ler Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-17 01:54:32.346",
+  "description": "Le as 5 data tables Bronze (serie completa, sem distinct) e gera CSV datado por tabela, para trazer a 02_Dados/raw/. So leitura, disparo manual.",
+  "id": "6dAtB1xEFBjL0wRp",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Exportar Bronze",
+  "nodes": [
+    {
+      "id": "3124fc8e-7e21-48c1-b687-9156317c3ffc",
+      "name": "Start",
+      "parameters": {},
+      "position": [
+        240,
+        400
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "23965512-d582-475b-96bd-51f062b40e1f",
+      "name": "Ler Suggest",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "HTp0xMFBFsY4OZzx"
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        544,
+        48
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "fef84f18-5e92-4251-b54b-db50f0cfe22e",
+      "name": "CSV Suggest",
+      "parameters": {
+        "jsCode": "const NL = String.fromCharCode(10);\nconst cols = ['termo_semente','sugestao','posicao','fonte','idioma','coletado_em'];\nfunction esc(v){ if (v === null || v === undefined) return ''; var s = String(v); if (s.indexOf(',') !== -1 || s.indexOf('\"') !== -1 || s.indexOf(NL) !== -1) { return '\"' + s.split('\"').join('\"\"') + '\"'; } return s; }\nconst items = $input.all();\nconst linhas = [cols.join(',')];\nfor (const item of items) { const row = item.json; linhas.push(cols.map(function(c){ return esc(row[c]); }).join(',')); }\nconst csv = linhas.join(NL);\nconst hoje = $now.toFormat('yyyy-LL-dd');\nreturn [{ json: { tabela: 'tcc_bronze_google_suggest', arquivo: 'tcc_bronze_google_suggest_' + hoje + '.csv', linhas: items.length, csv: csv } }];"
+      },
+      "position": [
+        848,
+        48
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "db178b42-91a3-4fde-af26-0ba30aa3535a",
+      "name": "Ler YouTube",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "txAtoMRsWO351Pm2"
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        544,
+        224
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "277ad43f-b0c4-4473-94fc-029956d2ce94",
+      "name": "CSV YouTube",
+      "parameters": {
+        "jsCode": "const NL = String.fromCharCode(10);\nconst cols = ['termo_semente','video_id','titulo','canal','published_at','total_results','coletado_em'];\nfunction esc(v){ if (v === null || v === undefined) return ''; var s = String(v); if (s.indexOf(',') !== -1 || s.indexOf('\"') !== -1 || s.indexOf(NL) !== -1) { return '\"' + s.split('\"').join('\"\"') + '\"'; } return s; }\nconst items = $input.all();\nconst linhas = [cols.join(',')];\nfor (const item of items) { const row = item.json; linhas.push(cols.map(function(c){ return esc(row[c]); }).join(',')); }\nconst csv = linhas.join(NL);\nconst hoje = $now.toFormat('yyyy-LL-dd');\nreturn [{ json: { tabela: 'tcc_bronze_youtube', arquivo: 'tcc_bronze_youtube_' + hoje + '.csv', linhas: items.length, csv: csv } }];"
+      },
+      "position": [
+        848,
+        224
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "f478ac88-caa3-4b4c-a4ab-401523ae86be",
+      "name": "Ler Shopee",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "oodaLwjRQOZdMcO7"
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        544,
+        400
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "dfdea4c4-6dfb-479e-8ea8-7e93348877fc",
+      "name": "CSV Shopee",
+      "parameters": {
+        "jsCode": "const NL = String.fromCharCode(10);\nconst cols = ['item_id','product_name','price','price_discount_rate','sales','rating_star','commission_rate','shop_name','offer_link','image_url','page','sort_type','coletado_em'];\nfunction esc(v){ if (v === null || v === undefined) return ''; var s = String(v); if (s.indexOf(',') !== -1 || s.indexOf('\"') !== -1 || s.indexOf(NL) !== -1) { return '\"' + s.split('\"').join('\"\"') + '\"'; } return s; }\nconst items = $input.all();\nconst linhas = [cols.join(',')];\nfor (const item of items) { const row = item.json; linhas.push(cols.map(function(c){ return esc(row[c]); }).join(',')); }\nconst csv = linhas.join(NL);\nconst hoje = $now.toFormat('yyyy-LL-dd');\nreturn [{ json: { tabela: 'tcc_bronze_shopee', arquivo: 'tcc_bronze_shopee_' + hoje + '.csv', linhas: items.length, csv: csv } }];"
+      },
+      "position": [
+        848,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "4d939dc4-f5c7-4b7d-8cdb-f8f1fa60ff50",
+      "name": "Ler ML",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "WL8TW6jSHW56O2lB"
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        544,
+        592
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "24568732-96b9-48d5-b355-1b9eb7fa3968",
+      "name": "CSV ML",
+      "parameters": {
+        "jsCode": "const NL = String.fromCharCode(10);\nconst cols = ['item_id','titulo','preco','preco_antigo','desconto','link','categoria_pagina','coletado_em'];\nfunction esc(v){ if (v === null || v === undefined) return ''; var s = String(v); if (s.indexOf(',') !== -1 || s.indexOf('\"') !== -1 || s.indexOf(NL) !== -1) { return '\"' + s.split('\"').join('\"\"') + '\"'; } return s; }\nconst items = $input.all();\nconst linhas = [cols.join(',')];\nfor (const item of items) { const row = item.json; linhas.push(cols.map(function(c){ return esc(row[c]); }).join(',')); }\nconst csv = linhas.join(NL);\nconst hoje = $now.toFormat('yyyy-LL-dd');\nreturn [{ json: { tabela: 'tcc_bronze_ml', arquivo: 'tcc_bronze_ml_' + hoje + '.csv', linhas: items.length, csv: csv } }];"
+      },
+      "position": [
+        848,
+        592
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "aeeb04d2-00e0-4a83-86b9-8378a701e977",
+      "name": "Ler Amazon",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        544,
+        768
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "56ac2eb5-489a-4079-9e1c-6faad7595d1f",
+      "name": "CSV Amazon",
+      "parameters": {
+        "jsCode": "const NL = String.fromCharCode(10);\nconst cols = ['item_id','titulo','categoria_pagina','rank','avaliacao','link','coletado_em','preco'];\nfunction esc(v){ if (v === null || v === undefined) return ''; var s = String(v); if (s.indexOf(',') !== -1 || s.indexOf('\"') !== -1 || s.indexOf(NL) !== -1) { return '\"' + s.split('\"').join('\"\"') + '\"'; } return s; }\nconst items = $input.all();\nconst linhas = [cols.join(',')];\nfor (const item of items) { const row = item.json; linhas.push(cols.map(function(c){ return esc(row[c]); }).join(',')); }\nconst csv = linhas.join(NL);\nconst hoje = $now.toFormat('yyyy-LL-dd');\nreturn [{ json: { tabela: 'tcc_bronze_amazon', arquivo: 'tcc_bronze_amazon_' + hoje + '.csv', linhas: items.length, csv: csv } }];"
+      },
+      "position": [
+        848,
+        768
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-17 02:59:35.334",
+  "versionId": "42702566-fb18-406c-9bbc-582e40eacced"
+}

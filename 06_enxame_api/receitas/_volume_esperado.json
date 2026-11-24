@@ -1,0 +1,53 @@
+{
+  "_leia_me": {
+    "o_que_e": "A REGUA DE VOLUME, como DADO. Para cada dominio de coleta, quanto uma pagina saudavel entrega -- em BYTES de HTML e em ITENS extraidos. E o que separa 'a fonte serviu casca' de 'a receita quebrou'. Item 9 da fila, aberto desde 17/07/2026 e fechado em 04/08/2026.",
+    "por_que_nao_mora_na_receita": "A expectativa e propriedade da ROTA, nao da receita: ela sobrevive a troca de receita, e reescrever o _meta de um artefato versionado seria editar a trilha de auditoria que este trabalho usa como prova (decisao de 04/08). Mesmo padrao de `tcc_seeds` e `tcc_amazon_vitrines`: lista governada, auditavel, fora do codigo.",
+    "por_que_ela_ABORTA_e_nao_repara": "Os tres modos de falha sao diferentes e o conserto de cada um tambem. (1) Pagina menor que `piso_bytes` = a fonte serviu casca -> nenhum seletor conserta o que o servidor nao mandou; acionar o Agente 4 queima LLM numa pagina vazia, que e exatamente o que o `bloqueio.py` existe para impedir. (2) Pagina boa mas poucos itens = degradacao da fonte -> tambem nao ha seletor a consertar. (3) Pagina boa, volume normal e CAMPOS vazios = a receita -> ai sim e reparo, e esse caminho fica intacto. A regua nova cobre (1) e (2); o Agente 4 continua dono de (3).",
+    "como_remedir": "03_Analise/auditar_volume_coleta.py sobre o Bronze, e os HTML versionados em 02_Dados/raw/ para os bytes. Refazer quando a fonte trocar de rota -- foi o que aconteceu com a Amazon em 16/07.",
+    "o_que_esta_regua_NAO_e": "Nao e deteccao de bloqueio por marcador (isso e `MARCADORES_DESAFIO`, e continua valendo), nem promessa de que a pagina esta correta: ela mede VOLUME, nao conteudo. Pagina do tamanho certo com dado errado passa por aqui e e problema da regua de campos.",
+    "fail_open_declarado": "Dominio sem linha aqui NAO tem regua de volume -- vale o limiar universal de 5.000 bytes do bloqueio.py. Inventar piso para dominio nao medido seria validar num alvo e aplicar em todos."
+  },
+  "medido_em": "2026-08-04",
+  "dominios": {
+    "www.mercadolivre.com.br": {
+      "rota": "/mais-vendidos/",
+      "piso_bytes": 250000,
+      "itens_esperados": 157,
+      "piso_fracao": 0.5,
+      "evidencia": {
+        "unidade": "CARACTERES do HTML (`len(html)`), nao bytes do arquivo -- e o que o `conferir()` mede. Os dois andam juntos aqui (a diferenca e de 0,2%, do UTF-8), mas o numero declarado e o que o codigo compara.",
+        "bytes_saudavel": [513753, 513750, 513716, 513882, 847035],
+        "bytes_casca": [133685, 134248],
+        "faixa_vazia_bytes": "134 KB a 514 KB -- o piso de 250 KB cai no meio, 1,9x acima da casca e 2,1x abaixo do saudavel",
+        "itens_por_rodada": "70 rodadas no Bronze: minimo 151, mediana 158, maximo 164 (variacao legitima de -4% a +4%)",
+        "itens_extraidos_dos_artefatos": "a receita de producao (15/07) aplicada aos HTML versionados: 0 itens na casca de 25/07 e 162 nas duas paginas saudaveis de 29/07 (EnxameBot e Chrome). E o teste de regressao: o piso de 78 nao encosta em nenhuma das duas.",
+        "piso_em_itens": "78 -- reprova 0 das 70 rodadas legitimas; o menor legitimo (151) fica 1,9x acima",
+        "artefatos": [
+          "02_Dados/raw/sonda_rotas_ml_20260725/ (a casca: 133.957 B, titulo legitimo, ZERO marcador -- passa ileso pelo conferir() antigo)",
+          "02_Dados/raw/sonda_reabertura_ml_20260729/ (o saudavel, mesmo cracha, mesma URL)"
+        ]
+      },
+      "por_que_este_dominio_primeiro": "E o caso concreto que motivou esta regua: em 23-28/07 a fonte serviu 133 KB com titulo 'Mais vendidos' e 8 IDs MLB, contra 513 KB e 194 IDs de uma pagina saudavel. O detector de bloqueio de producao NAO pega isso (medido em 31/07): nao ha marcador de desafio, o HTML tem 26x o limiar universal e o titulo e legitimo."
+    },
+    "www.amazon.com.br": {
+      "rota": "/gp/bestsellers/<departamento>/",
+      "piso_bytes": 100000,
+      "itens_esperados": 50,
+      "piso_fracao": 0.5,
+      "evidencia": {
+        "unidade": "CARACTERES do HTML, como no dominio acima.",
+        "bytes_saudavel": [329465, 329802, 332725, 333362, 335247, 418773, 419192, 457807, 619360],
+        "bytes_erro": [1643, 2584],
+        "faixa_vazia_bytes": "2,6 KB a 329 KB -- o piso de 100 KB fica 38x acima da pagina de erro e 3,3x abaixo da menor pagina boa. ATENCAO: esta borda de cima DERIVA e ja se moveu -- ela dizia '333 KB' com base nos 6 HTML versionados de 25/07, e a sonda de 10/08 mediu 329.465 e 329.802 em paginas saudaveis (50 de 50 itens), ou seja ABAIXO do minimo entao registrado. Nao afeta a regua: o piso e 100 KB, escolhido com 3,3x de folga justamente porque a borda de cima anda. Quem for re-derivar o piso lendo este bloco tem de MEDIR a serie, nao reusar este numero (instrumento que envelhece quando a serie cresce).",
+        "itens_por_vitrine": "868 pares (vitrine, rodada) sem linha de erro no Bronze: 867 com exatamente 50 itens e UM com 49. A variacao legitima e de 2%.",
+        "piso_em_itens": "25 -- reprova 0 dos 868 pares legitimos",
+        "artefatos": [
+          "02_Dados/raw/experimento_cracha/ (as 6 paginas boas, dois crachas x tres rotas)",
+          "a pagina de erro de 1.643 chars esta descrita no cabecalho de app/bloqueio.py, medida em 14/07"
+        ]
+      },
+      "por_que_este_piso_e_folgado_de_proposito": "Aqui a Amazon JA declara a falha: os pares (rodada, vitrine) que trazem apenas linha de [ERRO] -- 503 na maioria -- eram 34 de 902 quando esta regua foi escrita (04/08) e sao 59 de 1.190 (4,96%) em 10/08; o valor deriva com a serie. O caso que a regua acrescenta e o outro, medido em 17/07: a vitrine `office` que devolveu 1 item de 50 sem erro nenhum, e a regua de campos aprovou (1 de 1 = 100%). Amazon e ML falham de formas OPOSTAS -- a Amazon declara, o ML serve casca -- e por isso se mede nos dois antes de mexer.",
+      "o_503_da_fonte_x_a_nossa_regua_MEDIDO_EM_10_08": "A duvida que o Bronze nao responde foi resolvida por medicao, nao por leitura: em 10/08 as tres vitrines que falharam na rodada das 12:00 BRT (sports, hi, furniture) foram re-sondadas 5h depois com `sondas/sonda_vitrines_amazon.py` e voltaram TODAS com 50 de 50 itens e ~330 KB -- 3,3x o piso de bytes e 2,0x o piso de itens. Logo o 503 e da FONTE, nao da regua. Sinal independente que aponta no mesmo sentido: as vitrines que falham MUDAM a cada rodada, e a regua e deterministica -- se fosse ela, reprovaria sempre as mesmas."
+    }
+  }
+}

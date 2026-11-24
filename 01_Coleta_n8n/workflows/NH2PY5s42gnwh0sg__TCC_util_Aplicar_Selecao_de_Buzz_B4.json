@@ -1,0 +1,144 @@
+{
+  "active": 0,
+  "connections": {
+    "Decidir Mudancas": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar coletar_youtube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Decidir Mudancas",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-23 02:28:58.278",
+  "description": "Aplica a selecao de buzz da Parte B4 na coluna coletar_youtube da tcc_seeds. Rodada de 12/08: liga 7, desliga 7 (aplicada). Regra e listas vem de 03_Analise/parte_b4_remodelar_youtube.py.",
+  "id": "NH2PY5s42gnwh0sg",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Aplicar Selecao de Buzz (B4)",
+  "nodes": [
+    {
+      "id": "4e564496-b694-4114-8c28-5970df73186b",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "f67e0bde-7c35-4a8c-9c46-0898d8f18e51",
+      "name": "Ler Seeds",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "92162c48-3117-46eb-b97d-df51947c7af0",
+      "name": "Decidir Mudancas",
+      "parameters": {
+        "jsCode": "// Aplica a selecao da Parte B4 na coluna coletar_youtube da tcc_seeds.\n// As duas listas sao a SAIDA de 03_Analise/parte_b4_remodelar_youtube.py \u2014 a regra\n// mora no Python (auditavel, com teste); aqui so se escreve o resultado dela.\n// Regra B, teto 95: fica quem ja coleta e tem serie de buzz que VARIA; as vagas\n// restantes vao por suporte de mercado; sai quem tem serie CONSTANTE (informacao\n// zero) ou nenhum campeao no alvo.\n//\n// RODADA DE 12/08/2026 (a 2a; a 1a foi 22/07). Ela e a primeira que poda os termos\n// que entraram sem buzz medido: os 7 que saem sao TODOS daquela leva, e nenhum\n// termo da coorte antiga mudou de estado.\n// As listas mudaram depois do conserto do item 4d: ate 12/08 o script inferia\n// \"quem coleta hoje\" da SERIE do YouTube, e a serie guarda quem ja foi desligado.\nconst LIGAR = ['bebida alcoolica','controle de videogame','escova de dentes','guarda roupa','lenco umedecido','micro ondas','mixer de cozinha'];\nconst DESLIGAR = ['cafe','camera de seguranca','mouse','protetor solar','shampoo','tapete','teclado'];\nconst TETO = 95;\n\nconst seeds = $('Ler Seeds').all().map(i => i.json);\nconst existe = {};\nfor (const s of seeds) { existe[s.termo] = true; }\n\n// Fail-closed: se um termo da selecao nao existe na tabela, para tudo em vez de\n// aplicar metade da mudanca em silencio.\nconst faltando = [];\nfor (const t of LIGAR) { if (!existe[t]) faltando.push(t); }\nfor (const t of DESLIGAR) { if (!existe[t]) faltando.push(t); }\nif (faltando.length > 0) { throw new Error('Termos da selecao ausentes na tcc_seeds: ' + faltando); }\n\nconst mudancas = [];\nfor (const s of seeds) {\n  let desejado = null;\n  if (LIGAR.indexOf(s.termo) !== -1) { desejado = true; }\n  else if (DESLIGAR.indexOf(s.termo) !== -1) { desejado = false; }\n  if (desejado === null) { continue; }\n  if (s.coletar_youtube === desejado) { continue; }\n  mudancas.push({ json: { id: s.id, termo: s.termo, de: s.coletar_youtube, para: desejado, coletar_youtube: desejado, youtube_slot: desejado ? s.youtube_slot : null } });\n}\n\n// Trava nova (12/08): o teto e a razao de a regra existir \u2014 95 termos = 9.500 das\n// 10.000 unidades/dia da API. Conferir o TOTAL PREVISTO aqui, antes de gravar, e o\n// unico ponto em que ele ainda pode ser barato: depois da gravacao a cota ja estourou\n// na coleta seguinte, longe daqui.\nlet ligadosHoje = 0;\nfor (const s of seeds) { if (s.coletar_youtube === true) { ligadosHoje += 1; } }\nlet ligando = 0;\nlet desligando = 0;\nfor (const m of mudancas) { if (m.json.para === true) { ligando += 1; } else { desligando += 1; } }\nconst previsto = ligadosHoje - desligando + ligando;\nif (previsto > TETO) {\n  throw new Error('a selecao deixaria ' + previsto + ' termos coletando buzz, acima do teto de ' + TETO + ' (cota do YouTube). Nada foi gravado.');\n}\n\n// Sempre emite o diagnostico, mesmo sem mudanca: monitor que devolve [] quando esta\n// tudo bem e indistinguivel de monitor morto (licao do alerta de coleta, 25/07).\nif (mudancas.length === 0) {\n  return [{ json: { nada_a_fazer: true, ligados_hoje: ligadosHoje, previsto: previsto } }];\n}\nreturn mudancas;",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "eba43936-d010-4144-8222-80a77c794550",
+      "name": "Gravar coletar_youtube",
+      "parameters": {
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "coletar_youtube": "={{ $json.coletar_youtube }}",
+            "youtube_slot": "={{ $json.youtube_slot }}"
+          }
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "eq",
+              "keyName": "id",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "update",
+        "options": {
+          "dryRun": false
+        },
+        "resource": "row"
+      },
+      "position": [
+        960,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-08-12 10:56:21.178",
+  "versionId": "2d37bf2e-f55e-4a51-865c-70b88cac9225"
+}

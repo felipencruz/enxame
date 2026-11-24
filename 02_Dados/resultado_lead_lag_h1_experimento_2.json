@@ -1,0 +1,699 @@
+{
+ "gerado_em": "2026-11-05T12:35:56.414474+00:00",
+ "carater": "EXPERIMENTO 2 - confirmatorio pre-registrado (protocolo §8d e §8e)",
+ "fontes_do_alvo": [
+  "shopee",
+  "amazon"
+ ],
+ "primaria": "B_variacao_pct|alvo_unificado",
+ "faixa_de_lag": [
+  8,
+  12
+ ],
+ "janela_de_busca": [
+  "2026-09-14",
+  "2026-10-19"
+ ],
+ "janela_de_venda": [
+  "2026-09-14",
+  "2026-11-02"
+ ],
+ "minimo_pares_por_termo": 10,
+ "n_permutacoes": 1000,
+ "semente": 20260930,
+ "desconto_composicao": "por_fonte_depois_media",
+ "series": {
+  "alvo_unificado": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 103,
+     "mediana_rho": -0.002942825141002762,
+     "fracao_positiva": 0.49514563106796117
+    },
+    {
+     "lag": 1,
+     "termos": 103,
+     "mediana_rho": 0.031241244045951248,
+     "fracao_positiva": 0.5242718446601942
+    },
+    {
+     "lag": 2,
+     "termos": 103,
+     "mediana_rho": 0.019437472203752238,
+     "fracao_positiva": 0.5242718446601942
+    },
+    {
+     "lag": 3,
+     "termos": 104,
+     "mediana_rho": 0.017457069545945815,
+     "fracao_positiva": 0.5192307692307693
+    },
+    {
+     "lag": 4,
+     "termos": 104,
+     "mediana_rho": -0.001094021496570078,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 5,
+     "termos": 105,
+     "mediana_rho": -0.0002229410863522651,
+     "fracao_positiva": 0.49523809523809526
+    },
+    {
+     "lag": 6,
+     "termos": 104,
+     "mediana_rho": -0.0037014260740593093,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 7,
+     "termos": 104,
+     "mediana_rho": -0.0007083107097432084,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 8,
+     "termos": 104,
+     "mediana_rho": -0.028712045013360367,
+     "fracao_positiva": 0.46153846153846156
+    },
+    {
+     "lag": 9,
+     "termos": 105,
+     "mediana_rho": -0.00923967637283431,
+     "fracao_positiva": 0.49523809523809526
+    },
+    {
+     "lag": 10,
+     "termos": 106,
+     "mediana_rho": 0.0331056421174615,
+     "fracao_positiva": 0.5377358490566038
+    },
+    {
+     "lag": 11,
+     "termos": 106,
+     "mediana_rho": -0.0009304842193365373,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 12,
+     "termos": 105,
+     "mediana_rho": -0.022941608834914317,
+     "fracao_positiva": 0.45714285714285713
+    },
+    {
+     "lag": 13,
+     "termos": 105,
+     "mediana_rho": -0.036095987094172215,
+     "fracao_positiva": 0.4095238095238095
+    },
+    {
+     "lag": 14,
+     "termos": 105,
+     "mediana_rho": 0.04188555028835814,
+     "fracao_positiva": 0.5904761904761905
+    }
+   ],
+   "valor": 0.0331056421174615,
+   "lag": 10,
+   "termos_no_painel": 109,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.01983056833817612,
+   "nulo_p95": 0.05844889151951423,
+   "p_empirico": 0.255,
+   "z": 0.6116721561545202,
+   "digno": false
+  },
+  "alvo_shopee": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 29,
+     "mediana_rho": 0.01996303157486237,
+     "fracao_positiva": 0.5172413793103449
+    },
+    {
+     "lag": 1,
+     "termos": 30,
+     "mediana_rho": 0.06218438882546054,
+     "fracao_positiva": 0.5666666666666667
+    },
+    {
+     "lag": 2,
+     "termos": 27,
+     "mediana_rho": -0.011863570406412652,
+     "fracao_positiva": 0.48148148148148145
+    },
+    {
+     "lag": 3,
+     "termos": 28,
+     "mediana_rho": -0.14814248995822243,
+     "fracao_positiva": 0.32142857142857145
+    },
+    {
+     "lag": 4,
+     "termos": 28,
+     "mediana_rho": -0.13305634014757717,
+     "fracao_positiva": 0.39285714285714285
+    },
+    {
+     "lag": 5,
+     "termos": 29,
+     "mediana_rho": -0.011638321584274573,
+     "fracao_positiva": 0.41379310344827586
+    },
+    {
+     "lag": 6,
+     "termos": 28,
+     "mediana_rho": -0.059733027517184775,
+     "fracao_positiva": 0.4642857142857143
+    },
+    {
+     "lag": 7,
+     "termos": 28,
+     "mediana_rho": 0.019308600682157923,
+     "fracao_positiva": 0.5357142857142857
+    },
+    {
+     "lag": 8,
+     "termos": 27,
+     "mediana_rho": -0.12562590486139008,
+     "fracao_positiva": 0.3333333333333333
+    },
+    {
+     "lag": 9,
+     "termos": 27,
+     "mediana_rho": -0.12874413716407682,
+     "fracao_positiva": 0.37037037037037035
+    },
+    {
+     "lag": 10,
+     "termos": 27,
+     "mediana_rho": 0.009394314254938323,
+     "fracao_positiva": 0.5185185185185185
+    },
+    {
+     "lag": 11,
+     "termos": 27,
+     "mediana_rho": -0.06315828352402535,
+     "fracao_positiva": 0.2962962962962963
+    },
+    {
+     "lag": 12,
+     "termos": 25,
+     "mediana_rho": -0.09983155448060657,
+     "fracao_positiva": 0.4
+    },
+    {
+     "lag": 13,
+     "termos": 26,
+     "mediana_rho": -0.08703222154107532,
+     "fracao_positiva": 0.3076923076923077
+    },
+    {
+     "lag": 14,
+     "termos": 26,
+     "mediana_rho": 0.029780270610645844,
+     "fracao_positiva": 0.5384615384615384
+    }
+   ],
+   "valor": 0.009394314254938323,
+   "lag": 10,
+   "termos_no_painel": 73,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.060152136654867946,
+   "nulo_p95": 0.15197638592001614,
+   "p_empirico": 0.847,
+   "z": -1.0168099984182741,
+   "digno": false
+  },
+  "alvo_amazon": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 100,
+     "mediana_rho": 0.007954307764284747,
+     "fracao_positiva": 0.51
+    },
+    {
+     "lag": 1,
+     "termos": 100,
+     "mediana_rho": 0.008973332225788255,
+     "fracao_positiva": 0.51
+    },
+    {
+     "lag": 2,
+     "termos": 100,
+     "mediana_rho": -0.012311682397450275,
+     "fracao_positiva": 0.48
+    },
+    {
+     "lag": 3,
+     "termos": 101,
+     "mediana_rho": 0.05454545454545454,
+     "fracao_positiva": 0.5643564356435643
+    },
+    {
+     "lag": 4,
+     "termos": 101,
+     "mediana_rho": 0.03411371285155805,
+     "fracao_positiva": 0.5346534653465347
+    },
+    {
+     "lag": 5,
+     "termos": 101,
+     "mediana_rho": -0.0014666789444504646,
+     "fracao_positiva": 0.4752475247524752
+    },
+    {
+     "lag": 6,
+     "termos": 101,
+     "mediana_rho": -0.022736470783862654,
+     "fracao_positiva": 0.43564356435643564
+    },
+    {
+     "lag": 7,
+     "termos": 100,
+     "mediana_rho": 0.0007323420447463069,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 8,
+     "termos": 100,
+     "mediana_rho": 0.016095073695149217,
+     "fracao_positiva": 0.53
+    },
+    {
+     "lag": 9,
+     "termos": 101,
+     "mediana_rho": 0.035010941209067614,
+     "fracao_positiva": 0.5247524752475248
+    },
+    {
+     "lag": 10,
+     "termos": 102,
+     "mediana_rho": 0.046651808549721605,
+     "fracao_positiva": 0.5490196078431373
+    },
+    {
+     "lag": 11,
+     "termos": 102,
+     "mediana_rho": -0.006981901030276824,
+     "fracao_positiva": 0.4803921568627451
+    },
+    {
+     "lag": 12,
+     "termos": 102,
+     "mediana_rho": -0.0061035968721313266,
+     "fracao_positiva": 0.4803921568627451
+    },
+    {
+     "lag": 13,
+     "termos": 101,
+     "mediana_rho": 0.002754831389919543,
+     "fracao_positiva": 0.504950495049505
+    },
+    {
+     "lag": 14,
+     "termos": 101,
+     "mediana_rho": 0.04401654783045836,
+     "fracao_positiva": 0.6039603960396039
+    }
+   ],
+   "valor": 0.046651808549721605,
+   "lag": 10,
+   "termos_no_painel": 107,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.024806737478458456,
+   "nulo_p95": 0.05908347664077692,
+   "p_empirico": 0.157,
+   "z": 1.0236214279640916,
+   "digno": false
+  },
+  "alvo_unificado_sem_composicao": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 103,
+     "mediana_rho": -0.004633502809002683,
+     "fracao_positiva": 0.49514563106796117
+    },
+    {
+     "lag": 1,
+     "termos": 103,
+     "mediana_rho": 0.011070348223998041,
+     "fracao_positiva": 0.5436893203883495
+    },
+    {
+     "lag": 2,
+     "termos": 103,
+     "mediana_rho": 0.027349121466768527,
+     "fracao_positiva": 0.5339805825242718
+    },
+    {
+     "lag": 3,
+     "termos": 104,
+     "mediana_rho": 0.029523987742655335,
+     "fracao_positiva": 0.5480769230769231
+    },
+    {
+     "lag": 4,
+     "termos": 104,
+     "mediana_rho": 0.02618164175821206,
+     "fracao_positiva": 0.5769230769230769
+    },
+    {
+     "lag": 5,
+     "termos": 105,
+     "mediana_rho": 0.014931940935343654,
+     "fracao_positiva": 0.5238095238095238
+    },
+    {
+     "lag": 6,
+     "termos": 104,
+     "mediana_rho": 0.018797251639604166,
+     "fracao_positiva": 0.5288461538461539
+    },
+    {
+     "lag": 7,
+     "termos": 104,
+     "mediana_rho": 0.02839041151218971,
+     "fracao_positiva": 0.5192307692307693
+    },
+    {
+     "lag": 8,
+     "termos": 104,
+     "mediana_rho": -0.005825256031185057,
+     "fracao_positiva": 0.4807692307692308
+    },
+    {
+     "lag": 9,
+     "termos": 105,
+     "mediana_rho": 0.002319483662767245,
+     "fracao_positiva": 0.5142857142857142
+    },
+    {
+     "lag": 10,
+     "termos": 106,
+     "mediana_rho": 0.0186064884120057,
+     "fracao_positiva": 0.5283018867924528
+    },
+    {
+     "lag": 11,
+     "termos": 106,
+     "mediana_rho": -0.0047594578146886056,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 12,
+     "termos": 105,
+     "mediana_rho": -0.025974025974025976,
+     "fracao_positiva": 0.4666666666666667
+    },
+    {
+     "lag": 13,
+     "termos": 105,
+     "mediana_rho": -0.012356007490673821,
+     "fracao_positiva": 0.4666666666666667
+    },
+    {
+     "lag": 14,
+     "termos": 105,
+     "mediana_rho": 0.051964423406373694,
+     "fracao_positiva": 0.5714285714285714
+    }
+   ],
+   "valor": 0.0186064884120057,
+   "lag": 10,
+   "termos_no_painel": 109,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.016078630426892317,
+   "nulo_p95": 0.0544908587643086,
+   "p_empirico": 0.456,
+   "z": 0.057746818247837034,
+   "digno": false
+  },
+  "alvo_shopee_sem_composicao": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 29,
+     "mediana_rho": -0.021767531107101796,
+     "fracao_positiva": 0.4827586206896552
+    },
+    {
+     "lag": 1,
+     "termos": 30,
+     "mediana_rho": 0.08048974457699029,
+     "fracao_positiva": 0.6
+    },
+    {
+     "lag": 2,
+     "termos": 27,
+     "mediana_rho": -0.03163618775043374,
+     "fracao_positiva": 0.48148148148148145
+    },
+    {
+     "lag": 3,
+     "termos": 28,
+     "mediana_rho": -0.12777805665911257,
+     "fracao_positiva": 0.32142857142857145
+    },
+    {
+     "lag": 4,
+     "termos": 28,
+     "mediana_rho": -0.12793621570479452,
+     "fracao_positiva": 0.39285714285714285
+    },
+    {
+     "lag": 5,
+     "termos": 29,
+     "mediana_rho": -0.0019748215733657957,
+     "fracao_positiva": 0.41379310344827586
+    },
+    {
+     "lag": 6,
+     "termos": 28,
+     "mediana_rho": -0.03249740689932078,
+     "fracao_positiva": 0.4642857142857143
+    },
+    {
+     "lag": 7,
+     "termos": 28,
+     "mediana_rho": 0.009663824086948162,
+     "fracao_positiva": 0.5357142857142857
+    },
+    {
+     "lag": 8,
+     "termos": 27,
+     "mediana_rho": -0.12923079370050763,
+     "fracao_positiva": 0.3333333333333333
+    },
+    {
+     "lag": 9,
+     "termos": 27,
+     "mediana_rho": -0.15824189582685005,
+     "fracao_positiva": 0.3333333333333333
+    },
+    {
+     "lag": 10,
+     "termos": 27,
+     "mediana_rho": 0.02921750092780994,
+     "fracao_positiva": 0.5555555555555556
+    },
+    {
+     "lag": 11,
+     "termos": 27,
+     "mediana_rho": -0.058823529411764705,
+     "fracao_positiva": 0.3333333333333333
+    },
+    {
+     "lag": 12,
+     "termos": 25,
+     "mediana_rho": -0.08284274532587807,
+     "fracao_positiva": 0.36
+    },
+    {
+     "lag": 13,
+     "termos": 26,
+     "mediana_rho": -0.09619890051898332,
+     "fracao_positiva": 0.34615384615384615
+    },
+    {
+     "lag": 14,
+     "termos": 26,
+     "mediana_rho": -0.032695734672464075,
+     "fracao_positiva": 0.38461538461538464
+    }
+   ],
+   "valor": 0.02921750092780994,
+   "lag": 10,
+   "termos_no_painel": 73,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.06115860044980639,
+   "nulo_p95": 0.14596951273550426,
+   "p_empirico": 0.727,
+   "z": -0.6217958702143019,
+   "digno": false
+  },
+  "alvo_amazon_sem_composicao": {
+   "curva": [
+    {
+     "lag": 0,
+     "termos": 100,
+     "mediana_rho": 0.0075242055436638595,
+     "fracao_positiva": 0.5
+    },
+    {
+     "lag": 1,
+     "termos": 100,
+     "mediana_rho": 0.0074589746647809405,
+     "fracao_positiva": 0.51
+    },
+    {
+     "lag": 2,
+     "termos": 100,
+     "mediana_rho": -0.03725160457646703,
+     "fracao_positiva": 0.46
+    },
+    {
+     "lag": 3,
+     "termos": 101,
+     "mediana_rho": 0.038130410148149586,
+     "fracao_positiva": 0.5544554455445545
+    },
+    {
+     "lag": 4,
+     "termos": 101,
+     "mediana_rho": 0.019697457721643573,
+     "fracao_positiva": 0.5445544554455446
+    },
+    {
+     "lag": 5,
+     "termos": 101,
+     "mediana_rho": 0.01827299422588671,
+     "fracao_positiva": 0.5247524752475248
+    },
+    {
+     "lag": 6,
+     "termos": 101,
+     "mediana_rho": 0.02407826114280683,
+     "fracao_positiva": 0.5148514851485149
+    },
+    {
+     "lag": 7,
+     "termos": 100,
+     "mediana_rho": 0.03003404734105073,
+     "fracao_positiva": 0.55
+    },
+    {
+     "lag": 8,
+     "termos": 100,
+     "mediana_rho": 0.022148860949859663,
+     "fracao_positiva": 0.54
+    },
+    {
+     "lag": 9,
+     "termos": 101,
+     "mediana_rho": 0.019159916772041846,
+     "fracao_positiva": 0.5643564356435643
+    },
+    {
+     "lag": 10,
+     "termos": 102,
+     "mediana_rho": 0.02571450496847362,
+     "fracao_positiva": 0.5588235294117647
+    },
+    {
+     "lag": 11,
+     "termos": 102,
+     "mediana_rho": 0.02862939605843879,
+     "fracao_positiva": 0.5098039215686274
+    },
+    {
+     "lag": 12,
+     "termos": 102,
+     "mediana_rho": 0.0031162186643579654,
+     "fracao_positiva": 0.5098039215686274
+    },
+    {
+     "lag": 13,
+     "termos": 101,
+     "mediana_rho": 0.010239951212366184,
+     "fracao_positiva": 0.5148514851485149
+    },
+    {
+     "lag": 14,
+     "termos": 101,
+     "mediana_rho": 0.03660400427938255,
+     "fracao_positiva": 0.5841584158415841
+    }
+   ],
+   "valor": 0.02862939605843879,
+   "lag": 11,
+   "termos_no_painel": 107,
+   "n_permutacoes_efetivas": 1000,
+   "nulo_mediana": 0.023714009185722813,
+   "nulo_p95": 0.058668543621316946,
+   "p_empirico": 0.393,
+   "z": 0.2153567548671906,
+   "digno": false
+  }
+ },
+ "placebo_p1_lags_invertidos": [
+  {
+   "lag": -7,
+   "termos": 101,
+   "mediana_rho": -0.043606801027745466,
+   "fracao_positiva": 0.45544554455445546
+  },
+  {
+   "lag": -6,
+   "termos": 102,
+   "mediana_rho": -0.031262137958264935,
+   "fracao_positiva": 0.43137254901960786
+  },
+  {
+   "lag": -5,
+   "termos": 102,
+   "mediana_rho": -0.04383550814826156,
+   "fracao_positiva": 0.4117647058823529
+  },
+  {
+   "lag": -4,
+   "termos": 102,
+   "mediana_rho": -0.016822583746297613,
+   "fracao_positiva": 0.47058823529411764
+  },
+  {
+   "lag": -3,
+   "termos": 102,
+   "mediana_rho": 0.02407020518656377,
+   "fracao_positiva": 0.5490196078431373
+  },
+  {
+   "lag": -2,
+   "termos": 103,
+   "mediana_rho": 0.03137865980995054,
+   "fracao_positiva": 0.5631067961165048
+  },
+  {
+   "lag": -1,
+   "termos": 103,
+   "mediana_rho": 0.03691155321407206,
+   "fracao_positiva": 0.5728155339805825
+  }
+ ],
+ "primaria_digna": false,
+ "robustez_composicao_digna": false,
+ "veredito": "negativo",
+ "condicao_secao_1": {
+  "primeiro_dia_de_busca": "2026-09-07",
+  "termos_com_dias_suficientes": 103,
+  "dias_exigidos": 30,
+  "termos_exigidos": 60,
+  "cumprida": true
+ }
+}

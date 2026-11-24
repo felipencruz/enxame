@@ -1,0 +1,104 @@
+{
+  "seletor_item": ".zg-no-numbers",
+  "campos": {
+    "titulo": {
+      "seletor": "._cDEzb_p13n-sc-css-line-clamp-1_1Fn1y",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".p13n-sc-price",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": ".a-link-normal",
+      "origem": "atributo",
+      "atributo": "href"
+    },
+    "rank": {
+      "seletor": ".zg-bdg-text",
+      "origem": "texto"
+    },
+    "avaliacao": {
+      "seletor": ".a-icon-row a",
+      "origem": "atributo",
+      "atributo": "aria-label"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://www.amazon.com.br/gp/bestsellers/toys/",
+    "dominio": "www.amazon.com.br",
+    "modelo": "gpt-4o-mini",
+    "criado_em": "2026-07-16T01:36:18.212823+00:00",
+    "agente": "supervisor",
+    "versao_formato": 1,
+    "campos_pedidos": [
+      {
+        "nome": "titulo",
+        "descricao": "nome do produto",
+        "tipo": "texto"
+      },
+      {
+        "nome": "preco",
+        "descricao": "preco em reais, ex R$ 99,90",
+        "tipo": "preco"
+      },
+      {
+        "nome": "link",
+        "descricao": "href do link do produto",
+        "tipo": "url"
+      },
+      {
+        "nome": "rank",
+        "descricao": "posicao no ranking de mais vendidos, ex #1",
+        "tipo": "rank"
+      },
+      {
+        "nome": "avaliacao",
+        "descricao": "nota em estrelas e numero de avaliacoes",
+        "tipo": "nota"
+      }
+    ],
+    "validacao": {
+      "itens_encontrados": 50,
+      "campos": {
+        "titulo": {
+          "preenchidos": 41,
+          "taxa": 0.82,
+          "validos": 41,
+          "taxa_valida": 0.82,
+          "tipo": "texto"
+        },
+        "preco": {
+          "preenchidos": 50,
+          "taxa": 1.0,
+          "validos": 50,
+          "taxa_valida": 1.0,
+          "tipo": "preco"
+        },
+        "link": {
+          "preenchidos": 50,
+          "taxa": 1.0,
+          "validos": 50,
+          "taxa_valida": 1.0,
+          "tipo": "url"
+        },
+        "rank": {
+          "preenchidos": 50,
+          "taxa": 1.0,
+          "validos": 50,
+          "taxa_valida": 1.0,
+          "tipo": "rank"
+        },
+        "avaliacao": {
+          "preenchidos": 45,
+          "taxa": 0.9,
+          "validos": 45,
+          "taxa_valida": 0.9,
+          "tipo": "nota"
+        }
+      }
+    },
+    "aprovada": true,
+    "reparo": true
+  }
+}

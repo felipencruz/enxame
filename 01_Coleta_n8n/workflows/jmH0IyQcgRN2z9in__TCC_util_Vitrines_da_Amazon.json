@@ -1,0 +1,94 @@
+{
+  "active": 0,
+  "connections": {
+    "Disparo Manual": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Bronze Amazon",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Bronze Amazon": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Analisar Vitrines",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-15 21:35:37.614",
+  "description": "Read-only: raio-X das vitrines da Amazon por rodada. Mostra quais categorias apareceram em cada snapshot, a intermitencia de cada uma e se algum item_id migra de categoria. Serve para decidir o que fazer com as vitrines rotativas. Manual, nao grava nada.",
+  "id": "jmH0IyQcgRN2z9in",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 [util] Vitrines da Amazon",
+  "nodes": [
+    {
+      "id": "22f9012d-4092-4bd9-b840-f849ed38ebc6",
+      "name": "Disparo Manual",
+      "position": [
+        240,
+        300
+      ],
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1
+    },
+    {
+      "executeOnce": true,
+      "id": "327ded07-b57d-4e26-9a00-f5007cf18a63",
+      "name": "Ler Bronze Amazon",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_amazon",
+          "mode": "id",
+          "value": "2Qmnq0yOXArJ4b7C"
+        },
+        "operation": "get",
+        "resource": "row",
+        "returnAll": true
+      },
+      "position": [
+        480,
+        300
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "executeOnce": true,
+      "id": "11d1b7d3-1d9f-48d8-bc90-e5d650600f88",
+      "name": "Analisar Vitrines",
+      "parameters": {
+        "jsCode": "// Raio-X das vitrines da Amazon por rodada. Read-only.\n// Pergunta que precisa de resposta ANTES de decidir: a Amazon tem um POOL fixo de\n// vitrines do qual sorteia 6, ou o pool tambem muda? E o rank e comparavel entre\n// rodadas se a vitrine nem sempre aparece?\nconst rows = $('Ler Bronze Amazon').all().map(i => i.json);\n\nconst porSnapshot = {};\nfor (const r of rows) {\n  const s = String(r.coletado_em);\n  porSnapshot[s] = porSnapshot[s] || {};\n  const c = r.categoria_pagina || '(sem categoria)';\n  porSnapshot[s][c] = (porSnapshot[s][c] || 0) + 1;\n}\n\nconst snaps = Object.keys(porSnapshot).sort();\nconst todasCategorias = [...new Set(rows.map(r => r.categoria_pagina || '(sem categoria)'))].sort();\n\n// Em quantas rodadas cada categoria apareceu (a \"intermitencia\" que ameaca a serie)\nconst presenca = {};\nfor (const c of todasCategorias) {\n  presenca[c] = { rodadas: 0, de: snaps.length, produtos_por_rodada: [] };\n  for (const s of snaps) {\n    if (porSnapshot[s][c]) {\n      presenca[c].rodadas += 1;\n      presenca[c].produtos_por_rodada.push(porSnapshot[s][c]);\n    }\n  }\n}\n\n// O mesmo item_id reaparece em categorias diferentes? (isso quebraria o Score)\nconst catsPorItem = {};\nfor (const r of rows) {\n  const k = r.item_id;\n  catsPorItem[k] = catsPorItem[k] || new Set();\n  catsPorItem[k].add(r.categoria_pagina || '(sem categoria)');\n}\nconst itensEmMaisDeUmaCategoria = Object.entries(catsPorItem)\n  .filter(([, set]) => set.size > 1)\n  .map(([id, set]) => ({ item_id: id, categorias: [...set] }));\n\nreturn [{ json: {\n  gerado_em: new Date().toISOString(),\n  total_linhas: rows.length,\n  rodadas: snaps.length,\n  categorias_distintas_no_total: todasCategorias.length,\n  vitrines_por_rodada: snaps.map(s => ({\n    quando: s,\n    n_vitrines: Object.keys(porSnapshot[s]).length,\n    n_produtos: Object.values(porSnapshot[s]).reduce((a, b) => a + b, 0),\n    categorias: Object.keys(porSnapshot[s]).sort()\n  })),\n  presenca_por_categoria: presenca,\n  itens_em_mais_de_uma_categoria: itensEmMaisDeUmaCategoria\n} }];",
+        "language": "javaScript",
+        "mode": "runOnceForAllItems"
+      },
+      "position": [
+        720,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "availableInMCP": true,
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "updatedAt": "2026-07-16 02:15:15.440",
+  "versionId": "34ece307-df92-4eb5-9ae2-b00db670217d"
+}

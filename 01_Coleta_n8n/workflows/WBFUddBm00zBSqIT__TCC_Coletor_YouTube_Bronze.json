@@ -1,0 +1,165 @@
+{
+  "active": 0,
+  "connections": {
+    "Agendado 12h": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ler Seeds YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Coletar YouTube": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gravar Bronze YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ler Seeds YouTube": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Coletar YouTube",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-07-09 23:16:42.896",
+  "description": "Coletor Bronze de Buzz (YouTube). Le seeds com ativo, coletar_youtube e youtube_slot da hora (A antes do meio-dia, B depois: fuso do workflow, America/Sao_Paulo, NAO UTC). 95 termos = 9.500 de 10.000 unid/dia. Grava tcc_bronze_youtube. 12/12h.",
+  "id": "WBFUddBm00zBSqIT",
+  "isArchived": 0,
+  "meta": {
+    "aiBuilderAssisted": true
+  },
+  "name": "TCC \u2014 Coletor YouTube (Bronze)",
+  "nodes": [
+    {
+      "id": "8a4d7e09-197f-463b-bebb-1abf28b8f538",
+      "name": "Ler Seeds YouTube",
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_seeds",
+          "mode": "id",
+          "value": "qVSDXBqUnbstr9wk"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "isTrue",
+              "keyName": "ativo"
+            },
+            {
+              "condition": "isTrue",
+              "keyName": "coletar_youtube"
+            },
+            {
+              "keyName": "youtube_slot",
+              "keyValue": "={{ $now.hour < 12 ? \"A\" : \"B\" }}"
+            }
+          ]
+        },
+        "matchType": "allConditions",
+        "operation": "get",
+        "returnAll": true
+      },
+      "position": [
+        464,
+        320
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "8523c586-186c-4cb8-b807-5117576b77b4",
+      "name": "Coletar YouTube",
+      "parameters": {
+        "jsCode": "const seeds = $input.all().map(i => i.json.termo).filter(Boolean);\nconst YT_KEY = $env.YOUTUBE_API_KEY;\nconst rows = [];\nconst agora = new Date().toISOString();\nfor (const termo of seeds) {\n  try {\n    const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&order=relevance&relevanceLanguage=pt&regionCode=BR&q=' + encodeURIComponent(termo) + '&key=' + YT_KEY;\n    const resp = await this.helpers.httpRequest({ method: 'GET', url, json: true });\n    const total = (resp && resp.pageInfo && typeof resp.pageInfo.totalResults === 'number') ? resp.pageInfo.totalResults : null;\n    const items = (resp && Array.isArray(resp.items)) ? resp.items : [];\n    for (const it of items) {\n      const sn = it.snippet || {};\n      rows.push({ json: {\n        termo_semente: termo,\n        video_id: it.id ? it.id.videoId : null,\n        titulo: sn.title || null,\n        canal: sn.channelTitle || null,\n        published_at: sn.publishedAt || null,\n        total_results: total,\n        coletado_em: agora\n      }});\n    }\n  } catch (e) {\n    rows.push({ json: { termo_semente: termo, video_id: null, titulo: '[ERRO] ' + (e.message || e), canal: null, published_at: null, total_results: null, coletado_em: agora } });\n  }\n  await new Promise(r => setTimeout(r, 200));\n}\nreturn rows;"
+      },
+      "position": [
+        688,
+        320
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "134a8d2d-6238-49fd-9ff4-e33897eee2c4",
+      "name": "Gravar Bronze YouTube",
+      "parameters": {
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {}
+        },
+        "dataTableId": {
+          "__rl": true,
+          "cachedResultName": "tcc_bronze_youtube",
+          "mode": "id",
+          "value": "txAtoMRsWO351Pm2"
+        },
+        "options": {}
+      },
+      "position": [
+        912,
+        320
+      ],
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "d975b717-6e7c-4292-9f45-6e92f27521ec",
+      "name": "Agendado 12h",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 12
+            }
+          ]
+        }
+      },
+      "position": [
+        240,
+        320
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "availableInMCP": true,
+    "binaryMode": "separate",
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Agendado 12h": {
+      "recurrenceRules": [
+        0
+      ]
+    },
+    "node:Agendado 6h": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "triggerCount": 1,
+  "updatedAt": "2026-09-11 04:03:20.905",
+  "versionId": "69f36828-009b-4df5-a2c0-11896da02e59"
+}

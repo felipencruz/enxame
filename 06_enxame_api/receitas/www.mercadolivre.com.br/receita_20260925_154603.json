@@ -1,0 +1,217 @@
+{
+  "seletor_item": ".andes-carousel-snapped__slide",
+  "campos": {
+    "titulo": {
+      "seletor": ".dynamic-carousel__title, .poly-component__title",
+      "origem": "texto"
+    },
+    "preco": {
+      "seletor": ".dynamic-carousel__price > span, .poly-price__current > span",
+      "origem": "texto"
+    },
+    "preco_antigo": {
+      "seletor": ".dynamic-carousel__oldprice, .poly-price__label > span",
+      "origem": "texto"
+    },
+    "desconto": {
+      "seletor": ".dynamic-carousel__discount, .poly-price__discount-polylabel > span",
+      "origem": "texto"
+    },
+    "link": {
+      "seletor": "a.splinter-link, a.poly-component__title",
+      "origem": "atributo",
+      "atributo": "href"
+    },
+    "selo_mais_vendido": {
+      "seletor": ".dynamic-carousel__pill-container--text-best-seller, .poly-component__poly-label > span",
+      "origem": "texto"
+    }
+  },
+  "seletor_grupo": ".dynamic__carousel, .sbc-products-carousel",
+  "campos_grupo": {
+    "categoria": {
+      "seletor": "a[href*=\"/mais-vendidos/MLB\"]",
+      "origem": "atributo",
+      "atributo": "href"
+    }
+  },
+  "_meta": {
+    "url_origem": "https://www.mercadolivre.com.br/mais-vendidos/",
+    "dominio": "www.mercadolivre.com.br",
+    "criado_em": "2026-09-25T15:46:03.184499+00:00",
+    "agente": "supervisor (Agente 4, 2 passadas isoladas em 25/09, sonda sondas/sonda_reparo_layout_ml.py) + uniao com os seletores da v3 para o layout antigo",
+    "versao_formato": 1,
+    "historia": "Receita v4. Em 25/09/2026, entre 06:00 e 12:00 BRT, o ML trocou a marcacao da pagina (dynamic-carousel -> poly-card / sbc-products-carousel) e a v3 passou a extrair 0 itens. Os seletores do layout NOVO sao os do Agente 4, em duas passadas isoladas sobre o HTML guardado (1a: nota 0 -> 0,7963 com categoria em 0%; 2a, com a descricao da categoria corrigida para apontar o link \"Ver mais\": 0,7963 -> 0,9391). Cada seletor e uma LISTA \"antigo, novo\", para a receita servir aos dois layouts (contra pendulo se a fonte alternar). A categoria passa a ser o href do link \"Ver mais\" de cada carrossel nos DOIS layouts (o h2 do layout novo vem em espanhol e desalinhado); o nome sai de um mapa ID -> nome no Achatar Produtos do n8n, conferido nos HTML de 29/07 e 24/09. O preco do layout novo traz centavos; o do antigo continua sem (o seletor da v3 pega so o span dos reais).",
+    "substitui": "receita_20260925_000039.json (v3)",
+    "campos_essenciais": [
+      "titulo",
+      "preco",
+      "link",
+      "categoria"
+    ],
+    "campos_essenciais_por_que": "titulo, preco e link como na v3. categoria entra em 25/09: no ML sem categoria nao ha rank (o Achatar so numera com categoria) nem mapa para a Parte A, e a 1a passada do Agente 4 mostrou a regua APROVANDO uma candidata com categoria em 0% (limite 7). Medido nos dois sentidos: reprova 0 das 267 rodadas legitimas desde a v2 (15/07 a 24/09, categoria 100% em todas) e reprova a candidata da 1a passada.",
+    "campos_pedidos": [
+      {
+        "nome": "categoria",
+        "descricao": "a categoria do carrossel, que identifica a vitrine. Nesta pagina o titulo h2 do carrossel NAO serve: vem em espanhol e desalinhado do conteudo. O identificador confiavel e o link \"Ver mais\" que fica no cabecalho de cada carrossel: leia o atributo href dele, que contem o codigo MLB da categoria. Para isso o seletor_grupo precisa ser o conteiner do carrossel que inclui o cabecalho, e nao so a lista de produtos.",
+        "tipo": null
+      },
+      {
+        "nome": "titulo",
+        "descricao": "nome do produto",
+        "tipo": null
+      },
+      {
+        "nome": "preco",
+        "descricao": "preco atual em reais, ex R$ 99,90",
+        "tipo": null
+      },
+      {
+        "nome": "preco_antigo",
+        "descricao": "preco riscado, so existe em item com desconto",
+        "tipo": null
+      },
+      {
+        "nome": "desconto",
+        "descricao": "percentual de desconto, so existe em item com desconto",
+        "tipo": null
+      },
+      {
+        "nome": "link",
+        "descricao": "href do link do produto",
+        "tipo": null
+      },
+      {
+        "nome": "selo_mais_vendido",
+        "descricao": "selo de ranking do produto, ex 1o MAIS VENDIDO",
+        "tipo": null
+      }
+    ],
+    "campos_pedidos_por_que": "So para o Agente 4 enxergar o que cada campo e num reparo (a v2 nao guardava o pedido). `tipo` fica nulo de proposito: com tipo, a taxa_valida dos campos antigos mudaria e a regua deixaria de medir a v3 como media a v2.",
+    "reparo_historico": {
+      "passada_1": [
+        {
+          "tentativa": 0,
+          "pontuacao": 0.0,
+          "problemas": [
+            "NENHUM item encontrado. O seletor_grupo '.dynamic__carousel' ou o seletor_item '.andes-carousel-snapped__slide' está errado. Atenção: o seletor_grupo deve ser o CONTÊINER da vitrine (o elemento que envolve os produtos), NÃO o título dela; e o seletor_item é procurado DENTRO do grupo."
+          ]
+        },
+        {
+          "tentativa": 1,
+          "pontuacao": 0.7963,
+          "problemas": [
+            "Campo 'categoria' preenchido em apenas 0% dos itens — o seletor 'h2.sbc-products-carousel__title' (origem=texto) está errado ou aponta para um elemento que não existe na maioria dos itens."
+          ],
+          "aceita": true
+        },
+        {
+          "tentativa": 2,
+          "pontuacao": 0.7963,
+          "problemas": [
+            "Campo 'categoria' preenchido em apenas 0% dos itens — o seletor 'h2.sbc-products-carousel__title' (origem=texto) está errado ou aponta para um elemento que não existe na maioria dos itens."
+          ],
+          "aceita": false
+        },
+        {
+          "tentativa": 3,
+          "pontuacao": 0.7963,
+          "problemas": [
+            "Campo 'categoria' preenchido em apenas 0% dos itens — o seletor '.sbc-products-carousel__header h2' (origem=texto) está errado ou aponta para um elemento que não existe na maioria dos itens."
+          ],
+          "aceita": false
+        }
+      ],
+      "passada_2": [
+        {
+          "tentativa": 0,
+          "pontuacao": 0.7963,
+          "problemas": [
+            "Campo 'categoria' preenchido em apenas 0% dos itens — o seletor 'h2.sbc-products-carousel__title' (origem=texto) está errado ou aponta para um elemento que não existe na maioria dos itens."
+          ]
+        },
+        {
+          "tentativa": 1,
+          "pontuacao": 0.9391,
+          "problemas": [],
+          "aceita": true
+        }
+      ],
+      "custo_passada_1": {
+        "chamadas": 3,
+        "tokens_entrada": 112227,
+        "tokens_entrada_cacheados": 37248,
+        "tokens_saida": 4573,
+        "tokens_total": 116800,
+        "custo_usd": 0.01678425,
+        "duracao_s": 36.582
+      },
+      "custo_passada_2": {
+        "chamadas": 1,
+        "tokens_entrada": 37490,
+        "tokens_entrada_cacheados": 0,
+        "tokens_saida": 1529,
+        "tokens_total": 39019,
+        "custo_usd": 0.0065409,
+        "duracao_s": 12.673
+      }
+    },
+    "validacao": {
+      "itens_encontrados": 195,
+      "campos": {
+        "categoria": {
+          "preenchidos": 195,
+          "taxa": 1.0,
+          "validos": 195,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "titulo": {
+          "preenchidos": 195,
+          "taxa": 1.0,
+          "validos": 195,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "preco": {
+          "preenchidos": 195,
+          "taxa": 1.0,
+          "validos": 195,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "preco_antigo": {
+          "preenchidos": 157,
+          "taxa": 0.805,
+          "validos": 157,
+          "taxa_valida": 0.805,
+          "tipo": null
+        },
+        "desconto": {
+          "preenchidos": 157,
+          "taxa": 0.805,
+          "validos": 157,
+          "taxa_valida": 0.805,
+          "tipo": null
+        },
+        "link": {
+          "preenchidos": 195,
+          "taxa": 1.0,
+          "validos": 195,
+          "taxa_valida": 1.0,
+          "tipo": null
+        },
+        "selo_mais_vendido": {
+          "preenchidos": 188,
+          "taxa": 0.964,
+          "validos": 188,
+          "taxa_valida": 0.964,
+          "tipo": null
+        }
+      }
+    },
+    "validacao_origem": "02_Dados/raw/layout_ml_20260925/20260925T1504Z_ml_mais-vendidos_EnxameBot.html",
+    "aprovada": true,
+    "salvo_em": "2026-09-25T15:46:03.184499+00:00"
+  }
+}
